@@ -4,6 +4,10 @@ version.workspace = true
 edition.workspace = true
 authors.workspace = true
 
+[lib]
+name = "platform_worker"
+path = "src/lib.rs"
+
 [[bin]]
 name = "platform-worker"
 path = "src/main.rs"

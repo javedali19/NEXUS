@@ -26,6 +26,7 @@ jobs:
   deploy-cloud-run:
     name: Build & Deploy to Google Cloud Run (WIF OIDC)
     runs-on: ubuntu-latest
+    if: ${{ secrets.GCP_PROJECT_ID != '' && secrets.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
     env:
       GCP_REGION: ${{ vars.GCP_REGION || 'us-central1' }}
       GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}

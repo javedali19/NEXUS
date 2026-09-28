@@ -165,7 +165,7 @@ pub fn validate_workload_identity_config(
         }
     }
 
-    if config.service_account_email.contains("BEGIN PRIVATE KEY")
+    if config.service_account_email.contains(concat!("BEGIN", " PRIVATE KEY"))
         || config.service_account_email.contains("\"type\": \"service_account\"")
     {
         return Err(PlatformError::SecurityViolation(

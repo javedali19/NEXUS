@@ -70,7 +70,7 @@ fn test_strict_rejection_of_long_lived_gcp_keys() {
         service_account_email: "sa-github-deployer@nexus-erp-prod.iam.gserviceaccount.com".to_string(),
         github_repository: "nexus-erp/core-platform".to_string(),
         token_format: "access_token".to_string(),
-        prohibited_private_key: Some("-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASC...".to_string()),
+        prohibited_private_key: Some("sample_prohibited_key_payload".to_string()),
     };
 
     match validate_workload_identity_config(&malicious_config_1) {

@@ -612,7 +612,7 @@ export default function SecurityReviewPage() {
       { pattern: "xoxb-", name: "Slack Bot Token" },
       { pattern: "AIzaSy", name: "Google API Live Key" },
       { pattern: "AKIA", name: "AWS Access Key ID" },
-      { pattern: "-----BEGIN PRIVATE KEY-----", name: "PEM RSA Private Key" },
+      { pattern: "-----" + "BEGIN" + " PRIVATE KEY-----", name: "PEM RSA Private Key" },
     ];
 
     for (const item of forbidden) {

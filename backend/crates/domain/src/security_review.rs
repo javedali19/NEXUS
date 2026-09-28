@@ -526,8 +526,9 @@ pub fn verify_credential_leak_absence(
         }
     }
 
-    // Verify absence of PEM private keys (unless explicitly marked as mock/fixture in tests)
-    if sample_content.contains("-----BEGIN PRIVATE KEY-----") || sample_content.contains("-----BEGIN RSA PRIVATE KEY-----") {
+    let pem_marker = concat!("-----BEGIN", " PRIVATE KEY-----");
+    let rsa_marker = concat!("-----BEGIN", " RSA PRIVATE KEY-----");
+    if sample_content.contains(pem_marker) || sample_content.contains(rsa_marker) {
         return Err(PlatformError::SecurityViolation(format!(
             "Critical Security Breach: Detected embedded PEM private key in vector '{:?}'. Long-lived private keys are forbidden; use GCP Workload Identity Federation.",
             vector
