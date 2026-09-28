@@ -131,13 +131,16 @@ impl EventPublisher for GcpPubSubPublisher {
             let _cloud_event_json = serde_json::to_string(&cloud_event)
                 .map_err(|e| PlatformError::ValidationError(format!("Failed to serialize CloudEvent: {}", e)))?;
 
+            let org_id_str = envelope.organization_id.to_string();
+            let corr_id_str = envelope.correlation_id.to_string();
+
             // Attributes used by Pub/Sub subscriptions for filtering / routing
             let mut attributes = vec![
                 ("event_type", envelope.event_type.as_str()),
-                ("organization_id", &envelope.organization_id.to_string()),
+                ("organization_id", org_id_str.as_str()),
                 ("entity_type", envelope.entity_type.as_str()),
                 ("schema_version", envelope.schema_version.as_str()),
-                ("correlation_id", &envelope.correlation_id.to_string()),
+                ("correlation_id", corr_id_str.as_str()),
                 ("source_system", envelope.source_system.as_str()),
             ];
 
