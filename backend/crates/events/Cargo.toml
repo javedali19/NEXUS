@@ -1,0 +1,17 @@
+[package]
+name = "platform-events"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+platform-common = { path = "../common" }
+platform-domain = { path = "../domain" }
+platform-db = { path = "../db" }
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+async-trait.workspace = true
+tracing.workspace = true
+sqlx.workspace = true

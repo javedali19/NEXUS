@@ -1,0 +1,6 @@
+avoid-breaking-exported-api = false
+blacklisted-names = ["foo", "baz", "quux"]
+cognitive-complexity-threshold = 25
+too-many-lines-threshold = 400
+too-many-arguments-threshold = 8
+msrv = "1.80.0"

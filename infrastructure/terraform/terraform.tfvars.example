@@ -1,0 +1,4 @@
+gcp_project_id = "enterprise-platform-prod"
+gcp_region     = "us-central1"
+environment    = "production"
+db_tier        = "db-custom-4-15360"

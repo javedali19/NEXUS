@@ -1,0 +1,23 @@
+[package]
+name = "platform-worker"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "platform-worker"
+path = "src/main.rs"
+
+[dependencies]
+platform-common = { path = "../common" }
+platform-db = { path = "../db" }
+platform-domain = { path = "../domain" }
+platform-events = { path = "../events" }
+tokio.workspace = true
+axum.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+tracing.workspace = true
+sqlx.workspace = true

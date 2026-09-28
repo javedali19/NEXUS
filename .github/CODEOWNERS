@@ -1,0 +1,24 @@
+# Global owners for entire repository
+* @enterprise-platform-core-team
+
+# Backend (Rust Workspace)
+/backend/ @enterprise-platform-backend-team
+/backend/crates/api/ @enterprise-platform-backend-team
+/backend/crates/worker/ @enterprise-platform-backend-team
+/backend/crates/db/ @enterprise-platform-backend-team
+
+# Frontend (Next.js Application)
+/apps/web/ @enterprise-platform-frontend-team
+
+# Shared API Contracts
+/packages/contracts/ @enterprise-platform-core-team
+
+# Database Schemas & Migrations
+/database/migrations/ @enterprise-platform-data-team
+
+# Infrastructure (Terraform GCP)
+/infrastructure/terraform/ @enterprise-platform-devops-team
+
+# Security & Governance
+SECURITY.md @enterprise-platform-security-team
+.github/workflows/ @enterprise-platform-devops-team

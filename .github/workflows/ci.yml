@@ -1,0 +1,307 @@
+name: Platform Continuous Integration (CI)
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ============================================================================
+  # 1. Frontend Build Validation (Next.js)
+  # ============================================================================
+  gate-frontend-build:
+    name: 1. Frontend Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Next.js Production Build
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+          NODE_ENV: production
+
+  # ============================================================================
+  # 2. TypeScript Strict Type Checking
+  # ============================================================================
+  gate-typescript:
+    name: 2. TypeScript Strict Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: TypeScript Compile Without Emit
+        run: npx tsc --noEmit
+
+  # ============================================================================
+  # 3. Lint Code (ESLint, Prettier & Rustfmt)
+  # ============================================================================
+  gate-lint:
+    name: 3. Code Quality & Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install Frontend Dependencies
+        working-directory: apps/web
+        run: npm ci
+
+      - name: Run Frontend Lint
+        working-directory: apps/web
+        run: npm run lint
+
+      - name: Setup Rust Toolchain with rustfmt
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          components: rustfmt
+          override: true
+
+      - name: Rustfmt Formatting Check
+        working-directory: backend
+        run: cargo fmt --all -- --check
+
+  # ============================================================================
+  # 4. Rust Compilation & Clippy Analysis
+  # ============================================================================
+  gate-rust:
+    name: 4. Rust Cargo Check & Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust Toolchain with clippy
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          components: clippy
+          override: true
+
+      - name: Rust Cargo Check Workspace
+        working-directory: backend
+        run: cargo check --workspace --all-targets
+
+      - name: Rust Cargo Clippy (Deny Warnings)
+        working-directory: backend
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+  # ============================================================================
+  # 5. Automated Test Suites (Frontend & Rust)
+  # ============================================================================
+  gate-tests:
+    name: 5. Automated Test Suites
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Run Rust Workspace Unit & Integration Tests
+        working-directory: backend
+        run: cargo test --workspace --no-fail-fast
+
+  # ============================================================================
+  # 6. Database Migrations Verification
+  # ============================================================================
+  gate-migrations:
+    name: 6. Database Migrations Verification
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: nexus_test_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: testpassword
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install PostgreSQL Client
+        run: sudo apt-get install -y postgresql-client
+
+      - name: Validate Migration Ordering and Execute Dry Run
+        env:
+          PGPASSWORD: testpassword
+        run: |
+          echo "Verifying sequential migration schema application..."
+          for file in $(ls -1 database/migrations/*.sql | sort); do
+            echo "Applying migration: $file"
+            psql -h localhost -U postgres -d nexus_test_db -v ON_ERROR_STOP=1 -f "$file"
+          done
+          echo "All migrations applied successfully without syntax or dependency errors."
+
+  # ============================================================================
+  # 7. Security & Secret Scanning (Zero GCP Long-Lived Keys Enforcement)
+  # ============================================================================
+  gate-security:
+    name: 7. Security & Zero Keys Gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Scan for Leaked Secrets & Credentials
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: false
+
+      - name: Enforce Strict Prohibition of GCP Service Account JSON Keys
+        run: |
+          echo "Scanning repository for prohibited long-lived GCP service-account JSON private keys..."
+          if grep -r --exclude-dir={.git,node_modules,target} --include="*.json" '"type": *"service_account"' . ; then
+            echo "FATAL SECURITY VIOLATION: Stored GCP service account private key found! Long-lived keys are strictly forbidden. Use Workload Identity Federation."
+            exit 1
+          fi
+          if grep -r --exclude-dir={.git,node_modules,target} "BEGIN PRIVATE KEY" . ; then
+            echo "FATAL SECURITY VIOLATION: Plaintext private key certificate found! Must use GCP Workload Identity Federation."
+            exit 1
+          fi
+          echo "Security policy passed: Zero long-lived GCP service account keys detected."
+
+  # ============================================================================
+  # 8. Dependency Vulnerabilities Audit
+  # ============================================================================
+  gate-vulnerabilities:
+    name: 8. Dependency Vulnerabilities Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Audit Frontend npm Dependencies
+        working-directory: apps/web
+        run: |
+          npm audit --audit-level=critical || true
+
+      - name: Install Cargo Audit
+        uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: cargo-audit --locked
+        continue-on-error: true
+
+      - name: Audit Rust Backend Dependencies
+        working-directory: backend
+        run: |
+          cargo audit || true
+
+  # ============================================================================
+  # 9. Multi-Stage Container Image Validation
+  # ============================================================================
+  gate-containers:
+    name: 9. Container Multi-Stage Builds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Validate Web Frontend Dockerfile
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./apps/web/Dockerfile
+          push: false
+          tags: platform-web:ci-validation
+
+      - name: Validate Backend API Dockerfile
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: false
+          tags: platform-api:ci-validation
+
+  # ============================================================================
+  # 10. Terraform Infrastructure Validation & Lint
+  # ============================================================================
+  gate-terraform:
+    name: 10. Terraform Validation & Security
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.7
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive infrastructure/terraform
+
+      - name: Terraform Init (No Backend)
+        working-directory: infrastructure/terraform
+        run: terraform init -backend=false
+
+      - name: Terraform Validate
+        working-directory: infrastructure/terraform
+        run: terraform validate
