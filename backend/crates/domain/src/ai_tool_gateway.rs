@@ -325,6 +325,10 @@ impl AiToolGateway {
                         "description": {"type": "string"}
                     }
                 }),
+                returns_schema: json!({"type": "object", "properties": {"exception_id": {"type": "string"}, "status": {"type": "string"}}}),
+                rate_limit_per_minute: 60,
+                is_idempotent: false,
+            },
             ToolDefinition {
                 tool_name: "inventory_lookup".to_string(),
                 display_name: "ERP Inventory Lookup".to_string(),
