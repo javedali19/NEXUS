@@ -97,6 +97,12 @@ pub enum PlatformError {
     #[error("Authentication required: {0}")]
     Unauthenticated(String),
 
+    #[error("Authentication error: {0}")]
+    AuthenticationError(String),
+
+    #[error("Auth error: {0}")]
+    AuthError(String),
+
     #[error("Access denied: {0}")]
     Unauthorized(String),
 
@@ -105,6 +111,9 @@ pub enum PlatformError {
 
     #[error("Entity not found: {0}")]
     NotFound(String),
+
+    #[error("Resource conflict: {0}")]
+    Conflict(String),
 
     #[error("Validation failed: {0}")]
     ValidationError(String),
