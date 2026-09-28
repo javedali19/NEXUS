@@ -645,7 +645,7 @@ impl AiToolGateway {
         // ENFORCEMENT 6: Cryptographic Audit Hash Calculation
         // =========================================================================
         let duration = (Utc::now() - start_time).num_milliseconds().max(1);
-        let sha256_hash = Self::compute_sha256(&request, &result_payload);
+        let sha256_audit_hash = Self::compute_sha256(&request, &result_payload);
 
         Ok(ToolGatewayResponse {
             status: "success".to_string(),

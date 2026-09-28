@@ -26,7 +26,7 @@ pub async fn with_tenant_tx<'a, F, T, E>(
     f: F,
 ) -> Result<T, PlatformError>
 where
-    F: for<'c> FnOnce(&'c mut Transaction<'a, sqlx::Postgres>) -> futures::future::BoxFuture<'c, Result<T, E>>,
+    F: for<'c> FnOnce(&'c mut Transaction<'a, sqlx::Postgres>) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<T, E>> + Send + 'c>>,
     E: std::fmt::Display,
 {
     let mut tx = pool
