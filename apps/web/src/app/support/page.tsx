@@ -717,15 +717,16 @@ export default function SupportConsolePage() {
               <table className="w-full text-left text-xs">
                 <thead className="bg-slate-950/80 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
                   <tr>
+                    <th className="px-3 py-3 w-12 text-center font-mono">#</th>
                     <th className="px-4 py-3">Case & Customer</th>
-                    <th className="px-3 py-3">Channel</th>
-                    <th className="px-3 py-3">Priority</th>
-                    <th className="px-3 py-3">SLA Status</th>
+                    <th className="px-3 py-3 text-center">Channel</th>
+                    <th className="px-3 py-3 text-center">Priority</th>
+                    <th className="px-3 py-3 text-center">SLA Status</th>
                     <th className="px-3 py-3 text-right">Status</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800">
-                  {filteredCases.map((c) => {
+                  {filteredCases.map((c, idx) => {
                     const isSelected = selectedCase?.id === c.id;
                     return (
                       <tr
@@ -735,6 +736,9 @@ export default function SupportConsolePage() {
                           isSelected ? "bg-cyan-950/30 border-l-2 border-cyan-500" : "hover:bg-slate-800/40"
                         }`}
                       >
+                        <td className="px-3 py-3 text-center font-mono text-slate-400 font-medium">
+                          {idx + 1}
+                        </td>
                         <td className="px-4 py-3">
                           <div className="font-bold text-white flex items-center gap-1.5">
                             <span className="font-mono text-cyan-400">{c.caseNumber}</span>
@@ -745,7 +749,7 @@ export default function SupportConsolePage() {
                           </div>
                         </td>
 
-                        <td className="px-3 py-3">
+                        <td className="px-3 py-3 text-center">
                           <span
                             className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium capitalize ${
                               c.channelSource === "whatsapp"
@@ -766,7 +770,7 @@ export default function SupportConsolePage() {
                           </span>
                         </td>
 
-                        <td className="px-3 py-3">
+                        <td className="px-3 py-3 text-center">
                           <span
                             className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
                               c.priority === "urgent"
@@ -780,7 +784,7 @@ export default function SupportConsolePage() {
                           </span>
                         </td>
 
-                        <td className="px-3 py-3">
+                        <td className="px-3 py-3 text-center">
                           <div className="font-mono text-[11px] text-slate-300">{c.resolutionRemaining}</div>
                           <span
                             className={`inline-block text-[10px] font-medium mt-0.5 ${

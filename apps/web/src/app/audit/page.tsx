@@ -346,6 +346,7 @@ export default function AuditPage() {
           <table className="w-full text-left text-xs text-slate-300">
             <thead className="bg-slate-800/80 text-slate-400 uppercase font-mono border-b border-slate-700">
               <tr>
+                <th className="py-3 px-4 w-12 text-center font-mono">#</th>
                 <th className="py-3 px-4">Timestamp (UTC)</th>
                 <th className="py-3 px-4">Organization & User</th>
                 <th className="py-3 px-4">Action</th>
@@ -359,13 +360,14 @@ export default function AuditPage() {
             <tbody className="divide-y divide-slate-800">
               {filteredLogs.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-8 text-center text-slate-400">
+                  <td colSpan={9} className="py-8 text-center text-slate-400">
                     No audit records match the selected filter criteria.
                   </td>
                 </tr>
               ) : (
-                filteredLogs.map((log) => (
+                filteredLogs.map((log, idx) => (
                   <tr key={log.id} className="hover:bg-slate-800/50 transition-colors">
+                    <td className="py-3 px-4 text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</td>
                     <td className="py-3 px-4 font-mono text-slate-400 whitespace-nowrap">
                       {log.timestamp}
                     </td>

@@ -941,22 +941,26 @@ export default function AiAgentsControlPlanePage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-muted/40 border-b border-border text-muted-foreground font-medium">
                 <tr>
+                  <th className="py-2.5 px-3 w-12 text-center">#</th>
                   <th className="py-2.5 px-3">Run ID</th>
                   <th className="py-2.5 px-3">Agent</th>
-                  <th className="py-2.5 px-3">Status</th>
+                  <th className="py-2.5 px-3 text-center">Status</th>
                   <th className="py-2.5 px-3">Action Summary</th>
                   <th className="py-2.5 px-3 text-right">Tokens</th>
                   <th className="py-2.5 px-3 text-right">Cost</th>
                   <th className="py-2.5 px-3 text-right">Duration</th>
-                  <th className="py-2.5 px-3">Started</th>
+                  <th className="py-2.5 px-3 text-right">Started</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {runs.map((r) => (
+                {runs.map((r, idx) => (
                   <tr key={r.id} className="hover:bg-muted/20">
+                    <td className="py-2.5 px-3 text-center font-mono text-muted-foreground font-medium">
+                      {idx + 1}
+                    </td>
                     <td className="py-2.5 px-3 font-mono font-bold text-foreground">{r.id}</td>
                     <td className="py-2.5 px-3 font-medium text-foreground">{r.agentName}</td>
-                    <td className="py-2.5 px-3">
+                    <td className="py-2.5 px-3 text-center">
                       <span
                         className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase font-mono border ${
                           r.status === "completed"
@@ -973,7 +977,7 @@ export default function AiAgentsControlPlanePage() {
                     <td className="py-2.5 px-3 text-right font-mono">{r.promptTokens + r.completionTokens}</td>
                     <td className="py-2.5 px-3 text-right font-mono">${r.costUsd.toFixed(4)}</td>
                     <td className="py-2.5 px-3 text-right font-mono">{r.durationMs}ms</td>
-                    <td className="py-2.5 px-3 text-muted-foreground font-mono">{r.startedAt}</td>
+                    <td className="py-2.5 px-3 text-right text-muted-foreground font-mono">{r.startedAt}</td>
                   </tr>
                 ))}
               </tbody>

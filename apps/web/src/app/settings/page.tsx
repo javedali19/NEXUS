@@ -43,7 +43,6 @@ import {
   Badge,
   Button,
   Input,
-  useToast,
 } from "@/components/ui";
 
 // ============================================================================
@@ -555,15 +554,8 @@ export default function SettingsAndPolicyCenterPage() {
     );
   }, [searchQuery]);
 
-  const { showToast } = useToast();
-
   const handleSave = () => {
     setIsSavedToast(true);
-    showToast({
-      title: "Settings Saved",
-      description: "Enterprise policies across 16 domains successfully committed to PostgreSQL RLS.",
-      type: "success",
-    });
     setTimeout(() => setIsSavedToast(false), 3000);
   };
 
@@ -589,25 +581,25 @@ export default function SettingsAndPolicyCenterPage() {
   return (
     <div className="space-y-6 pb-20">
       {/* 1. Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
         <div>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/40 text-indigo-600 dark:text-indigo-400 shadow-2xs">
+            <div className="p-2.5 rounded-xl bg-gradient-to-tr from-indigo-600/30 to-blue-600/20 border border-indigo-500/30 text-indigo-400">
               <ShieldCheck className="h-6 w-6" />
             </div>
             <div>
               <div className="flex items-center gap-2.5 flex-wrap">
-                <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                <h1 className="text-2xl font-bold tracking-tight text-white">
                   Enterprise Settings & Policy Center
                 </h1>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 font-mono">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono">
                   16 Policy Domains
                 </span>
                 <Badge variant="rls" size="sm">
                   Tenant RLS Enforced
                 </Badge>
               </div>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              <p className="text-sm text-slate-400 mt-1">
                 Unified multi-tenant administrative governance, compliance boundaries, RBAC matrix, and security policies.
               </p>
             </div>
@@ -616,7 +608,7 @@ export default function SettingsAndPolicyCenterPage() {
 
         <div className="flex items-center gap-2.5">
           {isSavedToast && (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold animate-in fade-in">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-medium animate-in fade-in">
               <CheckCircle2 className="h-3.5 w-3.5" />
               Settings Saved
             </span>
@@ -644,12 +636,12 @@ export default function SettingsAndPolicyCenterPage() {
               placeholder="Search policy domains..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-lg text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors shadow-2xs"
+              className="w-full pl-9 pr-3 py-2 bg-slate-900/90 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
             />
           </div>
 
           {/* Grouped Section Links */}
-          <div className="space-y-4 bg-white dark:bg-slate-900/50 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-2xs">
+          <div className="space-y-4 bg-slate-900/50 p-2 rounded-xl border border-slate-800/80">
             {(["General", "Access & Governance", "Compliance & Security", "Intelligence & Automation"] as const).map(
               (category) => {
                 const groupSections = filteredSections.filter((s) => s.category === category);
@@ -896,6 +888,7 @@ export default function SettingsAndPolicyCenterPage() {
                 <table className="w-full text-left text-xs">
                   <thead className="bg-slate-950/80 text-slate-400 uppercase text-[10px] border-b border-slate-800">
                     <tr>
+                      <th className="py-3 px-4 w-12 text-center font-mono">#</th>
                       <th className="py-3 px-4">User</th>
                       <th className="py-3 px-4">Role</th>
                       <th className="py-3 px-4">Business Unit</th>
@@ -906,8 +899,9 @@ export default function SettingsAndPolicyCenterPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-800/60 text-slate-300">
-                    {users.map((u) => (
+                    {users.map((u, idx) => (
                       <tr key={u.id} className="hover:bg-slate-800/40">
+                        <td className="py-3 px-4 text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</td>
                         <td className="py-3 px-4">
                           <div className="font-medium text-white">{u.name}</div>
                           <div className="text-[11px] text-slate-400">{u.email}</div>
@@ -1020,6 +1014,7 @@ export default function SettingsAndPolicyCenterPage() {
                 <table className="w-full text-left text-xs">
                   <thead className="bg-slate-950/80 text-slate-400 uppercase text-[10px] border-b border-slate-800">
                     <tr>
+                      <th className="py-3 px-4 w-12 text-center font-mono">#</th>
                       <th className="py-3 px-4">Functional Module</th>
                       <th className="py-3 px-4 text-center">View</th>
                       <th className="py-3 px-4 text-center">Create</th>
@@ -1032,6 +1027,7 @@ export default function SettingsAndPolicyCenterPage() {
                   <tbody className="divide-y divide-slate-800/60 text-slate-300">
                     {permissionsMatrix.map((row, idx) => (
                       <tr key={idx} className="hover:bg-slate-800/40">
+                        <td className="py-3 px-4 text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</td>
                         <td className="py-3 px-4 font-medium text-white">{row.module}</td>
                         <td className="py-3 px-4 text-center">
                           <Check className="h-4 w-4 text-emerald-400 mx-auto" />
@@ -1450,6 +1446,7 @@ export default function SettingsAndPolicyCenterPage() {
                 <table className="w-full text-left text-xs">
                   <thead className="bg-slate-950/80 text-slate-400 uppercase text-[10px] border-b border-slate-800">
                     <tr>
+                      <th className="py-3 px-4 w-12 text-center font-mono">#</th>
                       <th className="py-3 px-4">Entity Type</th>
                       <th className="py-3 px-4">Retention Period</th>
                       <th className="py-3 px-4">Statutory Basis</th>
@@ -1460,6 +1457,7 @@ export default function SettingsAndPolicyCenterPage() {
                   <tbody className="divide-y divide-slate-800/60 text-slate-300">
                     {retentionRules.map((rule, idx) => (
                       <tr key={idx} className="hover:bg-slate-800/40">
+                        <td className="py-3 px-4 text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</td>
                         <td className="py-3 px-4 font-medium text-white">{rule.entity}</td>
                         <td className="py-3 px-4 font-mono text-indigo-400">{rule.period}</td>
                         <td className="py-3 px-4 text-slate-400">{rule.statutory}</td>
@@ -1574,6 +1572,7 @@ export default function SettingsAndPolicyCenterPage() {
                   <table className="w-full text-left text-xs">
                     <thead className="bg-slate-950/80 text-slate-400 uppercase text-[10px] border-b border-slate-800">
                       <tr>
+                        <th className="py-3 px-4 w-12 text-center font-mono">#</th>
                         <th className="py-3 px-4">Phone Number</th>
                         <th className="py-3 px-4">Country</th>
                         <th className="py-3 px-4">Source</th>
@@ -1584,6 +1583,7 @@ export default function SettingsAndPolicyCenterPage() {
                     <tbody className="divide-y divide-slate-800/60 text-slate-300">
                       {dncList.map((item, idx) => (
                         <tr key={idx} className="hover:bg-slate-800/40">
+                          <td className="py-3 px-4 text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</td>
                           <td className="py-3 px-4 font-mono font-semibold text-rose-400">{item.phone}</td>
                           <td className="py-3 px-4 font-mono">{item.country}</td>
                           <td className="py-3 px-4 text-slate-400">{item.source}</td>

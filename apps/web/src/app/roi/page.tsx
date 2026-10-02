@@ -177,6 +177,7 @@ export default function RoiPage() {
             <table className="w-full text-xs font-mono">
               <thead>
                 <tr className="border-b border-slate-800 text-slate-400 text-left">
+                  <th className="pb-2 w-12 text-center font-mono text-[11px] text-muted-foreground">#</th>
                   <th className="pb-2 font-medium">Agent Persona</th>
                   <th className="pb-2 font-medium text-center">Actions</th>
                   <th className="pb-2 font-medium text-right">Revenue Inflow</th>
@@ -186,6 +187,7 @@ export default function RoiPage() {
               </thead>
               <tbody className="divide-y divide-slate-800/80">
                 <tr>
+                  <td className="py-3 text-center font-mono text-xs text-slate-400 font-medium">1</td>
                   <td className="py-3 font-sans font-medium text-white">
                     <div className="flex items-center gap-2">
                       <div className="h-2 w-2 rounded-full bg-purple-400" />
@@ -202,6 +204,7 @@ export default function RoiPage() {
                 </tr>
 
                 <tr>
+                  <td className="py-3 text-center font-mono text-xs text-slate-400 font-medium">2</td>
                   <td className="py-3 font-sans font-medium text-white">
                     <div className="flex items-center gap-2">
                       <div className="h-2 w-2 rounded-full bg-sky-400" />
@@ -218,6 +221,7 @@ export default function RoiPage() {
                 </tr>
 
                 <tr>
+                  <td className="py-3 text-center font-mono text-xs text-slate-400 font-medium">3</td>
                   <td className="py-3 font-sans font-medium text-white">
                     <div className="flex items-center gap-2">
                       <div className="h-2 w-2 rounded-full bg-indigo-400" />
@@ -234,6 +238,7 @@ export default function RoiPage() {
                 </tr>
 
                 <tr>
+                  <td className="py-3 text-center font-mono text-xs text-slate-400 font-medium">4</td>
                   <td className="py-3 font-sans font-medium text-white">
                     <div className="flex items-center gap-2">
                       <div className="h-2 w-2 rounded-full bg-emerald-400" />

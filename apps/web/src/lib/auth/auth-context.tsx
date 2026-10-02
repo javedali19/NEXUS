@@ -113,24 +113,39 @@ const defaultProviderStatus: AuthProviderStatus = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<UserIdentity | null>({
-    id: "11111111-1111-1111-1111-111111111111",
-    email: "alex.morgan@enterprise.internal",
-    fullName: "Alex Morgan",
-  });
+  const [user, setUser] = useState<UserIdentity | null>(null);
   const [activeOrg, setActiveOrg] = useState<Organization>(defaultOrg);
   const [activeBusinessUnit, setActiveBusinessUnit] = useState<BusinessUnit | null>(defaultBusinessUnit);
   const [availableOrgs] = useState<Organization[]>(defaultAvailableOrgs);
   const [availableBusinessUnits] = useState<BusinessUnit[]>(defaultAvailableBusinessUnits);
   const [providerStatus] = useState<AuthProviderStatus>(defaultProviderStatus);
   const [currentRole, setCurrentRole] = useState<UserRole>("admin");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Restore authenticated session from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedUser = localStorage.getItem("nexus_auth_user");
+      const savedRole = localStorage.getItem("nexus_auth_role") as UserRole | null;
+      if (savedUser) {
+        const parsed = JSON.parse(savedUser);
+        setUser(parsed);
+        if (savedRole) {
+          setCurrentRole(savedRole);
+          setActiveOrg((prev) => ({ ...prev, role: savedRole }));
+        }
+      }
+    } catch {
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   // Server-Side Validated Organization Switch
   const switchOrganization = async (orgId: string) => {
     setIsLoading(true);
     try {
-      // In production: fetch(`/api/v1/auth/session/switch-organization`, { method: "POST", body: JSON.stringify({ organization_id: orgId }) })
       const target = availableOrgs.find((o) => o.id === orgId);
       if (target) {
         setActiveOrg(target);
@@ -159,13 +174,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const email = customEmail || (role === "admin" ? "alex.morgan@enterprise.internal" : "user@enterprise.internal");
       const name = customName || (customEmail ? customEmail.split("@")[0].replace(".", " ").replace(/\b\w/g, (l) => l.toUpperCase()) : "Alex Morgan");
-      setUser({
+      const userData: UserIdentity = {
         id: "11111111-1111-1111-1111-111111111111",
         email,
         fullName: name,
-      });
+      };
+      setUser(userData);
       setCurrentRole(role);
       setActiveOrg({ ...defaultOrg, role });
+      try {
+        localStorage.setItem("nexus_auth_user", JSON.stringify(userData));
+        localStorage.setItem("nexus_auth_role", role);
+      } catch {}
     } finally {
       setIsLoading(false);
     }
@@ -173,6 +193,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = () => {
     setUser(null);
+    try {
+      localStorage.removeItem("nexus_auth_user");
+      localStorage.removeItem("nexus_auth_role");
+    } catch {}
   };
 
   return (

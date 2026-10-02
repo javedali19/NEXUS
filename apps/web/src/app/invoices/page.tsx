@@ -885,6 +885,7 @@ export default function InvoicesPage() {
                       <table className="w-full text-left text-xs">
                         <thead className="bg-muted/60 text-muted-foreground font-mono uppercase text-[10px] border-b border-border">
                           <tr>
+                            <th className="py-2.5 px-3 w-12 text-center">#</th>
                             <th className="py-2.5 px-3">Item / SKU</th>
                             <th className="py-2.5 px-3">Description</th>
                             <th className="py-2.5 px-3 text-right">Qty</th>
@@ -896,6 +897,9 @@ export default function InvoicesPage() {
                         <tbody className="divide-y divide-border">
                           {selectedInvoice.items.map((item, idx) => (
                             <tr key={item.id} className="hover:bg-muted/30">
+                              <td className="py-2.5 px-3 text-center font-mono text-muted-foreground font-medium">
+                                {idx + 1}
+                              </td>
                               <td className="py-2.5 px-3 font-mono text-primary font-medium">
                                 {item.itemCode || `SKU-${idx + 1}`}
                               </td>
@@ -1222,6 +1226,7 @@ export default function InvoicesPage() {
                         <table className="w-full text-left text-xs">
                           <thead className="bg-muted/60 border-b border-border text-[10px] uppercase font-mono text-muted-foreground">
                             <tr>
+                              <th className="py-2 px-3 w-10 text-center">#</th>
                               <th className="py-2 px-3">Description</th>
                               <th className="py-2 px-3 text-right">Qty</th>
                               <th className="py-2 px-3 text-right">Unit Price</th>
@@ -1229,8 +1234,11 @@ export default function InvoicesPage() {
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-border">
-                            {selectedInvoice.items.map((it) => (
+                            {selectedInvoice.items.map((it, idx) => (
                               <tr key={it.id}>
+                                <td className="py-2 px-3 text-center font-mono text-muted-foreground">
+                                  {idx + 1}
+                                </td>
                                 <td className="py-2 px-3">
                                   <p className="font-medium text-foreground">{it.description}</p>
                                   {it.itemCode && (

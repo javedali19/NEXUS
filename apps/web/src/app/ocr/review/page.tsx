@@ -1265,7 +1265,7 @@ export default function OcrReviewConsolePage() {
                 <table className="w-full text-left text-xs">
                   <thead className="bg-muted/40 border-b border-border text-muted-foreground font-medium">
                     <tr>
-                      <th className="py-2 px-2.5">#</th>
+                      <th className="py-2 px-2.5 w-12 text-center font-mono text-[11px]">#</th>
                       <th className="py-2 px-2.5 min-w-[200px]">Description</th>
                       <th className="py-2 px-2.5 w-20">HSN/SAC</th>
                       <th className="py-2 px-2.5 w-16 text-right">Qty</th>
@@ -1286,7 +1286,7 @@ export default function OcrReviewConsolePage() {
                           className={`hover:bg-muted/20 ${hasDiscrepancy ? "bg-rose-500/5" : ""}`}
                           onMouseEnter={() => setActiveHighlightField(`item_${item.id}`)}
                         >
-                          <td className="py-2 px-2.5 font-mono text-muted-foreground">{item.itemIndex}</td>
+                          <td className="py-2 px-2.5 text-center font-mono text-xs text-muted-foreground font-medium">{item.itemIndex}</td>
                           <td className="py-2 px-2.5">
                             <input
                               type="text"

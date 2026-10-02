@@ -967,6 +967,7 @@ export default function InfrastructurePage() {
               <table className="w-full text-left text-xs border border-slate-800 rounded-xl overflow-hidden">
                 <thead className="bg-slate-950 text-slate-400 font-mono text-[11px] uppercase">
                   <tr>
+                    <th className="p-3 w-12 text-center font-mono">#</th>
                     <th className="p-3">File / Module</th>
                     <th className="p-3">Purpose</th>
                     <th className="p-3">Development</th>
@@ -976,6 +977,7 @@ export default function InfrastructurePage() {
                 </thead>
                 <tbody className="divide-y divide-slate-800 text-slate-300 font-mono text-[11px]">
                   <tr>
+                    <td className="p-3 text-center text-slate-500 font-medium">1</td>
                     <td className="p-3 text-sky-400">database.tf</td>
                     <td className="p-3 font-sans text-slate-400">Cloud SQL PostgreSQL 15</td>
                     <td className="p-3">db-f1-micro (Zonal)</td>
@@ -983,6 +985,7 @@ export default function InfrastructurePage() {
                     <td className="p-3 text-emerald-400 font-bold">db-custom-4-15360 (Regional HA)</td>
                   </tr>
                   <tr>
+                    <td className="p-3 text-center text-slate-500 font-medium">2</td>
                     <td className="p-3 text-sky-400">compute.tf</td>
                     <td className="p-3 font-sans text-slate-400">Cloud Run Serverless Services</td>
                     <td className="p-3">0-3 instances (Scale to 0)</td>
@@ -990,6 +993,7 @@ export default function InfrastructurePage() {
                     <td className="p-3 text-emerald-400 font-bold">2-20 instances (Warm)</td>
                   </tr>
                   <tr>
+                    <td className="p-3 text-center text-slate-500 font-medium">3</td>
                     <td className="p-3 text-sky-400">networking.tf</td>
                     <td className="p-3 font-sans text-slate-400">VPC & Serverless Connector</td>
                     <td className="p-3">10.20.0.0/20</td>
@@ -997,6 +1001,7 @@ export default function InfrastructurePage() {
                     <td className="p-3 text-emerald-400 font-bold">10.10.0.0/20 (Dedicated)</td>
                   </tr>
                   <tr>
+                    <td className="p-3 text-center text-slate-500 font-medium">4</td>
                     <td className="p-3 text-sky-400">security.tf</td>
                     <td className="p-3 font-sans text-slate-400">Cloud Armor WAF & KMS</td>
                     <td className="p-3">WAF Disabled</td>
@@ -1004,6 +1009,7 @@ export default function InfrastructurePage() {
                     <td className="p-3 text-emerald-400 font-bold">WAF OWASP + CMEK Active</td>
                   </tr>
                   <tr>
+                    <td className="p-3 text-center text-slate-500 font-medium">5</td>
                     <td className="p-3 text-sky-400">secrets.tf</td>
                     <td className="p-3 font-sans text-slate-400">Secret Manager Vault</td>
                     <td className="p-3">10 Secrets</td>

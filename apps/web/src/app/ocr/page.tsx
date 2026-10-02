@@ -924,7 +924,7 @@ export default function OcrStudioPage() {
                 <table className="w-full text-left text-xs">
                   <thead className="bg-muted/40 border-b border-border text-muted-foreground font-medium">
                     <tr>
-                      <th className="py-2 px-3">#</th>
+                      <th className="py-2 px-3 w-12 text-center font-mono text-[11px]">#</th>
                       <th className="py-2 px-3">Description</th>
                       <th className="py-2 px-3">HSN/SAC</th>
                       <th className="py-2 px-3 text-right">Qty</th>
@@ -941,7 +941,7 @@ export default function OcrStudioPage() {
 
                       return (
                         <tr key={item.itemIndex} className={`hover:bg-muted/20 ${hasLineMismatch ? "bg-rose-500/5" : ""}`}>
-                          <td className="py-2 px-3 font-mono text-muted-foreground">{item.itemIndex}</td>
+                          <td className="py-2 px-3 text-center font-mono text-xs text-muted-foreground font-medium">{item.itemIndex}</td>
                           <td className="py-2 px-3 font-medium text-foreground max-w-[240px] truncate">
                             {item.description}
                           </td>
@@ -1026,6 +1026,7 @@ export default function OcrStudioPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-muted/40 border-b border-border text-muted-foreground font-medium">
                 <tr>
+                  <th className="py-2.5 px-3 w-12 text-center font-mono text-[11px]">#</th>
                   <th className="py-2.5 px-3">Invoice Number</th>
                   <th className="py-2.5 px-3">Document Title</th>
                   <th className="py-2.5 px-3">Supplier</th>
@@ -1036,9 +1037,10 @@ export default function OcrStudioPage() {
                   <th className="py-2.5 px-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border">
-                {invoices.map((inv) => (
+              <tbody className="divide-y border-border">
+                {invoices.map((inv, idx) => (
                   <tr key={inv.id} className="hover:bg-muted/20">
+                    <td className="py-2.5 px-3 text-center font-mono text-xs text-muted-foreground font-medium">{idx + 1}</td>
                     <td className="py-2.5 px-3 font-semibold text-foreground font-mono">{inv.invoiceNumber}</td>
                     <td className="py-2.5 px-3 text-muted-foreground font-mono text-[11px]">{inv.documentTitle}</td>
                     <td className="py-2.5 px-3 font-medium text-foreground">{inv.supplierName}</td>

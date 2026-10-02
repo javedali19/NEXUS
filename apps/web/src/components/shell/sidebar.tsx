@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useShell } from "./shell-context";
 import { useAuth } from "@/lib/auth/auth-context";
 import { NAVIGATION_GROUPS, hasPermission } from "@/lib/permissions";
-import { Badge, useToast } from "@/components/ui";
+import { Badge } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
 import {
@@ -50,7 +50,6 @@ import {
   Search,
   LayoutGrid,
   ChevronsLeft,
-  ChevronsRight,
   Sliders,
   LogOut,
 } from "lucide-react";
@@ -96,26 +95,8 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 export const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { logout } = useAuth();
-  const { showToast } = useToast();
-
-  const handleLogout = () => {
-    logout();
-    showToast({
-      title: "Signed Out",
-      description: "You have been securely signed out of your enterprise session.",
-      type: "info",
-    });
-    router.push("/login");
-  };
-
-  const {
-    currentRole,
-    isMobileSidebarOpen,
-    setIsMobileSidebarOpen,
-    isSidebarCollapsed,
-    toggleSidebarCollapse,
-  } = useShell();
+  const { user, logout } = useAuth();
+  const { currentRole, isMobileSidebarOpen, setIsMobileSidebarOpen, currentOrg } = useShell();
 
   const getCustomBadge = (label: string, itemBadge?: string) => {
     if (label === "Command Center") {
@@ -183,46 +164,33 @@ export const Sidebar: React.FC = () => {
       {/* Sidebar Container */}
       <aside
         className={cn(
-          "fixed top-0 bottom-0 left-0 z-40 bg-white border-r border-slate-200/90 flex flex-col justify-between transition-all duration-200 ease-in-out lg:static shadow-[1px_0_4px_rgba(0,0,0,0.02)]",
-          isSidebarCollapsed ? "w-[72px]" : "w-[276px]",
-          isMobileSidebarOpen ? "translate-x-0 w-[276px]" : "max-lg:-translate-x-full"
+          "fixed top-0 bottom-0 left-0 z-40 w-60 bg-white border-r border-slate-200/90 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 shadow-[1px_0_4px_rgba(0,0,0,0.02)]",
+          isMobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="flex flex-col h-full overflow-hidden">
           {/* Brand Header */}
-          <div className={cn("p-4 border-b border-slate-100 flex items-center", isSidebarCollapsed ? "justify-center" : "justify-between")}>
-            <Link href="/" className="flex items-center space-x-3 group min-w-0">
-              <div className="h-9 w-9 rounded-xl bg-blue-600 flex items-center justify-center shadow-xs text-white shrink-0">
+          <div className="p-4 border-b border-slate-100 flex items-center justify-between">
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="h-9 w-9 rounded-xl bg-blue-600 flex items-center justify-center shadow-xs text-white">
                 <LayoutGrid className="h-5 w-5" />
               </div>
-              {!isSidebarCollapsed && (
-                <div className="truncate">
-                  <h1 className="font-extrabold text-sm tracking-tight text-slate-900 leading-tight">
-                    NEXUS
-                  </h1>
-                  <span className="text-[10px] uppercase tracking-wider font-mono text-slate-400 block">
-                    ERP + CRM
-                  </span>
-                </div>
-              )}
+              <div>
+                <h1 className="font-extrabold text-sm tracking-tight text-slate-900 leading-tight">
+                  NEXUS
+                </h1>
+                <span className="text-[10px] uppercase tracking-wider font-mono text-slate-400 block">
+                  ERP + CRM
+                </span>
+              </div>
             </Link>
 
             <button
-              onClick={() => {
-                if (typeof window !== "undefined" && window.innerWidth < 1024) {
-                  setIsMobileSidebarOpen(false);
-                } else {
-                  toggleSidebarCollapse();
-                }
-              }}
-              className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
-              title={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+              onClick={() => setIsMobileSidebarOpen(false)}
+              className="text-slate-400 hover:text-slate-600 p-1"
+              title="Collapse sidebar"
             >
-              {isSidebarCollapsed ? (
-                <ChevronsRight className="h-4 w-4" />
-              ) : (
-                <ChevronsLeft className="h-4 w-4" />
-              )}
+              <ChevronsLeft className="h-4 w-4" />
             </button>
           </div>
 
@@ -240,11 +208,9 @@ export const Sidebar: React.FC = () => {
 
               return (
                 <div key={group.id} className="space-y-0.5">
-                  {!isSidebarCollapsed && (
-                    <div className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-                      {group.id === "core" ? "CUSTOMERS" : group.title.toUpperCase()}
-                    </div>
-                  )}
+                  <div className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono">
+                    {group.id === "core" ? "CUSTOMERS" : group.title.toUpperCase()}
+                  </div>
 
                   {allowedItems.map((item) => {
                     const isActive = pathname === item.href || (item.id === "customers" && (pathname.startsWith("/customers") || pathname === "/timeline"));
@@ -255,25 +221,21 @@ export const Sidebar: React.FC = () => {
                         key={item.id}
                         href={item.href}
                         onClick={() => setIsMobileSidebarOpen(false)}
-                        title={isSidebarCollapsed ? item.label : undefined}
                         className={cn(
-                          "flex items-center rounded-lg text-xs transition-all duration-150 select-none",
-                          isSidebarCollapsed ? "justify-center p-2.5 my-0.5" : "justify-between px-3 py-1.5",
+                          "flex items-center justify-between px-3 py-1.5 rounded-lg text-xs transition-all duration-150 select-none",
                           isActive
                             ? "bg-blue-50 text-blue-600 font-semibold"
                             : "text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium"
                         )}
                       >
-                        <div className={cn("flex items-center min-w-0", isSidebarCollapsed ? "justify-center" : "space-x-2.5")}>
+                        <div className="flex items-center space-x-2.5 min-w-0">
                           <span className={cn("shrink-0 transition-colors", isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600")}>
                             {ICON_MAP[item.iconName] || <LayoutDashboard className="h-4 w-4" />}
                           </span>
-                          {!isSidebarCollapsed && (
-                            <span className="truncate">{item.label}</span>
-                          )}
+                          <span className="truncate">{item.label}</span>
                         </div>
 
-                        {!isSidebarCollapsed && customBadge}
+                        {customBadge}
                       </Link>
                     );
                   })}
@@ -282,34 +244,57 @@ export const Sidebar: React.FC = () => {
             })}
           </div>
 
-          {/* System Footer Row */}
-          <div className="p-3 border-t border-slate-100 bg-slate-50/50">
-            {!isSidebarCollapsed && (
-              <div className="px-2 pb-1.5 text-[9px] font-bold uppercase tracking-wider text-slate-400 font-mono">
-                SYSTEM
-              </div>
-            )}
-            <div className={cn("flex items-center text-[11px] text-slate-600 font-medium", isSidebarCollapsed ? "flex-col space-y-2 items-center" : "justify-between px-1")}>
-              <Link href="/integrations" title="Integrations" className="flex items-center gap-1 hover:text-blue-600 transition-colors p-1">
+          {/* System Footer Row & User Sign Out */}
+          <div className="p-3 border-t border-slate-100 bg-slate-50/50 space-y-2.5">
+            <div className="px-2 pb-1 text-[9px] font-bold uppercase tracking-wider text-slate-400 font-mono">
+              SYSTEM
+            </div>
+            <div className="flex items-center justify-between px-1 text-[11px] text-slate-600 font-medium">
+              <Link href="/integrations" className="flex items-center gap-1 hover:text-blue-600 transition-colors">
                 <Cpu className="h-3.5 w-3.5 text-slate-400" />
-                {!isSidebarCollapsed && <span>Integrations</span>}
+                <span>Integrations</span>
               </Link>
-              <Link href="/audit" title="Audit Log" className="flex items-center gap-1 hover:text-blue-600 transition-colors p-1">
+              <Link href="/audit" className="flex items-center gap-1 hover:text-blue-600 transition-colors">
                 <ShieldAlert className="h-3.5 w-3.5 text-slate-400" />
-                {!isSidebarCollapsed && <span>Audit</span>}
+                <span>Audit</span>
               </Link>
-              <Link href="/settings" title="Settings" className="flex items-center gap-1 hover:text-blue-600 transition-colors p-1">
+              <Link href="/settings" className="flex items-center gap-1 hover:text-blue-600 transition-colors">
                 <Settings className="h-3.5 w-3.5 text-slate-400" />
-                {!isSidebarCollapsed && <span>Settings</span>}
+                <span>Settings</span>
               </Link>
+            </div>
+
+            {/* User Session Bar & Sign Out */}
+            <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between px-1">
+              <div className="flex items-center space-x-2 min-w-0">
+                <div className="h-6 w-6 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0">
+                  {user?.fullName
+                    ? user.fullName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()
+                        .slice(0, 2)
+                    : "AM"}
+                </div>
+                <div className="truncate text-left">
+                  <p className="text-[11px] font-semibold text-slate-800 truncate leading-tight">
+                    {user?.fullName || "Alex Morgan"}
+                  </p>
+                  <p className="text-[9px] text-slate-400 font-mono capitalize">
+                    {currentRole.replace("_", " ")}
+                  </p>
+                </div>
+              </div>
               <button
-                onClick={handleLogout}
-                id="sidebar-logout-btn"
-                className="flex items-center gap-1 text-slate-500 hover:text-rose-600 transition-colors cursor-pointer p-1"
-                title="Log Out of Enterprise"
+                onClick={() => {
+                  logout();
+                  router.push("/login");
+                }}
+                title="Sign Out"
+                className="p-1.5 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
               >
-                <LogOut className="h-3.5 w-3.5 text-slate-400 hover:text-rose-600" />
-                {!isSidebarCollapsed && <span>Logout</span>}
+                <LogOut className="h-3.5 w-3.5" />
               </button>
             </div>
           </div>

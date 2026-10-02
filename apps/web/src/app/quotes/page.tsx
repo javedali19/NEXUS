@@ -102,19 +102,21 @@ export default function QuotesPage() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="w-12 text-center">#</TableHead>
               <TableHead>Quote #</TableHead>
               <TableHead>Customer</TableHead>
               <TableHead>Quoted SKU & Item</TableHead>
               <TableHead>ERP Stock Check</TableHead>
-              <TableHead>Total Amount</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead className="text-right">Total Amount</TableHead>
+              <TableHead className="text-center">Status</TableHead>
               <TableHead>Expiry</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {quotes.map((q) => (
+            {quotes.map((q, idx) => (
               <TableRow key={q.id}>
+                <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</TableCell>
                 <TableCell className="font-mono font-bold text-white">#{q.quoteNumber}</TableCell>
                 <TableCell className="text-slate-300 font-medium">{q.customerName}</TableCell>
                 <TableCell>
@@ -140,10 +142,10 @@ export default function QuotesPage() {
                     </div>
                   )}
                 </TableCell>
-                <TableCell className="font-mono text-emerald-400 font-bold">
+                <TableCell className="text-right font-mono text-emerald-400 font-bold">
                   ${q.totalAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                 </TableCell>
-                <TableCell>
+                <TableCell className="text-center">
                   {q.status === "accepted_invoiced" ? (
                     <Badge variant="success" size="sm">Accepted & Invoiced</Badge>
                   ) : (

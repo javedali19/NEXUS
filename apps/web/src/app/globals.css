@@ -228,43 +228,418 @@ html.light input.bg-slate-900::placeholder {
   color: #94a3b8;
 }
 
+
 /* ==========================================================================
-   Glassmorphism & Unified Surface Design Tokens
+   Premium Auth Pages — Enterprise-Grade Visual System
    ========================================================================== */
-.glass-card {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.75rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+
+/* ---- Animated Gradient Orbs ---- */
+.auth-orb-1 {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 65%);
+  animation: authOrb1 14s ease-in-out infinite;
+  filter: blur(40px);
+}
+.auth-orb-2 {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 65%);
+  animation: authOrb2 18s ease-in-out infinite;
+  filter: blur(50px);
+}
+.auth-orb-3 {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 65%);
+  animation: authOrb3 11s ease-in-out infinite;
+  filter: blur(35px);
 }
 
-html.dark .glass-card {
-  background-color: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+@keyframes authOrb1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-40px, 25px) scale(1.08); }
+  50% { transform: translate(20px, -20px) scale(0.92); }
+  75% { transform: translate(-15px, 40px) scale(1.04); }
+}
+@keyframes authOrb2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(35px, -25px) scale(1.1); }
+  66% { transform: translate(-25px, 20px) scale(0.94); }
+}
+@keyframes authOrb3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  50% { transform: translate(25px, -35px) scale(1.15); opacity: 1; }
 }
 
-.glass-panel {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+/* ---- Grid Pattern ---- */
+.auth-grid-pattern {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
 }
 
-html.dark .glass-panel {
-  background-color: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+/* ---- Sparkle Animation ---- */
+.auth-sparkle {
+  animation: authSparkle 3s ease-in-out infinite;
+}
+@keyframes authSparkle {
+  0%, 100% { opacity: 0.6; transform: scale(1) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.25) rotate(20deg); }
 }
 
-/* Ensure no overflowing text in tables or cards */
-.table-responsive {
+/* ---- Animated Gradient Text ---- */
+.auth-gradient-text {
+  background: linear-gradient(135deg, #60a5fa, #818cf8, #c084fc, #60a5fa);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: authGradientText 5s ease infinite;
+}
+@keyframes authGradientText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ---- Glassmorphism Cards (Dark Panel) ---- */
+.auth-glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ---- Stat Cards ---- */
+.auth-stat-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.005));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.auth-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+}
+.auth-stat-card:hover {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* ---- Pulsing Status Dot ---- */
+.auth-pulse-dot {
+  animation: authPulse 2.5s ease-in-out infinite;
+}
+@keyframes authPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+}
+
+/* ---- Trust Badge ---- */
+.auth-trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+}
+.auth-trust-badge:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* =========================================================================
+   Right Form Panel — Elevated Card System
+   ========================================================================= */
+
+/* Form panel with subtle texture */
+.auth-form-panel {
+  position: relative;
+  background: #f8fafc;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 70% 0%, rgba(219, 234, 254, 0.4) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 30% 100%, rgba(224, 231, 255, 0.25) 0%, transparent 70%);
+}
+
+/* Elevated form container */
+.auth-form-card {
+  background: white;
+  border-radius: 24px;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.02),
+    0 1px 2px rgba(0, 0, 0, 0.03),
+    0 4px 8px rgba(0, 0, 0, 0.03),
+    0 12px 24px rgba(0, 0, 0, 0.04),
+    0 24px 48px rgba(0, 0, 0, 0.02);
+  position: relative;
+  overflow: hidden;
+}
+.auth-form-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.9) 50%, transparent 90%);
+}
+
+/* ---- Premium Input Fields ---- */
+.auth-input {
+  background: #fafbfc;
+  border: 1.5px solid #e2e8f0;
+  outline: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 400;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.auth-input::placeholder {
+  color: #a1afc4;
+  font-weight: 400;
+}
+.auth-input:hover {
+  border-color: #cbd5e1;
+  background: #f8fafb;
+}
+.auth-input:focus {
+  background: #ffffff;
+  border-color: #3b82f6;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.02),
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 1px 3px rgba(59, 130, 246, 0.05);
+}
+
+/* ---- Gradient Submit Button ---- */
+.auth-submit-btn {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 30%, #4f46e5 70%, #6366f1 100%);
+  background-size: 250% 250%;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.1) inset,
+    0 4px 14px rgba(37, 99, 235, 0.3),
+    0 1px 3px rgba(37, 99, 235, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+}
+.auth-submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
   width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  transition: left 0.5s ease;
 }
+.auth-submit-btn:hover:not(:disabled)::before {
+  left: 100%;
+}
+.auth-submit-btn:hover:not(:disabled) {
+  background-position: 100% 0%;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.15) inset,
+    0 8px 24px rgba(37, 99, 235, 0.35),
+    0 2px 6px rgba(37, 99, 235, 0.25);
+  transform: translateY(-2px);
+}
+.auth-submit-btn:active:not(:disabled) {
+  transform: translateY(0px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.1) inset,
+    0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+/* ---- SSO Buttons ---- */
+.auth-sso-btn {
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255,255,255,0.8);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.auth-sso-btn:hover:not(:disabled) {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+  transform: translateY(-2px);
+}
+.auth-sso-btn:active:not(:disabled) {
+  transform: translateY(0px);
+  background: #f1f5f9;
+}
+
+/* ---- Test Accounts Container ---- */
+.auth-test-accounts-card {
+  background: linear-gradient(135deg, rgba(239, 246, 255, 0.6), rgba(238, 242, 255, 0.4));
+  border: 1px solid rgba(191, 219, 254, 0.45);
+  backdrop-filter: blur(8px);
+}
+
+/* ---- Test Account Button ---- */
+.auth-test-account-btn {
+  background: white;
+  border: 1px solid rgba(226, 232, 240, 0.7);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.auth-test-account-btn:hover {
+  border-color: #93c5fd;
+  background: linear-gradient(135deg, #eff6ff, #f5f3ff);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ---- Alert Animation ---- */
+.auth-alert-animate {
+  animation: authAlertIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes authAlertIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---- Trend Indicator ---- */
+.auth-trend-up {
+  color: #34d399;
+  font-size: 10px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ---- Page Entrance Animation ---- */
+.auth-page-enter {
+  animation: authPageEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes authPageEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Stagger children animation ---- */
+.auth-stagger > * {
+  animation: authStaggerIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.auth-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.auth-stagger > *:nth-child(2) { animation-delay: 0.1s; }
+.auth-stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.auth-stagger > *:nth-child(4) { animation-delay: 0.2s; }
+.auth-stagger > *:nth-child(5) { animation-delay: 0.25s; }
+.auth-stagger > *:nth-child(6) { animation-delay: 0.3s; }
+.auth-stagger > *:nth-child(7) { animation-delay: 0.35s; }
+.auth-stagger > *:nth-child(8) { animation-delay: 0.4s; }
+.auth-stagger > *:nth-child(9) { animation-delay: 0.45s; }
+.auth-stagger > *:nth-child(10) { animation-delay: 0.5s; }
+@keyframes authStaggerIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Custom Checkbox ---- */
+.auth-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #cbd5e1;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  flex-shrink: 0;
+}
+.auth-checkbox:checked {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  border-color: #2563eb;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+.auth-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 5px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.auth-checkbox:hover {
+  border-color: #94a3b8;
+}
+
+/* ---- Divider with label ---- */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+}
+
+/* ---- Seamless Panel Transition ---- */
+.auth-panel-edge {
+  position: absolute;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  width: 80px;
+  background: linear-gradient(90deg, transparent, rgba(248, 250, 252, 0.15));
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* =========================================================================
+   Auth Branding Panel — Light-Mode Override Protection
+   ========================================================================= */
+html.light .auth-brand-panel .text-white { color: #ffffff !important; }
+html.light .auth-brand-panel .text-slate-300,
+html.light .auth-brand-panel .text-slate-300\/90 { color: #cbd5e1 !important; }
+html.light .auth-brand-panel .text-slate-400,
+html.light .auth-brand-panel .text-slate-400\/80 { color: #94a3b8 !important; }
+html.light .auth-brand-panel .text-slate-500 { color: #64748b !important; }
+html.light .auth-brand-panel .text-slate-200 { color: #e2e8f0 !important; }
+html.light .auth-brand-panel .text-slate-100 { color: #f1f5f9 !important; }
+html.light .auth-brand-panel h1.text-white,
+html.light .auth-brand-panel h2.text-white,
+html.light .auth-brand-panel span.text-white,
+html.light .auth-brand-panel p.text-white,
+html.light .auth-brand-panel div.text-white { color: #ffffff !important; }
+html.light .auth-brand-panel .bg-slate-900\/80 { background-color: rgba(15, 23, 42, 0.8) !important; }
+html.light .auth-brand-panel .bg-slate-800\/60 { background-color: rgba(30, 41, 59, 0.6) !important; }
+html.light .auth-brand-panel .border-slate-700\/80,
+html.light .auth-brand-panel .border-slate-700\/60,
+html.light .auth-brand-panel .border-slate-800,
+html.light .auth-brand-panel .border-slate-800\/80 { border-color: rgba(51, 65, 85, 0.4) !important; }
+html.light .auth-brand-panel .border-slate-700,
+html.light .auth-brand-panel .border-slate-700\/50 { border-color: rgba(51, 65, 85, 0.5) !important; }
+
+
+
+
 
 
 

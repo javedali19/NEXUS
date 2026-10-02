@@ -460,16 +460,17 @@ export default function PaymentsPage() {
               <table className="w-full text-left text-xs">
                 <thead className="bg-muted/60 text-muted-foreground font-mono uppercase text-[10px] border-b border-border">
                   <tr>
+                    <th className="py-2.5 px-3 w-12 text-center">#</th>
                     <th className="py-2.5 px-3">Transaction #</th>
                     <th className="py-2.5 px-3">Customer / Company</th>
                     <th className="py-2.5 px-3">Provider</th>
                     <th className="py-2.5 px-3 text-right">Amount</th>
-                    <th className="py-2.5 px-3">Status</th>
+                    <th className="py-2.5 px-3 text-center">Status</th>
                     <th className="py-2.5 px-3 text-right">Date</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  {filteredTransactions.map((tx) => {
+                  {filteredTransactions.map((tx, idx) => {
                     const isSelected = selectedTx?.id === tx.id;
                     const statusMeta = PAYMENT_STATUS_CONFIG[tx.status];
 
@@ -481,6 +482,9 @@ export default function PaymentsPage() {
                           isSelected ? "bg-primary/10" : "hover:bg-muted/30"
                         }`}
                       >
+                        <td className="py-2.5 px-3 text-center font-mono text-muted-foreground font-medium">
+                          {idx + 1}
+                        </td>
                         <td className="py-2.5 px-3 font-mono font-bold text-foreground">
                           {tx.transactionNumber}
                         </td>
@@ -496,7 +500,7 @@ export default function PaymentsPage() {
                         <td className="py-2.5 px-3 text-right font-mono font-bold text-foreground">
                           {tx.currency} {tx.amount.toLocaleString("en-US", { minimumFractionDigits: 2 })}
                         </td>
-                        <td className="py-2.5 px-3">
+                        <td className="py-2.5 px-3 text-center">
                           <span
                             className={`px-2 py-0.5 rounded text-[10px] font-semibold border ${statusMeta.bg} ${statusMeta.text} ${statusMeta.border}`}
                           >
@@ -726,18 +730,22 @@ export default function PaymentsPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-muted/60 text-muted-foreground font-mono uppercase text-[10px] border-b border-border">
                 <tr>
+                  <th className="py-3 px-4 w-12 text-center">#</th>
                   <th className="py-3 px-4">Payment #</th>
                   <th className="py-3 px-4">Target Invoice</th>
                   <th className="py-3 px-4">Customer</th>
                   <th className="py-3 px-4 text-right">Allocated Amount</th>
                   <th className="py-3 px-4 text-right">Invoice Balance Remaining</th>
-                  <th className="py-3 px-4">Status</th>
+                  <th className="py-3 px-4 text-center">Status</th>
                   <th className="py-3 px-4 text-right">Allocated At</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {allocations.map((alloc) => (
+                {allocations.map((alloc, idx) => (
                   <tr key={alloc.id} className="hover:bg-muted/30">
+                    <td className="py-3 px-4 text-center font-mono text-muted-foreground font-medium">
+                      {idx + 1}
+                    </td>
                     <td className="py-3 px-4 font-mono font-bold text-primary">
                       {alloc.paymentNumber}
                     </td>
@@ -754,7 +762,7 @@ export default function PaymentsPage() {
                     <td className="py-3 px-4 text-right font-mono font-semibold text-foreground">
                       ${alloc.invoiceRemainingBalance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
                     </td>
-                    <td className="py-3 px-4">
+                    <td className="py-3 px-4 text-center">
                       <span
                         className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase ${
                           alloc.status === "settled"
@@ -873,18 +881,22 @@ export default function PaymentsPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-muted/60 text-muted-foreground font-mono uppercase text-[10px] border-b border-border">
                 <tr>
+                  <th className="py-3 px-4 w-12 text-center">#</th>
                   <th className="py-3 px-4">Payout Batch ID</th>
                   <th className="py-3 px-4">Provider</th>
                   <th className="py-3 px-4">Bank Statement Ref</th>
                   <th className="py-3 px-4 text-right">Cleared Amount</th>
                   <th className="py-3 px-4 text-right">Difference</th>
-                  <th className="py-3 px-4">Status</th>
+                  <th className="py-3 px-4 text-center">Status</th>
                   <th className="py-3 px-4 text-right">Matched By</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {reconciliations.map((rec) => (
+                {reconciliations.map((rec, idx) => (
                   <tr key={rec.id} className="hover:bg-muted/30">
+                    <td className="py-3 px-4 text-center font-mono text-muted-foreground font-medium">
+                      {idx + 1}
+                    </td>
                     <td className="py-3 px-4 font-mono font-bold text-foreground">
                       {rec.payoutBatchId}
                     </td>
@@ -902,8 +914,10 @@ export default function PaymentsPage() {
                     <td className="py-3 px-4 text-right font-mono font-semibold text-foreground">
                       ${rec.differenceAmount.toFixed(2)}
                     </td>
-                    <td className="py-3 px-4">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-semibold uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    <td className="py-3 px-4 text-center">
+                      <span
+                        className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20`}
+                      >
                         {rec.status.replace("_", " ")}
                       </span>
                     </td>

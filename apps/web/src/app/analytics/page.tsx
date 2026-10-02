@@ -353,6 +353,7 @@ export default function AnalyticsPage() {
               <table className="w-full text-xs font-mono">
                 <thead>
                   <tr className="border-b border-slate-800 text-slate-400 text-left">
+                    <th className="pb-2 w-12 text-center font-mono text-[11px] text-muted-foreground">#</th>
                     <th className="pb-2 font-medium">Channel Touchpoint</th>
                     <th className="pb-2 font-medium text-center">First Touch</th>
                     <th className="pb-2 font-medium text-center">Last Touch</th>
@@ -362,6 +363,7 @@ export default function AnalyticsPage() {
                 </thead>
                 <tbody className="divide-y divide-slate-800/80">
                   <tr>
+                    <td className="py-2.5 text-center font-mono text-xs text-slate-400 font-medium">1</td>
                     <td className="py-2.5 font-sans font-medium text-white flex items-center gap-1.5">
                       <MessageCircle className="h-3.5 w-3.5 text-emerald-400" /> WhatsApp
                     </td>
@@ -371,6 +373,7 @@ export default function AnalyticsPage() {
                     <td className="py-2.5 text-right text-emerald-400 font-bold">$320,150</td>
                   </tr>
                   <tr>
+                    <td className="py-2.5 text-center font-mono text-xs text-slate-400 font-medium">2</td>
                     <td className="py-2.5 font-sans font-medium text-white flex items-center gap-1.5">
                       <Headphones className="h-3.5 w-3.5 text-blue-400" /> AI Voice Telephony
                     </td>
@@ -380,6 +383,7 @@ export default function AnalyticsPage() {
                     <td className="py-2.5 text-right text-blue-400 font-bold">$286,450</td>
                   </tr>
                   <tr>
+                    <td className="py-2.5 text-center font-mono text-xs text-slate-400 font-medium">3</td>
                     <td className="py-2.5 font-sans font-medium text-white flex items-center gap-1.5">
                       <ExternalLink className="h-3.5 w-3.5 text-purple-400" /> Portal & Quotes
                     </td>

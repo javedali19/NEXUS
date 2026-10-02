@@ -27,9 +27,10 @@ export default function CompaniesPage() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="w-12 text-center">#</TableHead>
               <TableHead>Company Name</TableHead>
               <TableHead>Industry</TableHead>
-              <TableHead>Annual Revenue</TableHead>
+              <TableHead className="text-right">Annual Revenue</TableHead>
               <TableHead>Linked CRM Deals</TableHead>
               <TableHead>ERP Ledger Status</TableHead>
               <TableHead className="text-right">Actions</TableHead>
@@ -37,9 +38,10 @@ export default function CompaniesPage() {
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="font-bold text-slate-900">Acme Global Solutions</TableCell>
-              <TableCell className="text-slate-500">Enterprise SaaS / Cloud</TableCell>
-              <TableCell className="font-mono text-emerald-600 font-bold">$24.5M</TableCell>
+              <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">1</TableCell>
+              <TableCell className="font-bold text-slate-900 dark:text-white">Acme Global Solutions</TableCell>
+              <TableCell className="text-slate-500 dark:text-slate-400">Enterprise SaaS / Cloud</TableCell>
+              <TableCell className="text-right font-mono text-emerald-600 dark:text-emerald-400 font-bold">$24.5M</TableCell>
               <TableCell><Badge variant="primary" size="sm">2 Active Deals</Badge></TableCell>
               <TableCell><Badge variant="success" size="sm" dot>In Good Standing</Badge></TableCell>
               <TableCell className="text-right">
@@ -52,9 +54,10 @@ export default function CompaniesPage() {
             </TableRow>
 
             <TableRow>
-              <TableCell className="font-bold text-slate-900">Nexus Industrial Corp</TableCell>
-              <TableCell className="text-slate-500">Smart Manufacturing</TableCell>
-              <TableCell className="font-mono text-emerald-600 font-bold">$82.0M</TableCell>
+              <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">2</TableCell>
+              <TableCell className="font-bold text-slate-900 dark:text-white">Nexus Industrial Corp</TableCell>
+              <TableCell className="text-slate-500 dark:text-slate-400">Smart Manufacturing</TableCell>
+              <TableCell className="text-right font-mono text-emerald-600 dark:text-emerald-400 font-bold">$82.0M</TableCell>
               <TableCell><Badge variant="primary" size="sm">1 Deal ($38k)</Badge></TableCell>
               <TableCell><Badge variant="warning" size="sm" dot>Invoice Pending</Badge></TableCell>
               <TableCell className="text-right">

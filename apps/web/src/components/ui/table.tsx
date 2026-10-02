@@ -2,8 +2,8 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 export const Table: React.FC<React.HTMLAttributes<HTMLTableElement>> = ({ className, ...props }) => (
-  <div className="relative w-full overflow-auto rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-900 shadow-2xs">
-    <table className={cn("w-full caption-bottom text-xs text-slate-700 dark:text-slate-300", className)} {...props} />
+  <div className="relative w-full overflow-x-auto rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-900 shadow-xs">
+    <table className={cn("w-full caption-bottom text-xs text-slate-700 dark:text-slate-300 border-collapse", className)} {...props} />
   </div>
 );
 
@@ -13,7 +13,7 @@ export const TableHeader: React.FC<React.HTMLAttributes<HTMLTableSectionElement>
 }) => (
   <thead
     className={cn(
-      "bg-slate-50/80 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-mono text-[11px] uppercase tracking-wider border-b border-slate-200/80 dark:border-slate-800/80",
+      "bg-slate-50/90 dark:bg-slate-800/70 text-slate-500 dark:text-slate-400 font-mono text-[11px] uppercase tracking-wider border-b border-slate-200/80 dark:border-slate-800/80",
       className
     )}
     {...props}
@@ -31,7 +31,7 @@ export const TableRow: React.FC<React.HTMLAttributes<HTMLTableRowElement>> = ({
 }) => (
   <tr
     className={cn(
-      "transition-colors hover:bg-slate-50/80 dark:hover:bg-slate-800/50 data-[state=selected]:bg-slate-100 dark:data-[state=selected]:bg-slate-800",
+      "transition-colors hover:bg-slate-50/90 dark:hover:bg-slate-800/50 data-[state=selected]:bg-slate-100 dark:data-[state=selected]:bg-slate-800 border-b border-slate-100 dark:border-slate-800/40 last:border-0",
       className
     )}
     {...props}
@@ -43,7 +43,7 @@ export const TableHead: React.FC<React.ThHTMLAttributes<HTMLTableCellElement>> =
   ...props
 }) => (
   <th
-    className={cn("h-10 px-4 text-left align-middle font-semibold text-slate-600 dark:text-slate-400 select-none", className)}
+    className={cn("h-10 px-4 text-left align-middle font-semibold text-slate-600 dark:text-slate-300 select-none whitespace-nowrap", className)}
     {...props}
   />
 );

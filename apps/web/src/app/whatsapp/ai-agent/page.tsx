@@ -671,20 +671,24 @@ export default function AiWhatsAppAgentPage() {
               <table className="w-full text-xs text-left">
                 <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
                   <tr>
+                    <th className="py-3 px-4 w-12 text-center">#</th>
                     <th className="py-3 px-4">Ticket Number</th>
                     <th className="py-3 px-4">Category</th>
-                    <th className="py-3 px-4">Severity</th>
+                    <th className="py-3 px-4 text-center">Severity</th>
                     <th className="py-3 px-4">Summary</th>
                     <th className="py-3 px-4">SLA Target</th>
-                    <th className="py-3 px-4">Status</th>
+                    <th className="py-3 px-4 text-center">Status</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {supportTickets.map((t) => (
+                  {supportTickets.map((t, idx) => (
                     <tr key={t.caseNumber} className="hover:bg-slate-50/70 transition">
+                      <td className="py-3 px-4 text-center font-mono text-slate-400 font-medium">
+                        {idx + 1}
+                      </td>
                       <td className="py-3 px-4 font-mono font-bold text-indigo-700">{t.caseNumber}</td>
                       <td className="py-3 px-4 font-semibold text-slate-800">{t.category}</td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 text-center">
                         <span
                           className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
                             t.severity === "high" || t.severity === "urgent"
@@ -697,7 +701,7 @@ export default function AiWhatsAppAgentPage() {
                       </td>
                       <td className="py-3 px-4 text-slate-700 max-w-xs truncate">{t.summary}</td>
                       <td className="py-3 px-4 font-mono text-slate-600">{t.slaTarget}</td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 text-center">
                         <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
                           {t.status}
                         </span>

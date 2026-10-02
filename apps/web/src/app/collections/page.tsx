@@ -1257,6 +1257,7 @@ export default function CollectionsPolicyStudioPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-muted/40 border-b border-border text-muted-foreground font-medium">
                 <tr>
+                  <th className="py-2.5 px-3 w-12 text-center">#</th>
                   <th className="py-2.5 px-3">Debtor</th>
                   <th className="py-2.5 px-3">Invoice</th>
                   <th className="py-2.5 px-3 text-right">Promised Amount</th>
@@ -1267,8 +1268,11 @@ export default function CollectionsPolicyStudioPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {ptps.map((ptp) => (
+                {ptps.map((ptp, idx) => (
                   <tr key={ptp.id} className="hover:bg-muted/20">
+                    <td className="py-2.5 px-3 text-center font-mono text-muted-foreground font-medium">
+                      {idx + 1}
+                    </td>
                     <td className="py-2.5 px-3 font-semibold text-foreground">{ptp.customerName}</td>
                     <td className="py-2.5 px-3 font-mono text-muted-foreground">{ptp.invoiceNumber}</td>
                     <td className="py-2.5 px-3 text-right font-mono font-bold text-foreground">

@@ -906,9 +906,10 @@ export default function AiSalesAgentPage() {
               <table className="w-full text-xs text-left">
                 <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
                   <tr>
+                    <th className="py-3 px-4 w-12 text-center">#</th>
                     <th className="py-3 px-4">Company & Contact</th>
-                    <th className="py-3 px-4">Intent Score</th>
-                    <th className="py-3 px-4">Stage</th>
+                    <th className="py-3 px-4 text-center">Intent Score</th>
+                    <th className="py-3 px-4 text-center">Stage</th>
                     <th className="py-3 px-4">Budget</th>
                     <th className="py-3 px-4">Authority</th>
                     <th className="py-3 px-4">Need</th>
@@ -916,16 +917,19 @@ export default function AiSalesAgentPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {leads.map((l) => (
+                  {leads.map((l, idx) => (
                     <tr key={l.id} className="hover:bg-slate-50/70 transition">
+                      <td className="py-3 px-4 text-center font-mono text-slate-400 font-medium">
+                        {idx + 1}
+                      </td>
                       <td className="py-3 px-4">
                         <div className="font-bold text-slate-900">{l.company}</div>
                         <div className="text-[11px] text-slate-500">{l.contact} • {l.email}</div>
                       </td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 text-center">
                         <span className="font-mono font-bold text-indigo-600 text-sm">{l.intentScore}</span>/100
                       </td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 text-center">
                         <span
                           className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
                             l.stage === "AE Handoff"

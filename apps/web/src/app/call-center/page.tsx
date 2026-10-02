@@ -744,16 +744,17 @@ export default function CallCenterPage() {
               <table className="w-full text-left text-xs">
                 <thead className="bg-slate-950/80 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
                   <tr>
+                    <th className="px-3 py-3 w-12 text-center font-mono">#</th>
                     <th className="px-4 py-3">Customer & Queue</th>
                     <th className="px-3 py-3">Agent & Lang</th>
-                    <th className="px-3 py-3">Priority</th>
+                    <th className="px-3 py-3 text-center">Priority</th>
                     <th className="px-3 py-3">PTP / Outcome</th>
                     <th className="px-3 py-3">TCPA Window</th>
                     <th className="px-3 py-3 text-right">Status</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800">
-                  {filteredCalls.map((call) => {
+                  {filteredCalls.map((call, idx) => {
                     const isSelected = selectedCall?.id === call.id;
                     return (
                       <tr
@@ -763,6 +764,9 @@ export default function CallCenterPage() {
                           isSelected ? "bg-purple-950/30 border-l-2 border-purple-500" : "hover:bg-slate-800/40"
                         }`}
                       >
+                        <td className="px-3 py-3 text-center font-mono text-slate-400 font-medium">
+                          {idx + 1}
+                        </td>
                         <td className="px-4 py-3">
                           <div className="font-bold text-white flex items-center gap-1.5">
                             {call.customerName}

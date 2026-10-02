@@ -274,21 +274,23 @@ export default function Customer360DetailPage() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-12 text-center">#</TableHead>
                   <TableHead>Deal Title</TableHead>
-                  <TableHead>Stage</TableHead>
-                  <TableHead>Value</TableHead>
-                  <TableHead>Probability</TableHead>
-                  <TableHead>Close Date</TableHead>
+                  <TableHead className="text-center">Stage</TableHead>
+                  <TableHead className="text-right">Value</TableHead>
+                  <TableHead className="text-right">Probability</TableHead>
+                  <TableHead className="text-right">Close Date</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {customer.sales.deals.map((d) => (
+                {customer.sales.deals.map((d, idx) => (
                   <TableRow key={d.id}>
+                    <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</TableCell>
                     <TableCell className="font-semibold text-white">{d.title}</TableCell>
-                    <TableCell><Badge variant={d.stage === "Closed-Won" ? "success" : "primary"} size="sm">{d.stage}</Badge></TableCell>
-                    <TableCell className="font-mono font-bold text-emerald-400">${d.value.toLocaleString()}</TableCell>
-                    <TableCell className="font-mono text-slate-400">{d.probability}%</TableCell>
-                    <TableCell className="font-mono text-slate-400">{d.closeDate}</TableCell>
+                    <TableCell className="text-center"><Badge variant={d.stage === "Closed-Won" ? "success" : "primary"} size="sm">{d.stage}</Badge></TableCell>
+                    <TableCell className="text-right font-mono font-bold text-emerald-400">${d.value.toLocaleString()}</TableCell>
+                    <TableCell className="text-right font-mono text-slate-400">{d.probability}%</TableCell>
+                    <TableCell className="text-right font-mono text-slate-400">{d.closeDate}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -303,19 +305,21 @@ export default function Customer360DetailPage() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-12 text-center">#</TableHead>
                   <TableHead>Quote #</TableHead>
-                  <TableHead>Total Amount</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Expiry Date</TableHead>
+                  <TableHead className="text-right">Total Amount</TableHead>
+                  <TableHead className="text-center">Status</TableHead>
+                  <TableHead className="text-right">Expiry Date</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {customer.sales.quotes.map((q) => (
+                {customer.sales.quotes.map((q, idx) => (
                   <TableRow key={q.id}>
+                    <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</TableCell>
                     <TableCell className="font-mono font-semibold text-white">{q.quoteNumber}</TableCell>
-                    <TableCell className="font-mono font-bold text-emerald-400">${q.totalAmount.toLocaleString()}</TableCell>
-                    <TableCell><Badge variant="primary" size="sm">{q.status}</Badge></TableCell>
-                    <TableCell className="font-mono text-slate-400">{q.expiryDate}</TableCell>
+                    <TableCell className="text-right font-mono font-bold text-emerald-400">${q.totalAmount.toLocaleString()}</TableCell>
+                    <TableCell className="text-center"><Badge variant="primary" size="sm">{q.status}</Badge></TableCell>
+                    <TableCell className="text-right font-mono text-slate-400">{q.expiryDate}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -337,20 +341,22 @@ export default function Customer360DetailPage() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-12 text-center">#</TableHead>
                   <TableHead>Invoice #</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead className="text-center">Status</TableHead>
                   <TableHead>Due Date</TableHead>
                   <TableHead>Settled Date</TableHead>
                   <TableHead className="text-right">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {customer.financials.invoices.map((inv) => (
+                {customer.financials.invoices.map((inv, idx) => (
                   <TableRow key={inv.id}>
+                    <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</TableCell>
                     <TableCell className="font-mono font-semibold text-white">{inv.invoiceNumber}</TableCell>
-                    <TableCell className="font-mono font-bold text-emerald-400">${inv.amount.toLocaleString()}</TableCell>
-                    <TableCell><Badge variant="success" size="sm" dot>{inv.status}</Badge></TableCell>
+                    <TableCell className="text-right font-mono font-bold text-emerald-400">${inv.amount.toLocaleString()}</TableCell>
+                    <TableCell className="text-center"><Badge variant="success" size="sm" dot>{inv.status}</Badge></TableCell>
                     <TableCell className="font-mono text-slate-400">{inv.dueDate}</TableCell>
                     <TableCell className="font-mono text-emerald-400">{inv.paidDate || "-"}</TableCell>
                     <TableCell className="text-right">
@@ -376,19 +382,21 @@ export default function Customer360DetailPage() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-12 text-center">#</TableHead>
                 <TableHead>Channel</TableHead>
                 <TableHead>Subject</TableHead>
                 <TableHead>Last Message</TableHead>
-                <TableHead>Time</TableHead>
+                <TableHead className="text-right">Time</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {customer.conversations.map((conv) => (
+              {customer.conversations.map((conv, idx) => (
                 <TableRow key={conv.id}>
+                  <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</TableCell>
                   <TableCell><Badge variant={conv.channel === "whatsapp" ? "success" : "info"} size="sm">{conv.channel}</Badge></TableCell>
                   <TableCell className="font-semibold text-white">{conv.subject || "Direct Message"}</TableCell>
                   <TableCell className="text-slate-300 truncate max-w-md">{conv.lastMessage}</TableCell>
-                  <TableCell className="font-mono text-slate-400">{conv.timestamp}</TableCell>
+                  <TableCell className="text-right font-mono text-slate-400">{conv.timestamp}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -439,20 +447,22 @@ export default function Customer360DetailPage() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-12 text-center">#</TableHead>
                 <TableHead>Ticket #</TableHead>
                 <TableHead>Subject</TableHead>
-                <TableHead>Priority</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead className="text-center">Priority</TableHead>
+                <TableHead className="text-center">Status</TableHead>
                 <TableHead>Assigned Agent</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {customer.support.map((sup) => (
+              {customer.support.map((sup, idx) => (
                 <TableRow key={sup.id}>
+                  <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</TableCell>
                   <TableCell className="font-mono font-bold text-white">{sup.ticketNumber}</TableCell>
                   <TableCell className="font-semibold text-slate-200">{sup.subject}</TableCell>
-                  <TableCell><Badge variant="warning" size="sm">{sup.priority}</Badge></TableCell>
-                  <TableCell><Badge variant="success" size="sm" dot>{sup.status}</Badge></TableCell>
+                  <TableCell className="text-center"><Badge variant="warning" size="sm">{sup.priority}</Badge></TableCell>
+                  <TableCell className="text-center"><Badge variant="success" size="sm" dot>{sup.status}</Badge></TableCell>
                   <TableCell className="text-slate-400">{sup.assignedAgent}</TableCell>
                 </TableRow>
               ))}
@@ -471,21 +481,23 @@ export default function Customer360DetailPage() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-12 text-center">#</TableHead>
                 <TableHead>File Name</TableHead>
-                <TableHead>File Size</TableHead>
+                <TableHead className="text-right">File Size</TableHead>
                 <TableHead>Storage</TableHead>
                 <TableHead>Uploaded At</TableHead>
                 <TableHead className="text-right">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {customer.documents.map((doc) => (
+              {customer.documents.map((doc, idx) => (
                 <TableRow key={doc.id}>
+                  <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</TableCell>
                   <TableCell className="font-semibold text-white flex items-center gap-2">
                     <FileText className="h-4 w-4 text-slate-400" />
                     {doc.fileName}
                   </TableCell>
-                  <TableCell className="font-mono text-slate-400">{doc.fileSize}</TableCell>
+                  <TableCell className="text-right font-mono text-slate-400">{doc.fileSize}</TableCell>
                   <TableCell className="font-mono text-slate-400">{doc.storageBucket}</TableCell>
                   <TableCell className="font-mono text-slate-400">{doc.uploadedAt}</TableCell>
                   <TableCell className="text-right">
@@ -582,6 +594,7 @@ export default function Customer360DetailPage() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-12 text-center">#</TableHead>
                 <TableHead>Timestamp</TableHead>
                 <TableHead>Actor</TableHead>
                 <TableHead>Action</TableHead>
@@ -590,8 +603,9 @@ export default function Customer360DetailPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {customer.auditHistory.map((aud) => (
+              {customer.auditHistory.map((aud, idx) => (
                 <TableRow key={aud.id}>
+                  <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</TableCell>
                   <TableCell className="font-mono text-slate-400">{aud.timestamp}</TableCell>
                   <TableCell className="font-semibold text-white">{aud.actor}</TableCell>
                   <TableCell className="font-mono text-indigo-400">{aud.action}</TableCell>

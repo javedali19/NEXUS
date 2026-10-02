@@ -928,6 +928,7 @@ export default function CompleteSalesFlowPage() {
                           <table className="w-full text-xs text-left">
                             <thead className="text-[10px] text-slate-500 uppercase bg-slate-900 border-b border-slate-800">
                               <tr>
+                                <th className="p-2 w-10 text-center">#</th>
                                 <th className="p-2">SKU</th>
                                 <th className="p-2">Description</th>
                                 <th className="p-2 text-right">Qty</th>
@@ -937,6 +938,7 @@ export default function CompleteSalesFlowPage() {
                             </thead>
                             <tbody className="divide-y divide-slate-800/60 font-mono text-[11px]">
                               <tr>
+                                <td className="p-2 text-center text-slate-400 font-mono">1</td>
                                 <td className="p-2 text-cyan-400 font-semibold">{activeFlow.sku}</td>
                                 <td className="p-2 text-slate-300 font-sans">{activeFlow.productName}</td>
                                 <td className="p-2 text-right text-white">{activeFlow.quantity}</td>

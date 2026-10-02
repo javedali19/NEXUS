@@ -1042,23 +1042,27 @@ export default function WhatsAppOperationsPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-muted/40 border-b border-border text-[11px] text-muted-foreground uppercase font-semibold">
                 <tr>
+                  <th className="py-2.5 px-4 w-12 text-center">#</th>
                   <th className="py-2.5 px-4">Customer & Company</th>
                   <th className="py-2.5 px-4">E.164 Phone</th>
-                  <th className="py-2.5 px-4">Consent Status</th>
+                  <th className="py-2.5 px-4 text-center">Consent Status</th>
                   <th className="py-2.5 px-4">Source & Opt-In Timestamp</th>
                   <th className="py-2.5 px-4">Proof of Consent</th>
                   <th className="py-2.5 px-4 text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {consents.map((cs) => (
+                {consents.map((cs, idx) => (
                   <tr key={cs.id} className="hover:bg-muted/20 transition-colors">
+                    <td className="py-3 px-4 text-center font-mono text-muted-foreground font-medium">
+                      {idx + 1}
+                    </td>
                     <td className="py-3 px-4">
                       <div className="font-bold text-foreground">{cs.customerName}</div>
                       <div className="text-[11px] text-muted-foreground">{cs.company}</div>
                     </td>
                     <td className="py-3 px-4 font-mono font-bold text-foreground">{cs.phoneE164}</td>
-                    <td className="py-3 px-4">
+                    <td className="py-3 px-4 text-center">
                       <span
                         className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
                           cs.status === "OPTED_IN"

@@ -636,6 +636,7 @@ export default function AccountingPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-muted/60 text-muted-foreground font-mono uppercase text-[10px] border-b border-border">
                 <tr>
+                  <th className="py-3 px-4 w-12 text-center font-mono">#</th>
                   <th className="py-3 px-4">Entity Type</th>
                   <th className="py-3 px-4">Local Platform Record</th>
                   <th className="py-3 px-4">Provider</th>
@@ -646,8 +647,9 @@ export default function AccountingPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {filteredMappings.map((map) => (
+                {filteredMappings.map((map, idx) => (
                   <tr key={map.id} className="hover:bg-muted/30">
+                    <td className="py-3 px-4 text-center font-mono text-xs text-muted-foreground font-medium">{idx + 1}</td>
                     <td className="py-3 px-4">
                       <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-muted uppercase text-foreground">
                         {map.entityType}
@@ -703,6 +705,7 @@ export default function AccountingPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-muted/60 text-muted-foreground font-mono uppercase text-[10px] border-b border-border">
                 <tr>
+                  <th className="py-3 px-4 w-12 text-center font-mono">#</th>
                   <th className="py-3 px-4">Batch ID</th>
                   <th className="py-3 px-4">Provider</th>
                   <th className="py-3 px-4">Scope</th>
@@ -714,8 +717,9 @@ export default function AccountingPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {syncLogs.map((log) => (
+                {syncLogs.map((log, idx) => (
                   <tr key={log.id} className="hover:bg-muted/30">
+                    <td className="py-3 px-4 text-center font-mono text-xs text-muted-foreground font-medium">{idx + 1}</td>
                     <td className="py-3 px-4 font-mono font-bold text-foreground">
                       {log.batchId}
                     </td>

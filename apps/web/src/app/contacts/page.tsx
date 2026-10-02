@@ -25,32 +25,35 @@ export default function ContactsPage() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="w-12 text-center">#</TableHead>
               <TableHead>Contact Name</TableHead>
               <TableHead>Company</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Phone</TableHead>
-              <TableHead>Lifecycle</TableHead>
+              <TableHead className="text-center">Lifecycle</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="font-semibold text-slate-900">
-                <Link href="/customers/c1a2b3c4-d5e6-7f8a-9b0c-1d2e3f4a5b6c" className="text-blue-600 hover:text-blue-700 hover:underline">
+              <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">1</TableCell>
+              <TableCell className="font-semibold text-slate-900 dark:text-white">
+                <Link href="/customers/c1a2b3c4-d5e6-7f8a-9b0c-1d2e3f4a5b6c" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 hover:underline">
                   Sarah Jenkins
                 </Link>
               </TableCell>
-              <TableCell className="text-slate-700 font-medium">Acme Global Solutions</TableCell>
-              <TableCell className="text-slate-500 flex items-center gap-1.5"><Mail className="h-3 w-3" /> sarah.j@acmeglobal.com</TableCell>
-              <TableCell className="text-slate-500 font-mono"><Phone className="h-3 w-3 inline mr-1" /> +1 (555) 234-5678</TableCell>
-              <TableCell><Badge variant="success" size="sm">Customer</Badge></TableCell>
+              <TableCell className="text-slate-700 dark:text-slate-300 font-medium">Acme Global Solutions</TableCell>
+              <TableCell className="text-slate-500 dark:text-slate-400"><span className="flex items-center gap-1.5"><Mail className="h-3 w-3 text-slate-400" /> sarah.j@acmeglobal.com</span></TableCell>
+              <TableCell className="text-slate-500 dark:text-slate-400 font-mono text-xs"><Phone className="h-3 w-3 inline mr-1 text-slate-400" /> +1 (555) 234-5678</TableCell>
+              <TableCell className="text-center"><Badge variant="success" size="sm">Customer</Badge></TableCell>
             </TableRow>
 
             <TableRow>
-              <TableCell className="font-semibold text-slate-900">Michael Chen</TableCell>
-              <TableCell className="text-slate-700 font-medium">NexusOps</TableCell>
-              <TableCell className="text-slate-500 flex items-center gap-1.5"><Mail className="h-3 w-3" /> mchen@nexusops.io</TableCell>
-              <TableCell className="text-slate-500 font-mono"><Phone className="h-3 w-3 inline mr-1" /> +1 (555) 876-5432</TableCell>
-              <TableCell><Badge variant="warning" size="sm">Prospect</Badge></TableCell>
+              <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">2</TableCell>
+              <TableCell className="font-semibold text-slate-900 dark:text-white">Michael Chen</TableCell>
+              <TableCell className="text-slate-700 dark:text-slate-300 font-medium">NexusOps</TableCell>
+              <TableCell className="text-slate-500 dark:text-slate-400"><span className="flex items-center gap-1.5"><Mail className="h-3 w-3 text-slate-400" /> mchen@nexusops.io</span></TableCell>
+              <TableCell className="text-slate-500 dark:text-slate-400 font-mono text-xs"><Phone className="h-3 w-3 inline mr-1 text-slate-400" /> +1 (555) 876-5432</TableCell>
+              <TableCell className="text-center"><Badge variant="warning" size="sm">Prospect</Badge></TableCell>
             </TableRow>
           </TableBody>
         </Table>

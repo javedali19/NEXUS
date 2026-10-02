@@ -36,9 +36,6 @@ interface ShellContextType {
   // Sidebar & Modals
   isMobileSidebarOpen: boolean;
   setIsMobileSidebarOpen: (open: boolean) => void;
-  isSidebarCollapsed: boolean;
-  setIsSidebarCollapsed: (collapsed: boolean) => void;
-  toggleSidebarCollapse: () => void;
   isCommandPaletteOpen: boolean;
   setIsCommandPaletteOpen: (open: boolean) => void;
 
@@ -82,11 +79,8 @@ export const ShellProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const auth = useAuth();
   const [theme, setThemeState] = useState<"dark" | "light">("light");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [notifications, setNotifications] = useState<NotificationItem[]>(initialNotifications);
-
-  const toggleSidebarCollapse = () => setIsSidebarCollapsed((prev) => !prev);
 
   // Initialize theme from localStorage or document
   React.useEffect(() => {
@@ -137,9 +131,6 @@ export const ShellProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setCurrentRole: auth.setCurrentRole,
         isMobileSidebarOpen,
         setIsMobileSidebarOpen,
-        isSidebarCollapsed,
-        setIsSidebarCollapsed,
-        toggleSidebarCollapse,
         isCommandPaletteOpen,
         setIsCommandPaletteOpen,
         notifications,

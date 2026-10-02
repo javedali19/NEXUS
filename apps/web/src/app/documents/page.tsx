@@ -595,6 +595,7 @@ export default function DocumentsStudioPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-muted/40 border-b border-border text-[11px] text-muted-foreground uppercase font-semibold">
                 <tr>
+                  <th className="py-2.5 px-4 w-12 text-center font-mono">#</th>
                   <th className="py-2.5 px-4">Document Title</th>
                   <th className="py-2.5 px-4">Category & Access</th>
                   <th className="py-2.5 px-4">Linked Entity</th>
@@ -604,8 +605,9 @@ export default function DocumentsStudioPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {filteredDocuments.map((doc) => (
+                {filteredDocuments.map((doc, idx) => (
                   <tr key={doc.id} className="hover:bg-muted/20 transition-colors">
+                    <td className="py-3 px-4 text-center font-mono text-xs text-muted-foreground font-medium">{idx + 1}</td>
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
                         <FileText className="h-4 w-4 text-primary shrink-0" />
@@ -848,6 +850,7 @@ export default function DocumentsStudioPage() {
           <table className="w-full text-left text-xs">
             <thead className="bg-muted/40 border-b border-border text-[11px] text-muted-foreground uppercase font-semibold">
               <tr>
+                <th className="py-2.5 px-4 w-12 text-center font-mono">#</th>
                 <th className="py-2.5 px-4">Document</th>
                 <th className="py-2.5 px-4">Action</th>
                 <th className="py-2.5 px-4">Actor</th>
@@ -857,8 +860,9 @@ export default function DocumentsStudioPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {INITIAL_AUDITS.map((aud) => (
+              {INITIAL_AUDITS.map((aud, idx) => (
                 <tr key={aud.id} className="hover:bg-muted/20 transition-colors">
+                  <td className="py-3 px-4 text-center font-mono text-xs text-muted-foreground font-medium">{idx + 1}</td>
                   <td className="py-3 px-4 font-bold text-foreground">{aud.documentTitle}</td>
                   <td className="py-3 px-4">
                     <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-muted text-foreground uppercase">

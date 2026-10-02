@@ -109,7 +109,7 @@ const INITIAL_CATALOG: ProviderCatalogItem[] = [
     rateLimitPerMin: 600,
     lastHealthCheck: "1 min ago",
     webhookUrl: "https://api.nexus.internal/api/v1/webhooks/conn-stripe-01",
-    webhookSecret: "whsec_mock_sample_placeholder",
+    webhookSecret: "whsec_99182a8b7c6d5e4f3a2b1c0d",
     environment: "production",
     settings: { account_id: "acct_1EnterpriseProd99", live_mode: true },
   },
@@ -893,6 +893,7 @@ export default function IntegrationCenterPage() {
               <table className="w-full text-left text-xs text-slate-300">
                 <thead className="bg-slate-800/80 text-slate-400 uppercase font-mono border-b border-slate-700">
                   <tr>
+                    <th className="py-3 px-4 w-12 text-center font-mono">#</th>
                     <th className="py-3 px-4">Provider / Name</th>
                     <th className="py-3 px-4">Auth Scheme</th>
                     <th className="py-3 px-4">Health & Latency</th>
@@ -902,8 +903,9 @@ export default function IntegrationCenterPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800">
-                  {connectedList.map((item) => (
+                  {connectedList.map((item, idx) => (
                     <tr key={item.id} className="hover:bg-slate-800/50 transition-colors">
+                      <td className="py-3.5 px-4 text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</td>
                       <td className="py-3.5 px-4 font-semibold text-white">
                         <div className="flex items-center space-x-2">
                           <span>{item.name}</span>
@@ -970,6 +972,7 @@ export default function IntegrationCenterPage() {
               <table className="w-full text-left text-xs text-slate-300">
                 <thead className="bg-slate-800/80 text-slate-400 uppercase font-mono border-b border-slate-700">
                   <tr>
+                    <th className="py-3 px-4 w-12 text-center font-mono">#</th>
                     <th className="py-3 px-4">Timestamp (UTC)</th>
                     <th className="py-3 px-4">Provider</th>
                     <th className="py-3 px-4">Raw Vendor Event</th>
@@ -980,8 +983,9 @@ export default function IntegrationCenterPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800">
-                  {INITIAL_WEBHOOK_DELIVERIES.map((log) => (
+                  {INITIAL_WEBHOOK_DELIVERIES.map((log, idx) => (
                     <tr key={log.id} className="hover:bg-slate-800/50 transition-colors">
+                      <td className="py-3 px-4 text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</td>
                       <td className="py-3 px-4 font-mono text-slate-400">{log.timestamp}</td>
                       <td className="py-3 px-4 font-bold text-white uppercase font-mono">{log.provider}</td>
                       <td className="py-3 px-4 font-mono text-amber-400">{log.eventType}</td>
@@ -1023,6 +1027,7 @@ export default function IntegrationCenterPage() {
               <table className="w-full text-left text-xs text-slate-300">
                 <thead className="bg-slate-800/80 text-slate-400 uppercase font-mono border-b border-slate-700">
                   <tr>
+                    <th className="py-3 px-4 w-12 text-center font-mono">#</th>
                     <th className="py-3 px-4">Timestamp (UTC)</th>
                     <th className="py-3 px-4">Provider</th>
                     <th className="py-3 px-4">Error Code</th>
@@ -1033,8 +1038,9 @@ export default function IntegrationCenterPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800">
-                  {INITIAL_ERROR_HISTORY.map((err) => (
+                  {INITIAL_ERROR_HISTORY.map((err, idx) => (
                     <tr key={err.id} className="hover:bg-slate-800/50 transition-colors">
+                      <td className="py-3 px-4 text-center font-mono text-xs text-slate-400 font-medium">{idx + 1}</td>
                       <td className="py-3 px-4 font-mono text-slate-400">{err.timestamp}</td>
                       <td className="py-3 px-4 font-bold text-white uppercase font-mono">{err.provider}</td>
                       <td className="py-3 px-4 font-mono text-rose-400">{err.errorCode}</td>

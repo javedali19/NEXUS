@@ -223,18 +223,20 @@ function DesignSystemContent() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="w-12 text-center">#</TableHead>
               <TableHead>Customer</TableHead>
-              <TableHead>Lifecycle</TableHead>
-              <TableHead>Total LTV</TableHead>
+              <TableHead className="text-center">Lifecycle</TableHead>
+              <TableHead className="text-right">Total LTV</TableHead>
               <TableHead>Recent Module Touchpoint</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
+              <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">1</TableCell>
               <TableCell className="font-semibold text-white">Sarah Jenkins (Acme Global)</TableCell>
-              <TableCell><Badge variant="success" size="sm" dot>Customer</Badge></TableCell>
-              <TableCell className="font-bold text-emerald-400 font-mono">$145,000.00</TableCell>
+              <TableCell className="text-center"><Badge variant="success" size="sm" dot>Customer</Badge></TableCell>
+              <TableCell className="text-right font-bold text-emerald-400 font-mono">$145,000.00</TableCell>
               <TableCell className="text-purple-300">AI Call Summary (+0.85)</TableCell>
               <TableCell className="text-right">
                 <Dropdown
@@ -247,9 +249,10 @@ function DesignSystemContent() {
               </TableCell>
             </TableRow>
             <TableRow>
+              <TableCell className="text-center font-mono text-xs text-slate-400 font-medium">2</TableCell>
               <TableCell className="font-semibold text-white">Michael Chen (NexusOps)</TableCell>
-              <TableCell><Badge variant="warning" size="sm" dot>Prospect</Badge></TableCell>
-              <TableCell className="font-bold text-slate-200 font-mono">$38,000.00</TableCell>
+              <TableCell className="text-center"><Badge variant="warning" size="sm" dot>Prospect</Badge></TableCell>
+              <TableCell className="text-right font-bold text-slate-200 font-mono">$38,000.00</TableCell>
               <TableCell className="text-sky-300">CRM Proposal Sent</TableCell>
               <TableCell className="text-right">
                 <Dropdown

@@ -882,19 +882,23 @@ export default function InventoryPage() {
               <table className="w-full text-left text-sm">
                 <thead className="bg-slate-950/60 border-b border-slate-800 text-xs text-slate-400 uppercase font-semibold">
                   <tr>
+                    <th className="py-3 px-4 w-12 text-center">#</th>
                     <th className="py-3 px-4">SKU / Item Name</th>
                     <th className="py-3 px-4">Category</th>
-                    <th className="py-3 px-4">Standard Cost</th>
-                    <th className="py-3 px-4">Selling Price</th>
-                    <th className="py-3 px-4">Gross Margin</th>
-                    <th className="py-3 px-4">Reorder Threshold</th>
-                    <th className="py-3 px-4">Stock Status</th>
+                    <th className="py-3 px-4 text-right">Standard Cost</th>
+                    <th className="py-3 px-4 text-right">Selling Price</th>
+                    <th className="py-3 px-4 text-right">Gross Margin</th>
+                    <th className="py-3 px-4 text-right">Reorder Threshold</th>
+                    <th className="py-3 px-4 text-center">Stock Status</th>
                     <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60">
-                  {filteredProducts.map((prod) => (
+                  {filteredProducts.map((prod, idx) => (
                     <tr key={prod.id} className="hover:bg-slate-800/30 transition-colors">
+                      <td className="py-3 px-4 text-center font-mono text-slate-400 font-medium text-xs">
+                        {idx + 1}
+                      </td>
                       <td className="py-3 px-4">
                         <div className="font-semibold text-white">{prod.sku}</div>
                         <div className="text-xs text-slate-400">{prod.name}</div>
@@ -904,14 +908,14 @@ export default function InventoryPage() {
                           {prod.category.replace("_", " ")}
                         </span>
                       </td>
-                      <td className="py-3 px-4 font-mono text-slate-300">${prod.costPrice.toFixed(2)}</td>
-                      <td className="py-3 px-4 font-mono text-emerald-400">${prod.salePrice.toFixed(2)}</td>
-                      <td className="py-3 px-4">
-                        <span className="text-xs font-semibold text-emerald-400">
+                      <td className="py-3 px-4 text-right font-mono text-slate-300">${prod.costPrice.toFixed(2)}</td>
+                      <td className="py-3 px-4 text-right font-mono text-emerald-400">${prod.salePrice.toFixed(2)}</td>
+                      <td className="py-3 px-4 text-right">
+                        <span className="text-xs font-semibold text-emerald-400 font-mono">
                           {prod.marginPercent}%
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-slate-300">
+                      <td className="py-3 px-4 text-right text-slate-300 font-mono text-xs">
                         {prod.reorderPoint} {prod.unit}
                       </td>
                       <td className="py-3 px-4">
@@ -1057,19 +1061,23 @@ export default function InventoryPage() {
               <table className="w-full text-left text-sm">
                 <thead className="bg-slate-950/60 border-b border-slate-800 text-xs text-slate-400 uppercase font-semibold">
                   <tr>
+                    <th className="py-3 px-4 w-12 text-center">#</th>
                     <th className="py-3 px-4">SKU & Item</th>
                     <th className="py-3 px-4">Warehouse</th>
-                    <th className="py-3 px-4">On Hand</th>
-                    <th className="py-3 px-4">Allocated (CRM)</th>
-                    <th className="py-3 px-4">On Order (PO)</th>
-                    <th className="py-3 px-4">Net Available</th>
-                    <th className="py-3 px-4">Reorder Status</th>
+                    <th className="py-3 px-4 text-right">On Hand</th>
+                    <th className="py-3 px-4 text-right">Allocated (CRM)</th>
+                    <th className="py-3 px-4 text-right">On Order (PO)</th>
+                    <th className="py-3 px-4 text-right">Net Available</th>
+                    <th className="py-3 px-4 text-center">Reorder Status</th>
                     <th className="py-3 px-4 text-right">Replenishment Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60">
-                  {stockLevels.map((stk) => (
+                  {stockLevels.map((stk, idx) => (
                     <tr key={stk.id} className="hover:bg-slate-800/30 transition-colors">
+                      <td className="py-3 px-4 text-center font-mono text-slate-400 font-medium text-xs">
+                        {idx + 1}
+                      </td>
                       <td className="py-3 px-4">
                         <div className="font-semibold text-white">{stk.sku}</div>
                         <div className="text-xs text-slate-400">{stk.productName}</div>
@@ -1078,11 +1086,11 @@ export default function InventoryPage() {
                         <span className="font-mono text-xs text-slate-300">{stk.warehouseCode}</span>
                         <div className="text-xs text-slate-500">{stk.warehouseName}</div>
                       </td>
-                      <td className="py-3 px-4 font-mono text-slate-200 font-semibold">{stk.onHand}</td>
-                      <td className="py-3 px-4 font-mono text-amber-400">{stk.allocated}</td>
-                      <td className="py-3 px-4 font-mono text-sky-400">{stk.onOrder}</td>
-                      <td className="py-3 px-4 font-mono text-emerald-400 font-bold">{stk.available}</td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 text-right font-mono text-slate-200 font-semibold">{stk.onHand}</td>
+                      <td className="py-3 px-4 text-right font-mono text-amber-400">{stk.allocated}</td>
+                      <td className="py-3 px-4 text-right font-mono text-sky-400">{stk.onOrder}</td>
+                      <td className="py-3 px-4 text-right font-mono text-emerald-400 font-bold">{stk.available}</td>
+                      <td className="py-3 px-4 text-center">
                         {stk.status === "healthy" && (
                           <span className="px-2 py-0.5 rounded text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
                             Healthy
@@ -1142,28 +1150,32 @@ export default function InventoryPage() {
               <table className="w-full text-left text-sm">
                 <thead className="bg-slate-950/60 border-b border-slate-800 text-xs text-slate-400 uppercase font-semibold">
                   <tr>
+                    <th className="py-3 px-4 w-12 text-center">#</th>
                     <th className="py-3 px-4">PO Number</th>
                     <th className="py-3 px-4">Supplier</th>
                     <th className="py-3 px-4">Target Warehouse</th>
-                    <th className="py-3 px-4">Total Amount</th>
+                    <th className="py-3 px-4 text-right">Total Amount</th>
                     <th className="py-3 px-4">Order Date</th>
                     <th className="py-3 px-4">Expected Date</th>
-                    <th className="py-3 px-4">PO Status</th>
+                    <th className="py-3 px-4 text-center">PO Status</th>
                     <th className="py-3 px-4 text-right">Receipt Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60">
-                  {purchaseOrders.map((po) => (
+                  {purchaseOrders.map((po, idx) => (
                     <tr key={po.id} className="hover:bg-slate-800/30 transition-colors">
+                      <td className="py-3 px-4 text-center font-mono text-slate-400 font-medium text-xs">
+                        {idx + 1}
+                      </td>
                       <td className="py-3 px-4 font-mono font-semibold text-white">{po.poNumber}</td>
                       <td className="py-3 px-4 text-slate-300">{po.supplierName}</td>
                       <td className="py-3 px-4 text-slate-400 text-xs">{po.destinationWarehouse}</td>
-                      <td className="py-3 px-4 font-mono text-emerald-400 font-semibold">
+                      <td className="py-3 px-4 text-right font-mono text-emerald-400 font-semibold">
                         ${po.totalAmount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                       </td>
                       <td className="py-3 px-4 text-xs text-slate-400">{po.orderDate}</td>
                       <td className="py-3 px-4 text-xs text-slate-400">{po.expectedDelivery}</td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 text-center">
                         <span
                           className={`capitalize px-2 py-0.5 rounded text-xs border font-medium ${
                             po.status === "received"
@@ -1215,10 +1227,11 @@ export default function InventoryPage() {
               <table className="w-full text-left text-sm">
                 <thead className="bg-slate-950/60 border-b border-slate-800 text-xs text-slate-400 uppercase font-semibold">
                   <tr>
+                    <th className="py-3 px-4 w-12 text-center">#</th>
                     <th className="py-3 px-4">Vendor Code / Name</th>
-                    <th className="py-3 px-4">Relationship Tier</th>
-                    <th className="py-3 px-4">Quality & OTIF Score</th>
-                    <th className="py-3 px-4">Lead Time</th>
+                    <th className="py-3 px-4 text-center">Relationship Tier</th>
+                    <th className="py-3 px-4 text-center">Quality & OTIF Score</th>
+                    <th className="py-3 px-4 text-right">Lead Time</th>
                     <th className="py-3 px-4">Payment Terms</th>
                     <th className="py-3 px-4">Location</th>
                     <th className="py-3 px-4">Active Contracts</th>
@@ -1226,13 +1239,16 @@ export default function InventoryPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60">
-                  {suppliers.map((sup) => (
+                  {suppliers.map((sup, idx) => (
                     <tr key={sup.id} className="hover:bg-slate-800/30 transition-colors">
+                      <td className="py-3 px-4 text-center font-mono text-slate-400 font-medium text-xs">
+                        {idx + 1}
+                      </td>
                       <td className="py-3 px-4">
                         <div className="font-semibold text-white">{sup.name}</div>
                         <div className="text-xs text-slate-400">{sup.code} • {sup.contactEmail}</div>
                       </td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 text-center">
                         <span
                           className={`capitalize px-2 py-0.5 rounded text-xs border font-medium ${
                             sup.tier === "strategic"
@@ -1245,14 +1261,14 @@ export default function InventoryPage() {
                           {sup.tier}
                         </span>
                       </td>
-                      <td className="py-3 px-4">
-                        <div className="flex items-center gap-1.5 font-bold text-amber-400">
+                      <td className="py-3 px-4 text-center">
+                        <div className="flex items-center justify-center gap-1.5 font-bold text-amber-400">
                           <Star className="h-4 w-4 fill-amber-400" />
                           <span>{sup.ratingScore.toFixed(2)}</span>
                           <span className="text-xs text-slate-500">/ 5.0</span>
                         </div>
                       </td>
-                      <td className="py-3 px-4 text-slate-300 font-mono">{sup.leadTimeDays} days</td>
+                      <td className="py-3 px-4 text-right text-slate-300 font-mono text-xs">{sup.leadTimeDays} days</td>
                       <td className="py-3 px-4 text-slate-300">{sup.paymentTerms}</td>
                       <td className="py-3 px-4 text-xs text-slate-300">{sup.country}</td>
                       <td className="py-3 px-4 text-xs font-semibold text-slate-200">
@@ -1292,21 +1308,25 @@ export default function InventoryPage() {
               <table className="w-full text-left text-sm">
                 <thead className="bg-slate-950/60 border-b border-slate-800 text-xs text-slate-400 uppercase font-semibold">
                   <tr>
+                    <th className="py-3 px-4 w-12 text-center">#</th>
                     <th className="py-3 px-4">Movement #</th>
-                    <th className="py-3 px-4">Type</th>
+                    <th className="py-3 px-4 text-center">Type</th>
                     <th className="py-3 px-4">SKU & Item</th>
-                    <th className="py-3 px-4">Quantity</th>
-                    <th className="py-3 px-4">Total Cost</th>
+                    <th className="py-3 px-4 text-right">Quantity</th>
+                    <th className="py-3 px-4 text-right">Total Cost</th>
                     <th className="py-3 px-4">Source / Dest</th>
                     <th className="py-3 px-4">Reference Document</th>
-                    <th className="py-3 px-4">Timestamp</th>
+                    <th className="py-3 px-4 text-right">Timestamp</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60">
-                  {movements.map((mv) => (
+                  {movements.map((mv, idx) => (
                     <tr key={mv.id} className="hover:bg-slate-800/30 transition-colors">
+                      <td className="py-3 px-4 text-center font-mono text-slate-400 font-medium text-xs">
+                        {idx + 1}
+                      </td>
                       <td className="py-3 px-4 font-mono font-semibold text-white">{mv.movementNumber}</td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 text-center">
                         <span
                           className={`capitalize px-2 py-0.5 rounded text-xs border font-medium ${
                             mv.type === "goods_received"
@@ -1323,8 +1343,8 @@ export default function InventoryPage() {
                         <span className="font-semibold text-slate-200">{mv.sku}</span>
                         <div className="text-xs text-slate-400">{mv.productName}</div>
                       </td>
-                      <td className="py-3 px-4 font-mono text-white font-bold">{mv.quantity}</td>
-                      <td className="py-3 px-4 font-mono text-slate-300">${mv.totalCost.toFixed(2)}</td>
+                      <td className="py-3 px-4 font-mono text-white font-bold text-right">{mv.quantity}</td>
+                      <td className="py-3 px-4 font-mono text-slate-300 text-right">${mv.totalCost.toFixed(2)}</td>
                       <td className="py-3 px-4 text-xs text-slate-400">
                         {mv.sourceWarehouse && <span>From: {mv.sourceWarehouse}</span>}
                         {mv.destinationWarehouse && <span>To: {mv.destinationWarehouse}</span>}
@@ -1334,7 +1354,7 @@ export default function InventoryPage() {
                           {mv.refDocument}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-xs text-slate-400 font-mono">{mv.timestamp}</td>
+                      <td className="py-3 px-4 text-right text-xs text-slate-400 font-mono">{mv.timestamp}</td>
                     </tr>
                   ))}
                 </tbody>

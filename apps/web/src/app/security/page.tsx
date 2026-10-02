@@ -612,7 +612,7 @@ export default function SecurityReviewPage() {
       { pattern: "xoxb-", name: "Slack Bot Token" },
       { pattern: "AIzaSy", name: "Google API Live Key" },
       { pattern: "AKIA", name: "AWS Access Key ID" },
-      { pattern: "-----" + "BEGIN" + " PRIVATE KEY-----", name: "PEM RSA Private Key" },
+      { pattern: "-----BEGIN PRIVATE KEY-----", name: "PEM RSA Private Key" },
     ];
 
     for (const item of forbidden) {
@@ -1052,7 +1052,7 @@ export default function SecurityReviewPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setPayloadToTest(`const stripe = new Stripe('${['sk', 'live', '51ABCDEF1234567890abcdef'].join('_')}');`)}
+                onClick={() => setPayloadToTest("const stripe = new Stripe('" + "sk_live_" + "test_mock_injection');")}
               >
                 Inject Stripe Secret (Test Breach)
               </Button>

@@ -906,6 +906,7 @@ export default function VoiceCallsPage() {
                   <table className="w-full text-left text-xs">
                     <thead className="bg-slate-950/80 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
                       <tr>
+                        <th className="px-3 py-3 w-12 text-center font-mono">#</th>
                         <th className="px-4 py-3">Customer / Party</th>
                         <th className="px-3 py-3">Direction</th>
                         <th className="px-3 py-3">Purpose</th>
@@ -915,7 +916,7 @@ export default function VoiceCallsPage() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800">
-                      {filteredCalls.map((call) => {
+                      {filteredCalls.map((call, idx) => {
                         const isSelected = selectedCall?.id === call.id;
                         return (
                           <tr
@@ -925,6 +926,9 @@ export default function VoiceCallsPage() {
                               isSelected ? "bg-purple-950/30 border-l-2 border-purple-500" : "hover:bg-slate-800/40"
                             }`}
                           >
+                            <td className="px-3 py-3 text-center font-mono text-slate-400 font-medium">
+                              {idx + 1}
+                            </td>
                             <td className="px-4 py-3">
                               <div className="font-medium text-white">{call.customerName}</div>
                               <div className="text-[11px] text-slate-400">{call.companyName}</div>
@@ -1524,17 +1528,19 @@ export default function VoiceCallsPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-slate-950 text-slate-400 uppercase font-semibold">
                 <tr>
+                  <th className="px-4 py-3 w-12 text-center">#</th>
                   <th className="px-4 py-3">Phone Number</th>
                   <th className="px-4 py-3">Friendly Name</th>
                   <th className="px-4 py-3">Country</th>
                   <th className="px-4 py-3">Capabilities</th>
                   <th className="px-4 py-3">Assigned Queue</th>
-                  <th className="px-4 py-3">Status</th>
+                  <th className="px-4 py-3 text-center">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800">
-                {INITIAL_PHONE_NUMBERS.map((pn) => (
+                {INITIAL_PHONE_NUMBERS.map((pn, idx) => (
                   <tr key={pn.id} className="hover:bg-slate-800/40">
+                    <td className="px-4 py-3 text-center font-mono text-slate-400 font-medium">{idx + 1}</td>
                     <td className="px-4 py-3 font-mono font-semibold text-white">{pn.phoneNumber}</td>
                     <td className="px-4 py-3 text-slate-300">{pn.friendlyName}</td>
                     <td className="px-4 py-3 font-mono text-slate-400">{pn.countryCode}</td>

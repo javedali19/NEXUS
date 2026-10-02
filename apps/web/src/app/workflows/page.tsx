@@ -937,17 +937,21 @@ export default function WorkflowsStudioPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-muted/40 border-b border-border text-[11px] text-muted-foreground uppercase font-semibold">
                 <tr>
+                  <th className="py-2.5 px-4 w-12 text-center">#</th>
                   <th className="py-2.5 px-4">Task ID & Type</th>
                   <th className="py-2.5 px-4">Target Queue</th>
                   <th className="py-2.5 px-4">Scheduled Execution</th>
-                  <th className="py-2.5 px-4">Attempt / Max</th>
+                  <th className="py-2.5 px-4 text-center">Attempt / Max</th>
                   <th className="py-2.5 px-4">Idempotency Key</th>
                   <th className="py-2.5 px-4 text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {scheduledTasks.map((t) => (
+                {scheduledTasks.map((t, idx) => (
                   <tr key={t.id} className="hover:bg-muted/20 transition-colors">
+                    <td className="py-3 px-4 text-center font-mono text-muted-foreground font-medium">
+                      {idx + 1}
+                    </td>
                     <td className="py-3 px-4">
                       <div className="font-bold text-foreground font-mono">{t.id}</div>
                       <div className="text-[11px] text-primary">{t.taskType}</div>
@@ -958,7 +962,7 @@ export default function WorkflowsStudioPage() {
                         <Clock className="h-3 w-3 text-amber-500" /> {t.scheduledFor}
                       </span>
                     </td>
-                    <td className="py-3 px-4 font-mono text-foreground font-semibold">
+                    <td className="py-3 px-4 font-mono text-foreground font-semibold text-center">
                       {t.attemptCount} / {t.maxAttempts}
                     </td>
                     <td className="py-3 px-4 font-mono text-[10px] text-muted-foreground max-w-xs truncate">
