@@ -129,20 +129,20 @@ export default function ExecutiveCommandCenterPage() {
   };
 
   return (
-    <div className="space-y-6 pb-16">
+    <div className="space-y-7 pb-16">
       {/* 1. Executive Master Header Strip */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-slate-200/80 pb-5">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-slate-200/60 pb-6">
         <div>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200/60 text-blue-600 shadow-xs">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/20">
               <Activity className="h-6 w-6" />
             </div>
             <div>
               <div className="flex items-center gap-2.5 flex-wrap">
-                <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                <h1 className="text-[22px] font-extrabold tracking-tight text-slate-900">
                   Executive Command Center
                 </h1>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold nexus-badge-live font-mono">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                   14/14 Systems Synchronized
                 </span>
@@ -150,7 +150,7 @@ export default function ExecutiveCommandCenterPage() {
                   PostgreSQL RLS Active
                 </Badge>
               </div>
-              <p className="text-sm text-slate-500 mt-1">
+              <p className="text-[13px] text-slate-500 mt-1 leading-relaxed">
                 Synthesized operational intelligence across ERP Financials, CRM Pipelines, Omnichannel AI Comms, Workflows, and Governance.
               </p>
             </div>
@@ -159,15 +159,15 @@ export default function ExecutiveCommandCenterPage() {
 
         {/* Controls: Timeframe Selector + Refresh */}
         <div className="flex items-center gap-2.5 flex-wrap">
-          <div className="flex items-center bg-slate-100 border border-slate-200/80 rounded-lg p-1 shadow-xs">
+          <div className="flex items-center bg-white border border-slate-200/80 rounded-xl p-1 shadow-xs">
             {(["24h", "7d", "30d", "qtd", "ytd"] as Timeframe[]).map((tf) => (
               <button
                 key={tf}
                 onClick={() => setTimeframe(tf)}
-                className={`px-2.5 py-1 text-xs font-mono rounded-md transition-all ${
+                className={`px-3 py-1.5 text-[11px] font-mono rounded-lg transition-all ${
                   timeframe === tf
-                    ? "bg-white text-blue-600 font-semibold shadow-xs"
-                    : "text-slate-600 hover:text-slate-900"
+                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-sm"
+                    : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
                 {tf.toUpperCase()}
@@ -177,7 +177,7 @@ export default function ExecutiveCommandCenterPage() {
 
           <button
             onClick={handleRefresh}
-            className="p-2 rounded-lg bg-white border border-slate-200/80 hover:bg-slate-50 text-slate-600 hover:text-slate-900 shadow-xs transition-colors"
+            className="p-2.5 rounded-xl bg-white border border-slate-200/80 hover:bg-slate-50 text-slate-500 hover:text-blue-600 shadow-xs transition-all hover:shadow-sm"
             title="Refresh Live Data"
           >
             <RefreshCw
@@ -188,97 +188,105 @@ export default function ExecutiveCommandCenterPage() {
       </div>
 
       {/* 2. Top Executive KPI Ribbon: 4 Primary Financial & Operating Anchors */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 nexus-stagger">
         {/* Metric 1: Revenue */}
-        <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:border-slate-300 transition-all space-y-2 relative overflow-hidden">
+        <div className="nexus-metric-card p-5 space-y-2.5">
           <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
             <span className="flex items-center gap-1.5">
-              <DollarSign className="h-4 w-4 text-emerald-600" />
+              <div className="p-1.5 rounded-lg bg-emerald-50 border border-emerald-100">
+                <DollarSign className="h-3.5 w-3.5 text-emerald-600" />
+              </div>
               ERP Settled Revenue
             </span>
-            <span className="text-xs text-emerald-600 font-mono font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+            <span className="text-[10px] text-emerald-600 font-mono font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
               +18.4% MoM
             </span>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-slate-900 font-mono tracking-tight">$1,845,200</span>
+            <span className="text-[26px] font-extrabold text-slate-900 font-mono tracking-tight">$1,845,200</span>
             <Sparkline data={[80, 95, 110, 105, 125, 138, 145]} color="#10b981" />
           </div>
-          <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1.5 border-t border-slate-100 font-mono">
+          <div className="flex items-center justify-between text-[11px] text-slate-500 pt-2 border-t border-slate-100/80 font-mono">
             <span>Recognized: $1,420,800</span>
-            <span className="text-blue-600 font-medium">Pending: $424,400</span>
+            <span className="text-blue-600 font-semibold">Pending: $424,400</span>
           </div>
         </div>
 
         {/* Metric 2: Collections Recovery */}
-        <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:border-slate-300 transition-all space-y-2">
+        <div className="nexus-metric-card p-5 space-y-2.5">
           <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
             <span className="flex items-center gap-1.5">
-              <Landmark className="h-4 w-4 text-sky-600" />
+              <div className="p-1.5 rounded-lg bg-sky-50 border border-sky-100">
+                <Landmark className="h-3.5 w-3.5 text-sky-600" />
+              </div>
               Collections Recovered
             </span>
-            <span className="text-xs text-sky-600 font-mono font-semibold bg-sky-50 px-2 py-0.5 rounded-full border border-sky-100">
+            <span className="text-[10px] text-sky-600 font-mono font-bold bg-sky-50 px-2 py-0.5 rounded-full border border-sky-100">
               89.2% Rate
             </span>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-slate-900 font-mono tracking-tight">$384,500</span>
-            <span className="text-xs px-2 py-0.5 rounded bg-sky-50 text-sky-700 border border-sky-200/80 font-mono font-semibold">
+            <span className="text-[26px] font-extrabold text-slate-900 font-mono tracking-tight">$384,500</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-lg bg-sky-50 text-sky-700 border border-sky-200/80 font-mono font-bold">
               77.5% Autonomous
             </span>
           </div>
-          <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1.5 border-t border-slate-100 font-mono">
+          <div className="flex items-center justify-between text-[11px] text-slate-500 pt-2 border-t border-slate-100/80 font-mono">
             <span>Autonomous: $298K</span>
             <span>Manual: $86.5K</span>
           </div>
         </div>
 
         {/* Metric 3: Active Pipeline Value */}
-        <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:border-slate-300 transition-all space-y-2">
+        <div className="nexus-metric-card p-5 space-y-2.5">
           <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
             <span className="flex items-center gap-1.5">
-              <TrendingUp className="h-4 w-4 text-purple-600" />
+              <div className="p-1.5 rounded-lg bg-purple-50 border border-purple-100">
+                <TrendingUp className="h-3.5 w-3.5 text-purple-600" />
+              </div>
               Active Sales Pipeline
             </span>
-            <span className="text-xs text-purple-600 font-mono font-semibold bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100">
+            <span className="text-[10px] text-purple-600 font-mono font-bold bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100">
               38.2% Win Rate
             </span>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-slate-900 font-mono tracking-tight">$4,250,000</span>
-            <span className="text-xs text-slate-500 font-mono">142 Leads</span>
+            <span className="text-[26px] font-extrabold text-slate-900 font-mono tracking-tight">$4,250,000</span>
+            <span className="text-[11px] text-slate-400 font-mono font-semibold">142 Leads</span>
           </div>
-          <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1.5 border-t border-slate-100 font-mono">
+          <div className="flex items-center justify-between text-[11px] text-slate-500 pt-2 border-t border-slate-100/80 font-mono">
             <span>Avg Deal: $42.5K</span>
-            <span className="text-emerald-600 font-medium">Velocity: 1.8 Days</span>
+            <span className="text-emerald-600 font-semibold">Velocity: 1.8 Days</span>
           </div>
         </div>
 
         {/* Metric 4: Customer Sentiment & Health */}
-        <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:border-slate-300 transition-all space-y-2">
+        <div className="nexus-metric-card p-5 space-y-2.5">
           <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
             <span className="flex items-center gap-1.5">
-              <Bot className="h-4 w-4 text-indigo-600" />
+              <div className="p-1.5 rounded-lg bg-indigo-50 border border-indigo-100">
+                <Bot className="h-3.5 w-3.5 text-indigo-600" />
+              </div>
               AI Net Sentiment
             </span>
-            <span className="text-xs text-emerald-600 font-mono font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+            <span className="text-[10px] text-emerald-600 font-mono font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
               Delighted
             </span>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-slate-900 font-mono tracking-tight">+0.82</span>
-            <span className="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200/80 font-mono font-medium">
+            <span className="text-[26px] font-extrabold text-slate-900 font-mono tracking-tight">+0.82</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200/80 font-mono font-bold">
               1,420 Accounts
             </span>
           </div>
-          <div className="pt-1.5 border-t border-slate-100">
+          <div className="pt-2 border-t border-slate-100/80">
             <SentimentGauge score={0.82} />
           </div>
         </div>
       </div>
 
       {/* Domain Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200/80 pb-3 overflow-x-auto text-xs font-medium">
+      <div className="flex items-center gap-2 border-b border-slate-200/60 pb-3 overflow-x-auto text-[12px] font-medium">
         {[
           { id: "all", label: "All 14 Dimensions" },
           { id: "financials", label: "Financials & AR (5)" },
@@ -290,10 +298,10 @@ export default function ExecutiveCommandCenterPage() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-all ${
+            className={`px-3.5 py-1.5 rounded-xl whitespace-nowrap transition-all ${
               activeTab === tab.id
-                ? "bg-blue-600 text-white font-semibold shadow-xs"
-                : "bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-50 hover:text-slate-900"
+                ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-md shadow-blue-500/20"
+                : "bg-white text-slate-500 border border-slate-200/80 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300"
             }`}
           >
             {tab.label}
@@ -321,7 +329,7 @@ export default function ExecutiveCommandCenterPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Dimension 3: Outstanding Receivables & DSO */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-3">
+            <div className="p-4 rounded-xl nexus-metric-card space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xs font-semibold text-slate-900">Outstanding Receivables (AR)</h3>
@@ -355,7 +363,7 @@ export default function ExecutiveCommandCenterPage() {
             </div>
 
             {/* Dimension 4: Overdue Invoices & Disputes */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-3">
+            <div className="p-4 rounded-xl nexus-metric-card space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xs font-semibold text-slate-900">Overdue Invoices</h3>
@@ -394,7 +402,7 @@ export default function ExecutiveCommandCenterPage() {
             </div>
 
             {/* Dimension 5: Payment Conversion */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-3">
+            <div className="p-4 rounded-xl nexus-metric-card space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xs font-semibold text-slate-900">Payment Conversion</h3>
@@ -455,7 +463,7 @@ export default function ExecutiveCommandCenterPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Dimension 6: Pipeline Distribution */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-3">
+            <div className="p-4 rounded-xl nexus-metric-card space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xs font-semibold text-slate-900">Pipeline Stages</h3>
@@ -479,7 +487,7 @@ export default function ExecutiveCommandCenterPage() {
             </div>
 
             {/* Dimension 7: Leads Acceleration */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-3">
+            <div className="p-4 rounded-xl nexus-metric-card space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xs font-semibold text-slate-900">Leads Acceleration</h3>
@@ -515,7 +523,7 @@ export default function ExecutiveCommandCenterPage() {
             </div>
 
             {/* Dimension 8: Customer Activity & Health */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-3">
+            <div className="p-4 rounded-xl nexus-metric-card space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xs font-semibold text-slate-900">Customer Activity & Health</h3>
@@ -572,7 +580,7 @@ export default function ExecutiveCommandCenterPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Dimension 9: WhatsApp Performance */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-3">
+            <div className="p-4 rounded-xl nexus-metric-card space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100">
@@ -608,7 +616,7 @@ export default function ExecutiveCommandCenterPage() {
             </div>
 
             {/* Dimension 10: Call Performance */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-3">
+            <div className="p-4 rounded-xl nexus-metric-card space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="p-1.5 rounded-lg bg-blue-50 text-blue-600 border border-blue-100">
@@ -674,7 +682,7 @@ export default function ExecutiveCommandCenterPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Dimension 11: Workflow Health */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-3">
+            <div className="p-4 rounded-xl nexus-metric-card space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xs font-semibold text-slate-900">Workflow Execution Health</h3>
@@ -705,7 +713,7 @@ export default function ExecutiveCommandCenterPage() {
             </div>
 
             {/* Dimension 12: AI Activity & Tool Gateway */}
-            <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-3">
+            <div className="p-4 rounded-xl nexus-metric-card space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xs font-semibold text-slate-900">AI Safe Tool Gateway Telemetry</h3>
@@ -742,7 +750,7 @@ export default function ExecutiveCommandCenterPage() {
       {(activeTab === "all" || activeTab === "governance") && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Dimension 13: Exceptions Breakdown */}
-          <div className="p-5 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-4">
+          <div className="p-5 rounded-xl nexus-section-card space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-amber-500" />
@@ -781,7 +789,7 @@ export default function ExecutiveCommandCenterPage() {
           </div>
 
           {/* Dimension 14: Real-time Operational Alerts Stream */}
-          <div className="lg:col-span-2 p-5 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)] space-y-4">
+          <div className="lg:col-span-2 p-5 rounded-xl nexus-section-card space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
                 <ShieldAlert className="h-4 w-4 text-rose-500" />
@@ -865,7 +873,7 @@ export default function ExecutiveCommandCenterPage() {
       )}
 
       {/* 8. Quick Module Navigation Hub */}
-      <div className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
+      <div className="p-4 rounded-xl nexus-metric-card">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <Zap className="h-4 w-4 text-amber-500" />

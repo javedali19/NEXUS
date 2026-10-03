@@ -81,7 +81,7 @@ export const TopNav: React.FC = () => {
   ];
 
   return (
-    <header className="h-14 bg-white border-b border-slate-200/90 px-4 lg:px-6 flex items-center justify-between z-30 sticky top-0 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+    <header className="h-14 nexus-topnav px-4 lg:px-6 flex items-center justify-between z-30 sticky top-0">
       {/* Left side: Mobile Toggle + Selectors */}
       <div className="flex items-center space-x-3">
         {/* Mobile Menu Toggle */}
@@ -109,7 +109,7 @@ export const TopNav: React.FC = () => {
           </button>
 
           {isOrgOpen && (
-            <div className="absolute left-0 mt-2 w-64 rounded-xl bg-white border border-slate-200 p-2 shadow-xl ring-1 ring-black/5 z-50 animate-in fade-in duration-100">
+            <div className="absolute left-0 mt-2 w-64 rounded-xl nexus-glass p-2 z-50 animate-in fade-in duration-100">
               <div className="px-2.5 py-1 text-[10px] uppercase font-mono text-slate-400 font-semibold tracking-wider">
                 Select Enterprise Tenant
               </div>
@@ -145,7 +145,7 @@ export const TopNav: React.FC = () => {
       <div className="flex-1 max-w-xl mx-6 hidden md:block">
         <button
           onClick={() => setIsCommandPaletteOpen(true)}
-          className="w-full flex items-center justify-between bg-slate-50/80 hover:bg-slate-100/80 border border-slate-200/80 rounded-xl px-3.5 py-1.5 text-xs text-slate-500 transition-all shadow-2xs"
+          className="w-full flex items-center justify-between nexus-topnav-search px-3.5 py-2 text-xs text-slate-500 transition-all"
         >
           <div className="flex items-center space-x-2.5">
             <Search className="h-4 w-4 text-slate-400" />
@@ -173,7 +173,7 @@ export const TopNav: React.FC = () => {
           </button>
 
           {isNotifOpen && (
-            <div className="absolute right-0 mt-2 w-80 rounded-xl bg-white border border-slate-200 p-3 shadow-xl ring-1 ring-black/5 z-50 animate-in fade-in duration-100">
+            <div className="absolute right-0 mt-2 w-80 rounded-xl nexus-glass p-3 z-50 animate-in fade-in duration-100">
               <div className="flex items-center justify-between pb-2 border-b border-slate-100 px-1">
                 <span className="text-xs font-semibold text-slate-900">Notifications</span>
                 {unreadNotificationsCount > 0 && (
@@ -240,7 +240,7 @@ export const TopNav: React.FC = () => {
             onClick={() => setIsUserOpen(!isUserOpen)}
             className="flex items-center space-x-2.5 p-1 rounded-lg hover:bg-slate-100 transition-colors"
           >
-            <div className="h-8 w-8 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shadow-xs">
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-bold text-xs flex items-center justify-center shadow-sm shadow-blue-500/20">
               {user?.fullName
                 ? user.fullName
                     .split(" ")
@@ -261,7 +261,7 @@ export const TopNav: React.FC = () => {
           </button>
 
           {isUserOpen && (
-            <div className="absolute right-0 mt-2 w-72 rounded-xl bg-white border border-slate-200 p-3 shadow-xl ring-1 ring-black/5 z-50 animate-in fade-in duration-100 space-y-3">
+            <div className="absolute right-0 mt-2 w-72 rounded-xl nexus-glass p-3 z-50 animate-in fade-in duration-100 space-y-3">
               <div className="px-2 py-1">
                 <p className="text-xs font-semibold text-slate-900">{user?.fullName || "Alex Morgan"}</p>
                 <p className="text-[11px] text-slate-500">{user?.email || "alex.morgan@enterprise.internal"}</p>

@@ -62,15 +62,17 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
+    <div className="flex h-screen overflow-hidden bg-[#f8fafc] text-[var(--foreground)]">
       {/* 1. Responsive Sidebar */}
       <Sidebar />
 
       {/* 2. Top Nav + Main Viewport */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <TopNav />
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 bg-[#f8fafc] scrollbar-thin scrollbar-thumb-slate-200">
-          {children}
+        <main className="flex-1 overflow-y-auto p-5 sm:p-7 space-y-6 bg-gradient-to-br from-[#f8fafc] via-[#f8fafc] to-[#f1f5f9] scrollbar-thin scrollbar-thumb-slate-200">
+          <div className="nexus-page-enter">
+            {children}
+          </div>
         </main>
       </div>
 
