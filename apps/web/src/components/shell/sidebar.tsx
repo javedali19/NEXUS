@@ -105,53 +105,6 @@ export const Sidebar: React.FC = () => {
     setCollapsedGroups(prev => ({ ...prev, [groupId]: !prev[groupId] }));
   };
 
-  const getCustomBadge = (label: string, itemBadge?: string) => {
-    if (label === "Command Center" || label === "Voice Calls") {
-      return (
-        <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-sans">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          Live
-        </span>
-      );
-    }
-    if (label === "Leads") {
-      return (
-        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/80">
-          12
-        </span>
-      );
-    }
-    if (label === "Deals") {
-      return (
-        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-          8
-        </span>
-      );
-    }
-    if (label === "WhatsApp") {
-      return (
-        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80">
-          5
-        </span>
-      );
-    }
-    if (label === "Conversations" || label === "Unified Inbox") {
-      return (
-        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-          8
-        </span>
-      );
-    }
-    if (itemBadge) {
-      return (
-        <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200/60">
-          {itemBadge}
-        </span>
-      );
-    }
-    return null;
-  };
-
   return (
     <>
       {/* Mobile Backdrop */}
@@ -241,7 +194,6 @@ export const Sidebar: React.FC = () => {
 
                   {!isGroupCollapsed && allowedItems.map((item) => {
                     const isActive = pathname === item.href || (item.id === "customers" && (pathname.startsWith("/customers") || pathname === "/timeline"));
-                    const customBadge = getCustomBadge(item.label, item.badge);
 
                     return (
                       <Link
@@ -249,20 +201,16 @@ export const Sidebar: React.FC = () => {
                         href={item.href}
                         onClick={() => setIsMobileSidebarOpen(false)}
                         className={cn(
-                          "nexus-sidebar-item flex items-center justify-between px-3 py-[7px] text-[12.5px] select-none",
+                          "nexus-sidebar-item flex items-center space-x-2.5 px-3 py-[7px] text-[12.5px] select-none",
                           isActive
                             ? "active"
                             : "text-slate-600 hover:text-slate-900 font-medium"
                         )}
                       >
-                        <div className="flex items-center space-x-2.5 min-w-0">
-                          <span className={cn("shrink-0 transition-colors", isActive ? "text-blue-600" : "text-slate-400")}>
-                            {ICON_MAP[item.iconName] || <LayoutDashboard className="h-4 w-4" />}
-                          </span>
-                          <span className="truncate">{item.label}</span>
-                        </div>
-
-                        {customBadge}
+                        <span className={cn("shrink-0 transition-colors", isActive ? "text-blue-600" : "text-slate-400")}>
+                          {ICON_MAP[item.iconName] || <LayoutDashboard className="h-4 w-4" />}
+                        </span>
+                        <span className="truncate">{item.label}</span>
                       </Link>
                     );
                   })}
