@@ -213,27 +213,27 @@ export default function VoiceAgentIntegrationPage() {
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200/80 pb-5">
         <div>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-tr from-purple-600/30 to-pink-600/20 border border-purple-500/30 text-purple-400">
+            <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
               <Layers className="h-6 w-6" />
             </div>
             <div>
               <div className="flex items-center gap-2.5">
-                <h1 className="text-2xl font-bold tracking-tight text-white">AI Voice-Agent Orchestrator</h1>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                <h1 className="text-2xl font-bold tracking-tight text-slate-900">AI Voice-Agent Orchestrator</h1>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
                   <Sparkles className="h-3 w-3" />
                   Full-Duplex Pipeline
                 </span>
               </div>
-              <p className="text-sm text-slate-400 mt-1">
+              <p className="text-sm text-slate-500 mt-1">
                 Real-time conversational pipeline:{" "}
-                <span className="text-purple-300 font-medium">Telephony (Twilio)</span> →{" "}
-                <span className="text-blue-300 font-medium">STT (Deepgram nova-2)</span> →{" "}
-                <span className="text-emerald-300 font-medium">AI Decision Layer</span> →{" "}
-                <span className="text-pink-300 font-medium">Voice Synthesis (ElevenLabs turbo_v2_5)</span> →{" "}
-                <span className="text-purple-300 font-medium">Telephony</span>.
+                <span className="text-slate-700 font-medium">Telephony (Twilio)</span> →{" "}
+                <span className="text-slate-700 font-medium">STT (Deepgram nova-2)</span> →{" "}
+                <span className="text-slate-700 font-medium">AI Decision Layer</span> →{" "}
+                <span className="text-slate-700 font-medium">Voice Synthesis (ElevenLabs turbo_v2_5)</span> →{" "}
+                <span className="text-slate-700 font-medium">Telephony</span>.
               </p>
             </div>
           </div>
@@ -242,9 +242,9 @@ export default function VoiceAgentIntegrationPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/voice-calls"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition-colors"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 shadow-sm transition-colors"
           >
-            <PhoneCall className="h-3.5 w-3.5" />
+            <PhoneCall className="h-3.5 w-3.5 text-slate-500" />
             Voice Studio & Ledger
           </Link>
         </div>
@@ -252,10 +252,10 @@ export default function VoiceAgentIntegrationPage() {
 
       {/* Inviolable Quad-Gate Authorization Banner */}
       <div
-        className={`rounded-xl border p-5 transition-all shadow-xl ${
+        className={`rounded-xl border p-5 transition-all shadow-sm ${
           isQuadGateAuthorized
-            ? "bg-gradient-to-r from-slate-900 via-slate-900/90 to-emerald-950/30 border-emerald-500/40"
-            : "bg-gradient-to-r from-slate-900 via-slate-900/90 to-red-950/30 border-red-500/40"
+            ? "bg-slate-900 border-slate-800 text-white"
+            : "bg-slate-900 border-rose-900/50 text-white"
         }`}
       >
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -264,7 +264,7 @@ export default function VoiceAgentIntegrationPage() {
               className={`p-3 rounded-xl border flex-shrink-0 ${
                 isQuadGateAuthorized
                   ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                  : "bg-red-500/10 border-red-500/30 text-red-400 animate-pulse"
+                  : "bg-rose-500/10 border-rose-500/30 text-rose-400 animate-pulse"
               }`}
             >
               {isQuadGateAuthorized ? <ShieldCheck className="h-6 w-6" /> : <ShieldAlert className="h-6 w-6" />}
@@ -279,7 +279,7 @@ export default function VoiceAgentIntegrationPage() {
                   className={`px-2.5 py-0.5 rounded text-xs font-bold ${
                     isQuadGateAuthorized
                       ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                      : "bg-red-500/20 text-red-300 border border-red-500/30"
+                      : "bg-rose-500/20 text-rose-300 border border-rose-500/30"
                   }`}
                 >
                   {isQuadGateAuthorized
@@ -297,7 +297,7 @@ export default function VoiceAgentIntegrationPage() {
           <button
             onClick={handleValidateAllProviders}
             disabled={isValidatingAll}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold shadow-lg shadow-purple-600/20 transition-colors disabled:opacity-50 flex-shrink-0"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition-colors disabled:opacity-50 flex-shrink-0"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${isValidatingAll ? "animate-spin" : ""}`} />
             {isValidatingAll ? "Validating Quad-Handshake..." : "Validate All Providers"}

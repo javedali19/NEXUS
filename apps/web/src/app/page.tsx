@@ -241,12 +241,12 @@ export default function ExecutiveCommandCenterPage() {
         <div className="nexus-metric-card p-5 space-y-2.5">
           <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
             <span className="flex items-center gap-1.5">
-              <div className="p-1.5 rounded-lg bg-purple-50 border border-purple-100">
-                <TrendingUp className="h-3.5 w-3.5 text-purple-600" />
+              <div className="p-1.5 rounded-lg bg-blue-50 border border-blue-100">
+                <TrendingUp className="h-3.5 w-3.5 text-blue-600" />
               </div>
               Active Sales Pipeline
             </span>
-            <span className="text-[10px] text-purple-600 font-mono font-bold bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100">
+            <span className="text-[10px] text-blue-700 font-mono font-bold bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200/80">
               38.2% Win Rate
             </span>
           </div>
@@ -901,10 +901,10 @@ export default function ExecutiveCommandCenterPage() {
           </Link>
           <Link
             href="/call-center"
-            className="p-2.5 rounded-lg bg-slate-50/80 hover:bg-purple-50/60 border border-slate-200/80 hover:border-purple-200 text-slate-700 hover:text-purple-700 flex items-center justify-between transition-all group"
+            className="p-2.5 rounded-lg bg-slate-50/80 hover:bg-blue-50/60 border border-slate-200/80 hover:border-blue-200 text-slate-700 hover:text-blue-700 flex items-center justify-between transition-all group"
           >
             <span>Call Center</span>
-            <Headphones className="h-3.5 w-3.5 text-purple-500 group-hover:text-purple-600" />
+            <Headphones className="h-3.5 w-3.5 text-blue-600 group-hover:text-blue-700" />
           </Link>
           <Link
             href="/support"

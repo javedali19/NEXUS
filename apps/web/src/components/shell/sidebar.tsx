@@ -106,9 +106,9 @@ export const Sidebar: React.FC = () => {
   };
 
   const getCustomBadge = (label: string, itemBadge?: string) => {
-    if (label === "Command Center") {
+    if (label === "Command Center" || label === "Voice Calls") {
       return (
-        <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full nexus-badge-live font-sans">
+        <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-sans">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
           Live
         </span>
@@ -116,43 +116,35 @@ export const Sidebar: React.FC = () => {
     }
     if (label === "Leads") {
       return (
-        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
+        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/80">
           12
         </span>
       );
     }
     if (label === "Deals") {
       return (
-        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-purple-50 text-purple-600 border border-purple-100">
+        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
           8
         </span>
       );
     }
     if (label === "WhatsApp") {
       return (
-        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100">
+        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80">
           5
         </span>
       );
     }
     if (label === "Conversations" || label === "Unified Inbox") {
       return (
-        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-600 border border-amber-100">
+        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
           8
-        </span>
-      );
-    }
-    if (label === "Voice Calls") {
-      return (
-        <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full nexus-badge-live font-sans">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          Live
         </span>
       );
     }
     if (itemBadge) {
       return (
-        <span className="text-[10px] font-mono font-medium px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500">
+        <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200/60">
           {itemBadge}
         </span>
       );

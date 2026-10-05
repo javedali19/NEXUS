@@ -621,21 +621,21 @@ export default function VoiceCallsPage() {
   return (
     <div className="space-y-6 pb-12">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200/80 pb-5">
         <div>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-tr from-purple-600/30 to-indigo-600/20 border border-purple-500/30 text-purple-400">
+            <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
               <PhoneCall className="h-6 w-6" />
             </div>
             <div>
               <div className="flex items-center gap-2.5">
-                <h1 className="text-2xl font-bold tracking-tight text-white">AI Voice & Telephony Command Studio</h1>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <h1 className="text-2xl font-bold tracking-tight text-slate-900">AI Voice & Telephony Command Studio</h1>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                   Twilio SIP Engine Active
                 </span>
               </div>
-              <p className="text-sm text-slate-400 mt-1">
+              <p className="text-sm text-slate-500 mt-1">
                 Full-stack voice infrastructure: WebRTC streaming, speaker-diarized STT, sentiment extraction, TCPA compliance, and warm human escalations.
               </p>
             </div>
@@ -645,21 +645,21 @@ export default function VoiceCallsPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/call-center"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 text-xs font-semibold border border-blue-500/40 transition-colors"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 shadow-sm transition-colors"
           >
-            <Headphones className="h-3.5 w-3.5" />
+            <Headphones className="h-3.5 w-3.5 text-slate-500" />
             Call Center Console
           </Link>
           <Link
             href="/voice-agent"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-pink-600/20 hover:bg-pink-600/30 text-pink-300 text-xs font-semibold border border-pink-500/40 transition-colors"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 shadow-sm transition-colors"
           >
-            <Layers className="h-3.5 w-3.5" />
+            <Layers className="h-3.5 w-3.5 text-slate-500" />
             AI Voice-Agent Pipeline
           </Link>
           <button
             onClick={() => setActiveTab("dialpad")}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium shadow-lg shadow-purple-600/20 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium shadow-sm transition-colors"
           >
             <Phone className="h-4 w-4" />
             Launch Softphone
@@ -668,26 +668,26 @@ export default function VoiceCallsPage() {
       </div>
 
       {/* Twilio Provider Integration Bar */}
-      <div className="rounded-xl bg-gradient-to-r from-slate-900 via-slate-900/90 to-purple-950/40 border border-purple-500/30 p-4 shadow-xl">
+      <div className="rounded-xl bg-slate-900 border border-slate-800 p-4 shadow-sm text-white">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div className="flex items-start md:items-center gap-4">
-            <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 flex-shrink-0">
+            <div className="p-2.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex-shrink-0">
               <Radio className="h-5 w-5 animate-pulse" />
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-semibold uppercase tracking-wider text-purple-400">Telephony Provider</span>
-                <span className="text-sm font-bold text-white">Twilio SIP & Voice WebRTC Trunks</span>
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Telephony Provider</span>
+                <span className="text-sm font-semibold text-white">Twilio SIP & Voice WebRTC Trunks</span>
                 <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-800 text-slate-300 border border-slate-700">
                   SID: AC8f9e••••••••b10a
                 </span>
-                <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
                   <CheckCircle2 className="h-3 w-3" /> Healthy (38ms)
                 </span>
               </div>
               <p className="text-xs text-slate-400">
                 Primary DID: <span className="font-mono text-slate-200">+1 (800) 555-0199</span> • Codec:{" "}
-                <span className="font-mono text-purple-300">PCMU / G.711u</span> • Encrypted GCS Archiving:{" "}
+                <span className="font-mono text-slate-200">PCMU / G.711u</span> • Encrypted GCS Archiving:{" "}
                 <span className="text-emerald-400 font-medium">90-Day Retention</span>
               </p>
             </div>
@@ -707,7 +707,7 @@ export default function VoiceCallsPage() {
             <button
               onClick={handleTestTwilioConnection}
               disabled={isTestingConnection}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 text-xs font-medium border border-purple-500/40 transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition-colors disabled:opacity-50"
             >
               <RefreshCw className={`h-3 w-3 ${isTestingConnection ? "animate-spin" : ""}`} />
               {isTestingConnection ? "Testing SIP Ping..." : "Test Connection"}
@@ -725,83 +725,91 @@ export default function VoiceCallsPage() {
 
       {/* 4 Quick Key Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="rounded-xl bg-slate-900 border border-slate-800 p-4">
+        <div className="nexus-metric-card p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">Total Calls Today</span>
-            <PhoneCall className="h-4 w-4 text-purple-400" />
+            <span className="text-xs font-medium text-slate-500">Total Calls Today</span>
+            <div className="p-1.5 rounded-md bg-blue-50 text-blue-600">
+              <PhoneCall className="h-4 w-4" />
+            </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-white">142</span>
-            <span className="text-xs font-medium text-emerald-400 flex items-center">
+            <span className="text-2xl font-bold text-slate-900">142</span>
+            <span className="text-xs font-medium text-emerald-600 flex items-center">
               <TrendingUp className="h-3 w-3 mr-0.5" /> +18.4%
             </span>
           </div>
           <span className="text-[11px] text-slate-500">89 Inbound • 53 Outbound</span>
         </div>
 
-        <div className="rounded-xl bg-slate-900 border border-slate-800 p-4">
+        <div className="nexus-metric-card p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">Avg Handle Duration</span>
-            <Clock className="h-4 w-4 text-indigo-400" />
+            <span className="text-xs font-medium text-slate-500">Avg Handle Duration</span>
+            <div className="p-1.5 rounded-md bg-slate-100 text-slate-600">
+              <Clock className="h-4 w-4" />
+            </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-white">03m 48s</span>
-            <span className="text-xs font-medium text-slate-400">per call</span>
+            <span className="text-2xl font-bold text-slate-900">03m 48s</span>
+            <span className="text-xs font-medium text-slate-500">per call</span>
           </div>
           <span className="text-[11px] text-slate-500">100% automated transcription</span>
         </div>
 
-        <div className="rounded-xl bg-slate-900 border border-slate-800 p-4">
+        <div className="nexus-metric-card p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">Avg AI Sentiment</span>
-            <Sparkles className="h-4 w-4 text-amber-400" />
+            <span className="text-xs font-medium text-slate-500">Avg AI Sentiment</span>
+            <div className="p-1.5 rounded-md bg-emerald-50 text-emerald-600">
+              <Sparkles className="h-4 w-4" />
+            </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-emerald-400">+0.72</span>
-            <span className="text-xs font-medium text-slate-400">/ 1.00</span>
+            <span className="text-2xl font-bold text-emerald-600">+0.72</span>
+            <span className="text-xs font-medium text-slate-500">/ 1.00</span>
           </div>
-          <span className="text-[11px] text-emerald-500">Delighted • 89% positive sentiment</span>
+          <span className="text-[11px] text-slate-500">Delighted • 89% positive sentiment</span>
         </div>
 
-        <div className="rounded-xl bg-slate-900 border border-slate-800 p-4">
+        <div className="nexus-metric-card p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400">TCPA Legal Compliance</span>
-            <ShieldCheck className="h-4 w-4 text-emerald-400" />
+            <span className="text-xs font-medium text-slate-500">TCPA Legal Compliance</span>
+            <div className="p-1.5 rounded-md bg-blue-50 text-blue-600">
+              <ShieldCheck className="h-4 w-4" />
+            </div>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-white">100%</span>
-            <span className="text-xs font-medium text-emerald-400">0 Violations</span>
+            <span className="text-2xl font-bold text-slate-900">100%</span>
+            <span className="text-xs font-medium text-emerald-600">0 Violations</span>
           </div>
           <span className="text-[11px] text-slate-500">Strict 08:00 - 21:00 & DNC checks</span>
         </div>
       </div>
 
       {/* Tabs Bar */}
-      <div className="flex items-center gap-1 border-b border-slate-800 overflow-x-auto">
+      <div className="flex items-center gap-1 border-b border-slate-200/80 overflow-x-auto">
         <button
           onClick={() => setActiveTab("calls")}
-          className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap flex items-center gap-2 ${
+          className={`px-4 py-2.5 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap flex items-center gap-2 ${
             activeTab === "calls"
-              ? "border-purple-500 text-purple-400"
-              : "border-transparent text-slate-400 hover:text-slate-200"
+              ? "border-blue-600 text-blue-600"
+              : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300"
           }`}
         >
-          <PhoneCall className="h-4 w-4" />
+          <PhoneCall className="h-3.5 w-3.5" />
           Master Calls Ledger & Intelligence ({calls.length})
         </button>
 
         <button
           onClick={() => setActiveTab("dialpad")}
-          className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap flex items-center gap-2 ${
+          className={`px-4 py-2.5 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap flex items-center gap-2 ${
             activeTab === "dialpad"
-              ? "border-purple-500 text-purple-400"
-              : "border-transparent text-slate-400 hover:text-slate-200"
+              ? "border-blue-600 text-blue-600"
+              : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300"
           }`}
         >
-          <Phone className="h-4 w-4" />
+          <Phone className="h-3.5 w-3.5" />
           Softphone & Outbound AI Dialer
           {isCallingActive && (
-            <span className="px-1.5 py-0.5 rounded text-[10px] bg-red-500 text-white font-mono animate-pulse">
+            <span className="px-1.5 py-0.5 rounded text-[10px] bg-red-600 text-white font-mono animate-pulse">
               LIVE CALL
             </span>
           )}
@@ -809,37 +817,37 @@ export default function VoiceCallsPage() {
 
         <button
           onClick={() => setActiveTab("numbers")}
-          className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap flex items-center gap-2 ${
+          className={`px-4 py-2.5 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap flex items-center gap-2 ${
             activeTab === "numbers"
-              ? "border-purple-500 text-purple-400"
-              : "border-transparent text-slate-400 hover:text-slate-200"
+              ? "border-blue-600 text-blue-600"
+              : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300"
           }`}
         >
-          <Users className="h-4 w-4" />
+          <Users className="h-3.5 w-3.5" />
           Provisioned DIDs ({INITIAL_PHONE_NUMBERS.length})
         </button>
 
         <button
           onClick={() => setActiveTab("queues")}
-          className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap flex items-center gap-2 ${
+          className={`px-4 py-2.5 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap flex items-center gap-2 ${
             activeTab === "queues"
-              ? "border-purple-500 text-purple-400"
-              : "border-transparent text-slate-400 hover:text-slate-200"
+              ? "border-blue-600 text-blue-600"
+              : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300"
           }`}
         >
-          <Headphones className="h-4 w-4" />
+          <Headphones className="h-3.5 w-3.5" />
           Routing Queues ({INITIAL_QUEUES.length})
         </button>
 
         <button
           onClick={() => setActiveTab("compliance")}
-          className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors whitespace-nowrap flex items-center gap-2 ${
+          className={`px-4 py-2.5 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap flex items-center gap-2 ${
             activeTab === "compliance"
-              ? "border-purple-500 text-purple-400"
-              : "border-transparent text-slate-400 hover:text-slate-200"
+              ? "border-blue-600 text-blue-600"
+              : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300"
           }`}
         >
-          <ShieldCheck className="h-4 w-4" />
+          <ShieldCheck className="h-3.5 w-3.5" />
           TCPA Calling Windows & Consent Audit
         </button>
       </div>
@@ -850,7 +858,7 @@ export default function VoiceCallsPage() {
       {activeTab === "calls" && (
         <div className="space-y-6">
           {/* Filter Bar */}
-          <div className="flex flex-col md:flex-row gap-3 items-center justify-between bg-slate-900/60 border border-slate-800 p-3 rounded-xl">
+          <div className="flex flex-col md:flex-row gap-3 items-center justify-between bg-white border border-slate-200/90 p-3 rounded-xl shadow-xs">
             <div className="relative w-full md:w-80">
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
               <input
@@ -858,18 +866,18 @@ export default function VoiceCallsPage() {
                 placeholder="Search caller, company, SID, phone..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-purple-500"
+                className="w-full bg-slate-50 border border-slate-200 rounded-lg pl-9 pr-4 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
               />
             </div>
 
             <div className="flex items-center gap-3 w-full md:w-auto">
-              <div className="flex items-center gap-2 text-xs text-slate-400">
-                <Filter className="h-3.5 w-3.5" />
-                <span>Purpose:</span>
+              <div className="flex items-center gap-2 text-xs text-slate-600">
+                <Filter className="h-3.5 w-3.5 text-slate-400" />
+                <span className="font-medium">Purpose:</span>
                 <select
                   value={filterPurpose}
                   onChange={(e) => setFilterPurpose(e.target.value)}
-                  className="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-purple-500"
+                  className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-blue-500"
                 >
                   <option value="all">All Purposes</option>
                   <option value="inbound_lead_qualification">Lead Qualification</option>
@@ -880,12 +888,12 @@ export default function VoiceCallsPage() {
                 </select>
               </div>
 
-              <div className="flex items-center gap-2 text-xs text-slate-400">
-                <span>Outcome:</span>
+              <div className="flex items-center gap-2 text-xs text-slate-600">
+                <span className="font-medium">Outcome:</span>
                 <select
                   value={filterOutcome}
                   onChange={(e) => setFilterOutcome(e.target.value)}
-                  className="bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-purple-500"
+                  className="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-blue-500"
                 >
                   <option value="all">All Outcomes</option>
                   <option value="qualified_opportunity_created">Opportunity Created</option>
@@ -901,10 +909,10 @@ export default function VoiceCallsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* Table Area (7 cols on lg) */}
             <div className="lg:col-span-7 space-y-3">
-              <div className="rounded-xl border border-slate-800 bg-slate-900/50 overflow-hidden">
+              <div className="rounded-xl border border-slate-200/90 bg-white overflow-hidden shadow-xs">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-950/80 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+                    <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase tracking-wider font-semibold">
                       <tr>
                         <th className="px-3 py-3 w-12 text-center font-mono">#</th>
                         <th className="px-4 py-3">Customer / Party</th>
@@ -915,7 +923,7 @@ export default function VoiceCallsPage() {
                         <th className="px-3 py-3 text-right">Action</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800">
+                    <tbody className="divide-y divide-slate-100">
                       {filteredCalls.map((call, idx) => {
                         const isSelected = selectedCall?.id === call.id;
                         return (
@@ -923,16 +931,16 @@ export default function VoiceCallsPage() {
                             key={call.id}
                             onClick={() => setSelectedCall(call)}
                             className={`cursor-pointer transition-colors ${
-                              isSelected ? "bg-purple-950/30 border-l-2 border-purple-500" : "hover:bg-slate-800/40"
+                              isSelected ? "bg-blue-50/70 border-l-4 border-blue-600 font-medium" : "hover:bg-slate-50/80"
                             }`}
                           >
-                            <td className="px-3 py-3 text-center font-mono text-slate-400 font-medium">
+                            <td className="px-3 py-3 text-center font-mono text-slate-400">
                               {idx + 1}
                             </td>
                             <td className="px-4 py-3">
-                              <div className="font-medium text-white">{call.customerName}</div>
-                              <div className="text-[11px] text-slate-400">{call.companyName}</div>
-                              <div className="text-[10px] font-mono text-slate-500 mt-0.5">
+                              <div className="font-semibold text-slate-900">{call.customerName}</div>
+                              <div className="text-[11px] text-slate-500">{call.companyName}</div>
+                              <div className="text-[10px] font-mono text-slate-400 mt-0.5">
                                 {call.direction === "inbound" ? call.fromNumber : call.toNumber}
                               </div>
                             </td>
@@ -941,31 +949,31 @@ export default function VoiceCallsPage() {
                               <span
                                 className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium ${
                                   call.direction === "inbound"
-                                    ? "bg-blue-500/10 text-blue-400 border border-blue-500/20"
-                                    : "bg-purple-500/10 text-purple-400 border border-purple-500/20"
+                                    ? "bg-blue-50 text-blue-700 border border-blue-200/80"
+                                    : "bg-slate-100 text-slate-700 border border-slate-200/80"
                                 }`}
                               >
                                 {call.direction === "inbound" ? (
-                                  <PhoneIncoming className="h-3 w-3" />
+                                  <PhoneIncoming className="h-3 w-3 text-blue-600" />
                                 ) : (
-                                  <PhoneOutgoing className="h-3 w-3" />
+                                  <PhoneOutgoing className="h-3 w-3 text-slate-600" />
                                 )}
                                 {call.direction === "inbound" ? "Inbound" : "Outbound"}
                               </span>
                             </td>
 
                             <td className="px-3 py-3">
-                              <div className="font-medium text-slate-300 capitalize">
+                              <div className="font-medium text-slate-800 capitalize">
                                 {call.purpose.replace(/_/g, " ")}
                               </div>
                               {call.outcome && (
-                                <span className="inline-block mt-0.5 text-[10px] text-slate-400 capitalize">
+                                <span className="inline-block mt-0.5 text-[10px] text-slate-500 capitalize">
                                   {call.outcome.replace(/_/g, " ")}
                                 </span>
                               )}
                             </td>
 
-                            <td className="px-3 py-3 font-mono text-slate-300">
+                            <td className="px-3 py-3 font-mono text-slate-600">
                               {formatDuration(call.durationSeconds)}
                             </td>
 
@@ -973,10 +981,10 @@ export default function VoiceCallsPage() {
                               <span
                                 className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold ${
                                   call.sentimentScore >= 0.5
-                                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                                    ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                                     : call.sentimentScore >= 0
-                                    ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                                    : "bg-red-500/10 text-red-400 border border-red-500/20"
+                                    ? "bg-amber-50 text-amber-700 border border-amber-200"
+                                    : "bg-rose-50 text-rose-700 border border-rose-200"
                                 }`}
                               >
                                 {call.sentimentScore > 0 ? `+${call.sentimentScore}` : call.sentimentScore}
@@ -990,7 +998,7 @@ export default function VoiceCallsPage() {
                                   setSelectedCall(call);
                                   setIsPlayingAudio(true);
                                 }}
-                                className="p-1.5 rounded-lg bg-slate-800 hover:bg-purple-600/30 text-slate-300 hover:text-purple-300 transition-colors"
+                                className="p-1.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-600 hover:text-blue-600 border border-slate-200/80 shadow-xs transition-colors"
                                 title="Listen to Recording"
                               >
                                 <Play className="h-3.5 w-3.5" />
@@ -1008,13 +1016,13 @@ export default function VoiceCallsPage() {
             {/* Call Detail Drawer (5 cols on lg) */}
             <div className="lg:col-span-5 space-y-4">
               {selectedCall ? (
-                <div className="rounded-xl border border-slate-800 bg-slate-900 p-5 space-y-5 sticky top-4">
+                <div className="rounded-xl border border-slate-200/90 bg-white p-5 space-y-5 sticky top-4 shadow-sm">
                   {/* Drawer Header */}
-                  <div className="flex items-start justify-between pb-4 border-b border-slate-800">
+                  <div className="flex items-start justify-between pb-4 border-b border-slate-200/80">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h2 className="text-base font-bold text-white">{selectedCall.customerName}</h2>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-purple-300 border border-purple-500/30">
+                        <h2 className="text-base font-bold text-slate-900">{selectedCall.customerName}</h2>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 text-slate-700 border border-slate-200">
                           {selectedCall.companyName}
                         </span>
                       </div>
@@ -1024,34 +1032,34 @@ export default function VoiceCallsPage() {
                     </div>
 
                     <div className="text-right">
-                      <span className="text-xs font-mono text-slate-400">{selectedCall.startedAt}</span>
-                      <div className="text-xs text-slate-500 font-mono">Cost: ${selectedCall.costUsd.toFixed(4)}</div>
+                      <span className="text-xs font-mono text-slate-500">{selectedCall.startedAt}</span>
+                      <div className="text-xs text-slate-400 font-mono">Cost: ${selectedCall.costUsd.toFixed(4)}</div>
                     </div>
                   </div>
 
                   {/* Audio Player & Recording Reference */}
-                  <div className="rounded-lg bg-slate-950 border border-slate-800 p-3 space-y-2.5">
+                  <div className="rounded-lg bg-slate-50 border border-slate-200/80 p-3 space-y-2.5">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-semibold text-slate-300 flex items-center gap-1.5">
-                        <Volume2 className="h-3.5 w-3.5 text-purple-400" />
+                      <span className="font-semibold text-slate-800 flex items-center gap-1.5">
+                        <Volume2 className="h-3.5 w-3.5 text-blue-600" />
                         Encrypted Voice Recording
                       </span>
-                      <span className="font-mono text-slate-400">
+                      <span className="font-mono text-slate-500">
                         {formatDuration(Math.round((selectedCall.durationSeconds * audioPlaybackProgress) / 100))} /{" "}
                         {formatDuration(selectedCall.durationSeconds)}
                       </span>
                     </div>
 
                     {/* Fake Audio Waveform */}
-                    <div className="flex items-center gap-1 h-8 px-2 bg-slate-900 rounded border border-slate-800 overflow-hidden">
+                    <div className="flex items-center gap-1 h-8 px-2 bg-white rounded border border-slate-200 overflow-hidden">
                       {[15, 45, 80, 60, 30, 90, 75, 40, 20, 65, 85, 95, 30, 50, 70, 45, 30, 85, 60, 40, 90, 30].map(
                         (h, idx) => (
                           <div
                             key={idx}
                             className={`flex-1 rounded-full transition-all duration-300 ${
                               idx / 22 <= audioPlaybackProgress / 100
-                                ? "bg-purple-500"
-                                : "bg-slate-700 hover:bg-slate-600"
+                                ? "bg-blue-600"
+                                : "bg-slate-200 hover:bg-slate-300"
                             }`}
                             style={{ height: `${h}%` }}
                           />
@@ -1062,14 +1070,14 @@ export default function VoiceCallsPage() {
                     <div className="flex items-center justify-between pt-1">
                       <button
                         onClick={() => setIsPlayingAudio(!isPlayingAudio)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-purple-600 hover:bg-purple-500 text-white text-xs font-medium transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium shadow-xs transition-colors"
                       >
                         {isPlayingAudio ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
                         {isPlayingAudio ? "Pause Audio" : "Play Recording"}
                       </button>
 
-                      <div className="text-[10px] text-slate-400 font-mono flex items-center gap-1">
-                        <Lock className="h-3 w-3 text-emerald-400" />
+                      <div className="text-[10px] text-slate-500 font-mono flex items-center gap-1">
+                        <Lock className="h-3 w-3 text-emerald-600" />
                         AES-256 (GCS)
                       </div>
                     </div>
@@ -1078,20 +1086,20 @@ export default function VoiceCallsPage() {
                   {/* AI Summary & Sentiment Gauge */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                        <Sparkles className="h-3.5 w-3.5 text-purple-400" />
+                      <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                        <Sparkles className="h-3.5 w-3.5 text-blue-600" />
                         AI Executive Summary
                       </span>
 
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[11px] text-slate-400">Sentiment:</span>
+                        <span className="text-[11px] text-slate-500">Sentiment:</span>
                         <span
                           className={`text-xs font-bold px-1.5 py-0.5 rounded ${
                             selectedCall.sentimentScore >= 0.5
-                              ? "bg-emerald-500/20 text-emerald-300"
+                              ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                               : selectedCall.sentimentScore >= 0
-                              ? "bg-amber-500/20 text-amber-300"
-                              : "bg-red-500/20 text-red-300"
+                              ? "bg-amber-50 text-amber-700 border border-amber-200"
+                              : "bg-rose-50 text-rose-700 border border-rose-200"
                           }`}
                         >
                           {selectedCall.sentimentScore > 0
@@ -1101,7 +1109,7 @@ export default function VoiceCallsPage() {
                       </div>
                     </div>
 
-                    <p className="text-xs leading-relaxed text-slate-300 bg-slate-950/60 p-3 rounded-lg border border-slate-800">
+                    <p className="text-xs leading-relaxed text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-200">
                       {selectedCall.executiveSummary}
                     </p>
                   </div>
@@ -1111,14 +1119,14 @@ export default function VoiceCallsPage() {
                     <div className="space-y-2">
                       {selectedCall.buyingSignals.length > 0 && (
                         <div>
-                          <span className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide">
+                          <span className="text-[11px] font-semibold text-emerald-700 uppercase tracking-wide">
                             Buying Signals:
                           </span>
                           <div className="flex flex-wrap gap-1.5 mt-1">
                             {selectedCall.buyingSignals.map((signal, i) => (
                               <span
                                 key={i}
-                                className="px-2 py-0.5 rounded text-[11px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
+                                className="px-2 py-0.5 rounded text-[11px] bg-emerald-50 text-emerald-700 border border-emerald-200"
                               >
                                 {signal}
                               </span>
@@ -1129,16 +1137,16 @@ export default function VoiceCallsPage() {
 
                       {selectedCall.churnRisks.length > 0 && (
                         <div>
-                          <span className="text-[11px] font-semibold text-red-400 uppercase tracking-wide">
+                          <span className="text-[11px] font-semibold text-rose-700 uppercase tracking-wide">
                             Churn Risk Flags:
                           </span>
                           <div className="flex flex-wrap gap-1.5 mt-1">
                             {selectedCall.churnRisks.map((risk, i) => (
                               <span
                                 key={i}
-                                className="px-2 py-0.5 rounded text-[11px] bg-red-500/10 text-red-300 border border-red-500/20 flex items-center gap-1"
+                                className="px-2 py-0.5 rounded text-[11px] bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1"
                               >
-                                <AlertTriangle className="h-3 w-3" />
+                                <AlertTriangle className="h-3 w-3 text-rose-500" />
                                 {risk}
                               </span>
                             ))}
@@ -1151,13 +1159,13 @@ export default function VoiceCallsPage() {
                   {/* Action Items */}
                   {selectedCall.actionItems.length > 0 && (
                     <div className="space-y-1.5">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
                         Autonomous Action Items
                       </span>
                       <ul className="space-y-1">
                         {selectedCall.actionItems.map((item, i) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
-                            <CheckCircle2 className="h-3.5 w-3.5 text-purple-400 flex-shrink-0 mt-0.5" />
+                          <li key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-blue-600 flex-shrink-0 mt-0.5" />
                             <span>{item}</span>
                           </li>
                         ))}
@@ -1167,29 +1175,29 @@ export default function VoiceCallsPage() {
 
                   {/* Supervisor Warm Transfer Status if present */}
                   {selectedCall.escalation && (
-                    <div className="rounded-lg bg-red-950/30 border border-red-500/30 p-3 space-y-2">
+                    <div className="rounded-lg bg-rose-50 border border-rose-200 p-3 space-y-2">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-bold text-red-400 flex items-center gap-1.5">
+                        <span className="font-bold text-rose-700 flex items-center gap-1.5">
                           <PhoneForwarded className="h-3.5 w-3.5" />
                           Escalated to Supervisor
                         </span>
-                        <span className="px-1.5 py-0.5 rounded text-[10px] uppercase font-bold bg-red-500 text-white">
+                        <span className="px-1.5 py-0.5 rounded text-[10px] uppercase font-bold bg-rose-600 text-white">
                           {selectedCall.escalation.priority}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-300">
-                        Assigned: <strong className="text-white">{selectedCall.escalation.assignedSupervisor}</strong> (
+                      <p className="text-xs text-slate-700">
+                        Assigned: <strong className="text-slate-900">{selectedCall.escalation.assignedSupervisor}</strong> (
                         {selectedCall.escalation.targetQueue})
                       </p>
-                      <p className="text-[11px] text-slate-400 italic">"{selectedCall.escalation.reason}"</p>
+                      <p className="text-[11px] text-slate-500 italic">"{selectedCall.escalation.reason}"</p>
                     </div>
                   )}
 
                   {/* Speaker-Diarized Transcript Feed */}
-                  <div className="space-y-2 pt-2 border-t border-slate-800">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center justify-between">
+                  <div className="space-y-2 pt-2 border-t border-slate-200">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 flex items-center justify-between">
                       <span>Diarized Transcript turns ({selectedCall.transcripts.length})</span>
-                      <span className="text-[10px] text-emerald-400 font-mono">STT: 98.4% Confidence</span>
+                      <span className="text-[10px] text-emerald-700 font-mono font-medium">STT: 98.4% Confidence</span>
                     </span>
 
                     <div className="max-h-60 overflow-y-auto space-y-2.5 pr-1">
@@ -1198,15 +1206,17 @@ export default function VoiceCallsPage() {
                           key={i}
                           className={`p-2.5 rounded-lg text-xs space-y-1 ${
                             turn.speaker === "agent"
-                              ? "bg-purple-950/20 border border-purple-500/20 text-slate-200"
-                              : "bg-slate-800/40 border border-slate-700/40 text-slate-300"
+                              ? "bg-blue-50/60 border border-blue-100 text-slate-800"
+                              : "bg-slate-50 border border-slate-200 text-slate-700"
                           }`}
                         >
-                          <div className="flex items-center justify-between text-[10px] text-slate-400">
-                            <span className="font-semibold text-purple-300 uppercase">
+                          <div className="flex items-center justify-between text-[10px]">
+                            <span className={`font-semibold uppercase ${
+                              turn.speaker === "agent" ? "text-blue-700" : "text-slate-600"
+                            }`}>
                               {turn.speaker === "agent" ? "Danielle (AI Agent)" : selectedCall.customerName}
                             </span>
-                            <span className="font-mono">{formatDuration(Math.round(turn.startMs / 1000))}</span>
+                            <span className="font-mono text-slate-400">{formatDuration(Math.round(turn.startMs / 1000))}</span>
                           </div>
                           <p className="leading-relaxed">{turn.text}</p>
                         </div>
@@ -1218,9 +1228,9 @@ export default function VoiceCallsPage() {
                   {!selectedCall.escalation && (
                     <button
                       onClick={() => setShowEscalationModal(true)}
-                      className="w-full py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium border border-slate-700 transition-colors flex items-center justify-center gap-2"
+                      className="w-full py-2 rounded-lg bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-xs font-medium border border-slate-200 shadow-xs transition-colors flex items-center justify-center gap-2"
                     >
-                      <PhoneForwarded className="h-3.5 w-3.5 text-purple-400" />
+                      <PhoneForwarded className="h-3.5 w-3.5 text-blue-600" />
                       Initiate Warm Transfer to Human Supervisor
                     </button>
                   )}
@@ -1241,32 +1251,32 @@ export default function VoiceCallsPage() {
       {activeTab === "dialpad" && (
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6">
           {/* Dialpad Controller (5 cols) */}
-          <div className="md:col-span-5 rounded-xl border border-slate-800 bg-slate-900 p-5 space-y-5">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+          <div className="md:col-span-5 rounded-xl border border-slate-200/90 bg-white p-5 space-y-5 shadow-xs">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200/80">
               <div className="flex items-center gap-2">
-                <Headphones className="h-4 w-4 text-purple-400" />
-                <h3 className="text-sm font-bold text-white">WebRTC Softphone</h3>
+                <Headphones className="h-4 w-4 text-blue-600" />
+                <h3 className="text-sm font-bold text-slate-900">WebRTC Softphone</h3>
               </div>
-              <span className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
-                <span className="h-2 w-2 rounded-full bg-emerald-400"></span> Online
+              <span className="text-[11px] font-mono text-emerald-600 flex items-center gap-1 font-medium">
+                <span className="h-2 w-2 rounded-full bg-emerald-500"></span> Online
               </span>
             </div>
 
             {/* Target Phone Input */}
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-slate-400">Recipient Phone (E.164)</label>
+              <label className="text-xs font-medium text-slate-500">Recipient Phone (E.164)</label>
               <div className="relative">
                 <input
                   type="text"
                   value={dialNumber}
                   onChange={(e) => setDialNumber(e.target.value)}
                   placeholder="+1 (555) 000-0000"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-base font-mono text-white text-center tracking-wider focus:outline-none focus:border-purple-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-base font-mono text-slate-900 text-center tracking-wider focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
                 />
                 {dialNumber && (
                   <button
                     onClick={() => setDialNumber("")}
-                    className="absolute right-3 top-3 text-slate-500 hover:text-slate-300 text-xs"
+                    className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-xs"
                   >
                     Clear
                   </button>
@@ -1279,14 +1289,14 @@ export default function VoiceCallsPage() {
               <div
                 className={`p-2.5 rounded-lg border text-xs flex items-start gap-2 ${
                   tcpaStatus.isPermitted
-                    ? "bg-emerald-950/20 border-emerald-500/30 text-emerald-300"
-                    : "bg-red-950/20 border-red-500/30 text-red-300"
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-800"
+                    : "bg-rose-50 border-rose-200 text-rose-800"
                 }`}
               >
                 {tcpaStatus.isPermitted ? (
-                  <ShieldCheck className="h-4 w-4 flex-shrink-0 text-emerald-400 mt-0.5" />
+                  <ShieldCheck className="h-4 w-4 flex-shrink-0 text-emerald-600 mt-0.5" />
                 ) : (
-                  <ShieldAlert className="h-4 w-4 flex-shrink-0 text-red-400 mt-0.5" />
+                  <ShieldAlert className="h-4 w-4 flex-shrink-0 text-rose-600 mt-0.5" />
                 )}
                 <div>
                   <div className="font-semibold">{tcpaStatus.isPermitted ? "TCPA Cleared" : "TCPA Blocked"}</div>
@@ -1314,10 +1324,10 @@ export default function VoiceCallsPage() {
                 <button
                   key={k.d}
                   onClick={() => handleDialpadDigit(k.d)}
-                  className="py-3 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-200 flex flex-col items-center justify-center transition-colors active:scale-95"
+                  className="py-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex flex-col items-center justify-center transition-colors active:scale-95"
                 >
                   <span className="text-base font-bold font-mono">{k.d}</span>
-                  {k.sub && <span className="text-[9px] text-slate-500 tracking-wider">{k.sub}</span>}
+                  {k.sub && <span className="text-[9px] text-slate-400 tracking-wider">{k.sub}</span>}
                 </button>
               ))}
             </div>
@@ -1327,7 +1337,7 @@ export default function VoiceCallsPage() {
               <button
                 onClick={handleStartCall}
                 disabled={!dialNumber || !tcpaStatus.isPermitted}
-                className="w-full py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-600 text-white font-bold text-sm shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition-colors"
+                className="w-full py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-100 disabled:text-slate-400 text-white font-semibold text-sm shadow-xs flex items-center justify-center gap-2 transition-colors"
               >
                 <PhoneCall className="h-4 w-4" />
                 Initiate AI Voice Call
@@ -1335,7 +1345,7 @@ export default function VoiceCallsPage() {
             ) : (
               <button
                 onClick={handleHangUp}
-                className="w-full py-3 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-sm shadow-lg shadow-red-600/20 flex items-center justify-center gap-2 transition-colors animate-pulse"
+                className="w-full py-3 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-sm shadow-xs flex items-center justify-center gap-2 transition-colors animate-pulse"
               >
                 <PhoneOff className="h-4 w-4" />
                 End Call ({formatDuration(activeCallDuration)})
@@ -1346,19 +1356,19 @@ export default function VoiceCallsPage() {
           {/* Call Configuration & Live Session (7 cols) */}
           <div className="md:col-span-7 space-y-4">
             {/* Call Settings Box */}
-            <div className="rounded-xl border border-slate-800 bg-slate-900 p-5 space-y-4">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <Sliders className="h-4 w-4 text-purple-400" />
+            <div className="rounded-xl border border-slate-200/90 bg-white p-5 space-y-4 shadow-xs">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <Sliders className="h-4 w-4 text-slate-600" />
                 AI Voice Campaign Configuration
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-medium text-slate-400 block mb-1">Routing Queue</label>
+                  <label className="text-xs font-medium text-slate-500 block mb-1">Routing Queue</label>
                   <select
                     value={dialQueue}
                     onChange={(e) => setDialQueue(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
                   >
                     <option value="commercial_sales">Commercial Sales (Skills-Based)</option>
                     <option value="collections_recovery">Collections Recovery (Longest-Idle)</option>
@@ -1367,11 +1377,11 @@ export default function VoiceCallsPage() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-medium text-slate-400 block mb-1">Call Purpose</label>
+                  <label className="text-xs font-medium text-slate-500 block mb-1">Call Purpose</label>
                   <select
                     value={dialPurpose}
                     onChange={(e) => setDialPurpose(e.target.value as CallPurpose)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
                   >
                     <option value="inbound_lead_qualification">Lead Qualification</option>
                     <option value="collections_dunning">Collections Dunning</option>
@@ -1382,15 +1392,15 @@ export default function VoiceCallsPage() {
                 </div>
               </div>
 
-              <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1 text-xs text-slate-400">
-                <div className="font-semibold text-slate-300">Automated Voice Invariants Enforced:</div>
-                <div className="flex items-center gap-1 text-emerald-400">
+              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1 text-xs text-slate-600">
+                <div className="font-semibold text-slate-800">Automated Voice Invariants Enforced:</div>
+                <div className="flex items-center gap-1 text-emerald-700">
                   <Check className="h-3 w-3" /> Mandatory call recording disclosure played automatically
                 </div>
-                <div className="flex items-center gap-1 text-emerald-400">
+                <div className="flex items-center gap-1 text-emerald-700">
                   <Check className="h-3 w-3" /> Real-time bidirectional WebRTC media streaming at 16kHz
                 </div>
-                <div className="flex items-center gap-1 text-emerald-400">
+                <div className="flex items-center gap-1 text-emerald-700">
                   <Check className="h-3 w-3" /> TCPA 08:00 - 21:00 recipient local time boundary gate
                 </div>
               </div>
@@ -1398,13 +1408,13 @@ export default function VoiceCallsPage() {
 
             {/* In-Call Active Session HUD */}
             {isCallingActive ? (
-              <div className="rounded-xl border border-purple-500/40 bg-gradient-to-b from-purple-950/30 to-slate-900 p-5 space-y-5">
+              <div className="rounded-xl border border-slate-800 bg-slate-900 p-5 space-y-5 text-white shadow-md">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="h-3 w-3 rounded-full bg-red-500 animate-ping"></div>
+                    <div className="h-3 w-3 rounded-full bg-rose-500 animate-ping"></div>
                     <div>
                       <div className="text-sm font-bold text-white">Active Telephony Session</div>
-                      <div className="text-xs font-mono text-purple-300">{dialNumber}</div>
+                      <div className="text-xs font-mono text-slate-300">{dialNumber}</div>
                     </div>
                   </div>
 
@@ -1421,7 +1431,7 @@ export default function VoiceCallsPage() {
                   {[20, 60, 90, 40, 100, 70, 30, 85, 95, 45, 80, 60, 20, 75, 90, 35, 60, 80].map((h, idx) => (
                     <div
                       key={idx}
-                      className="w-1.5 bg-gradient-to-t from-purple-600 to-indigo-400 rounded-full animate-pulse"
+                      className="w-1.5 bg-blue-500 rounded-full animate-pulse"
                       style={{
                         height: `${h}%`,
                         animationDelay: `${idx * 75}ms`,
@@ -1436,7 +1446,7 @@ export default function VoiceCallsPage() {
                     Live Streaming Transcript
                   </span>
                   <div className="p-3 rounded-lg bg-slate-950 border border-slate-800 text-xs space-y-2">
-                    <div className="text-purple-300 font-semibold">
+                    <div className="text-blue-400 font-semibold">
                       Danielle (AI Voice):{" "}
                       <span className="text-slate-300 font-normal">
                         "Hello! This is Danielle with Nexus Enterprise calling on a recorded line. Am I speaking with the
@@ -1444,12 +1454,12 @@ export default function VoiceCallsPage() {
                       </span>
                     </div>
                     {activeCallDuration > 4 && (
-                      <div className="text-blue-300 font-semibold animate-fadeIn">
+                      <div className="text-slate-200 font-semibold animate-fadeIn">
                         Recipient: <span className="text-slate-300 font-normal">"Yes this is him. What is this call regarding?"</span>
                       </div>
                     )}
                     {activeCallDuration > 8 && (
-                      <div className="text-purple-300 font-semibold animate-fadeIn">
+                      <div className="text-blue-400 font-semibold animate-fadeIn">
                         Danielle (AI Voice):{" "}
                         <span className="text-slate-300 font-normal">
                           "I am following up regarding your invoice and enterprise expansion inquiry..."
@@ -1465,7 +1475,7 @@ export default function VoiceCallsPage() {
                     onClick={() => setIsMuted(!isMuted)}
                     className={`py-2 rounded-lg text-xs font-medium border flex items-center justify-center gap-1.5 transition-colors ${
                       isMuted
-                        ? "bg-red-500/20 border-red-500 text-red-300"
+                        ? "bg-rose-500/20 border-rose-500 text-rose-300"
                         : "bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-300"
                     }`}
                   >
@@ -1487,17 +1497,17 @@ export default function VoiceCallsPage() {
 
                   <button
                     onClick={() => setShowEscalationModal(true)}
-                    className="py-2 rounded-lg text-xs font-medium bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500 text-purple-300 flex items-center justify-center gap-1.5 transition-colors"
+                    className="py-2 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 flex items-center justify-center gap-1.5 transition-colors"
                   >
-                    <PhoneForwarded className="h-3.5 w-3.5" />
+                    <PhoneForwarded className="h-3.5 w-3.5 text-blue-400" />
                     Warm Transfer
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-12 text-center text-slate-500 space-y-2">
-                <PhoneCall className="h-8 w-8 text-slate-600 mx-auto" />
-                <div className="text-sm font-medium text-slate-400">Softphone Idle</div>
+              <div className="rounded-xl border border-slate-200/90 bg-white p-12 text-center text-slate-500 space-y-2 shadow-xs">
+                <PhoneCall className="h-8 w-8 text-slate-400 mx-auto" />
+                <div className="text-sm font-medium text-slate-700">Softphone Idle</div>
                 <div className="text-xs text-slate-500">
                   Enter an E.164 phone number and click "Initiate AI Voice Call" to test live outbound streaming.
                 </div>
@@ -1514,19 +1524,19 @@ export default function VoiceCallsPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-base font-bold text-white">Provisioned Direct Inward Dialing (DID) Catalog</h3>
-              <p className="text-xs text-slate-400">
+              <h3 className="text-base font-bold text-slate-900">Provisioned Direct Inward Dialing (DID) Catalog</h3>
+              <p className="text-xs text-slate-500">
                 Managed phone numbers attached to Twilio SIP voice trunks and routing queues.
               </p>
             </div>
-            <button className="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-medium transition-colors">
+            <button className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium shadow-xs transition-colors">
               + Provision New DID
             </button>
           </div>
 
-          <div className="rounded-xl border border-slate-800 bg-slate-900/50 overflow-hidden">
+          <div className="rounded-xl border border-slate-200/90 bg-white overflow-hidden shadow-xs">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-950 text-slate-400 uppercase font-semibold">
+              <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase font-semibold">
                 <tr>
                   <th className="px-4 py-3 w-12 text-center">#</th>
                   <th className="px-4 py-3">Phone Number</th>
@@ -1537,28 +1547,28 @@ export default function VoiceCallsPage() {
                   <th className="px-4 py-3 text-center">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800">
+              <tbody className="divide-y divide-slate-100">
                 {INITIAL_PHONE_NUMBERS.map((pn, idx) => (
-                  <tr key={pn.id} className="hover:bg-slate-800/40">
+                  <tr key={pn.id} className="hover:bg-slate-50/80">
                     <td className="px-4 py-3 text-center font-mono text-slate-400 font-medium">{idx + 1}</td>
-                    <td className="px-4 py-3 font-mono font-semibold text-white">{pn.phoneNumber}</td>
-                    <td className="px-4 py-3 text-slate-300">{pn.friendlyName}</td>
+                    <td className="px-4 py-3 font-mono font-semibold text-slate-900">{pn.phoneNumber}</td>
+                    <td className="px-4 py-3 text-slate-600">{pn.friendlyName}</td>
                     <td className="px-4 py-3 font-mono text-slate-400">{pn.countryCode}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1.5">
                         {pn.capabilities.map((c, i) => (
                           <span
                             key={i}
-                            className="px-2 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300 border border-slate-700"
+                            className="px-2 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600 border border-slate-200"
                           >
                             {c}
                           </span>
                         ))}
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-purple-400 font-medium">{pn.assignedQueue}</td>
-                    <td className="px-4 py-3">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <td className="px-4 py-3 text-slate-700 font-medium">{pn.assignedQueue}</td>
+                    <td className="px-4 py-3 text-center">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
                         <CheckCircle2 className="h-3 w-3" />
                         Active
                       </span>
@@ -1578,51 +1588,51 @@ export default function VoiceCallsPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-base font-bold text-white">Inbound & Outbound Telephony Queues</h3>
-              <p className="text-xs text-slate-400">
+              <h3 className="text-base font-bold text-slate-900">Inbound & Outbound Telephony Queues</h3>
+              <p className="text-xs text-slate-500">
                 Configure automatic call distribution strategies, hold music, and SLA wait thresholds.
               </p>
             </div>
-            <button className="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-medium transition-colors">
+            <button className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium shadow-xs transition-colors">
               + Create Queue
             </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {INITIAL_QUEUES.map((q) => (
-              <div key={q.id} className="rounded-xl border border-slate-800 bg-slate-900 p-5 space-y-4">
+              <div key={q.id} className="rounded-xl border border-slate-200/90 bg-white p-5 space-y-4 shadow-xs">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h4 className="text-sm font-bold text-white">{q.name}</h4>
+                    <h4 className="text-sm font-bold text-slate-900">{q.name}</h4>
                     <span className="text-[11px] font-mono text-slate-400">slug: {q.slug}</span>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
                     Active
                   </span>
                 </div>
 
                 <div className="space-y-2 text-xs">
-                  <div className="flex justify-between py-1 border-b border-slate-800">
-                    <span className="text-slate-400">Routing Strategy:</span>
-                    <span className="font-semibold text-purple-400 capitalize">
+                  <div className="flex justify-between py-1 border-b border-slate-100">
+                    <span className="text-slate-500">Routing Strategy:</span>
+                    <span className="font-semibold text-slate-800 capitalize">
                       {q.routingStrategy.replace(/_/g, " ")}
                     </span>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-slate-800">
-                    <span className="text-slate-400">Active Live Calls:</span>
-                    <span className="font-mono text-white font-bold">{q.activeCalls}</span>
+                  <div className="flex justify-between py-1 border-b border-slate-100">
+                    <span className="text-slate-500">Active Live Calls:</span>
+                    <span className="font-mono text-slate-900 font-bold">{q.activeCalls}</span>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-slate-800">
-                    <span className="text-slate-400">Max Wait Timeout:</span>
-                    <span className="font-mono text-slate-300">{q.maxWaitSeconds}s</span>
+                  <div className="flex justify-between py-1 border-b border-slate-100">
+                    <span className="text-slate-500">Max Wait Timeout:</span>
+                    <span className="font-mono text-slate-700">{q.maxWaitSeconds}s</span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-slate-400">Hold Audio Stream:</span>
-                    <span className="text-slate-300 truncate max-w-[140px]">{q.holdMusic}</span>
+                    <span className="text-slate-500">Hold Audio Stream:</span>
+                    <span className="text-slate-700 truncate max-w-[140px]">{q.holdMusic}</span>
                   </div>
                 </div>
 
-                <button className="w-full py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors">
+                <button className="w-full py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium border border-slate-200 transition-colors">
                   Edit Routing Policies
                 </button>
               </div>
@@ -1636,14 +1646,14 @@ export default function VoiceCallsPage() {
       {/* ==================================================================== */}
       {activeTab === "compliance" && (
         <div className="space-y-6">
-          <div className="rounded-xl bg-slate-900 border border-slate-800 p-5 space-y-4">
+          <div className="rounded-xl bg-white border border-slate-200/90 p-5 space-y-4 shadow-xs">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">
                 <ShieldCheck className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">TCPA Legal Calling Windows (Automated Enforcement)</h3>
-                <p className="text-xs text-slate-400">
+                <h3 className="text-base font-bold text-slate-900">TCPA Legal Calling Windows (Automated Enforcement)</h3>
+                <p className="text-xs text-slate-500">
                   Strict federal regulatory limits: Outbound telemarketing and collections calls are restricted to 08:00
                   to 21:00 recipient local time.
                 </p>
@@ -1651,32 +1661,32 @@ export default function VoiceCallsPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-              <div className="p-4 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-                <div className="text-xs font-medium text-slate-400">Permitted Calling Hours</div>
-                <div className="text-xl font-bold font-mono text-white">08:00 - 21:00</div>
-                <div className="text-[11px] text-slate-500">Recipient Local Timezone</div>
+              <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                <div className="text-xs font-medium text-slate-500">Permitted Calling Hours</div>
+                <div className="text-xl font-bold font-mono text-slate-900">08:00 - 21:00</div>
+                <div className="text-[11px] text-slate-400">Recipient Local Timezone</div>
               </div>
 
-              <div className="p-4 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-                <div className="text-xs font-medium text-slate-400">Weekend Call Policy</div>
-                <div className="text-xl font-bold font-mono text-amber-400">Restricted</div>
-                <div className="text-[11px] text-slate-500">Automated dunning paused on Sundays</div>
+              <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                <div className="text-xs font-medium text-slate-500">Weekend Call Policy</div>
+                <div className="text-xl font-bold font-mono text-amber-700">Restricted</div>
+                <div className="text-[11px] text-slate-400">Automated dunning paused on Sundays</div>
               </div>
 
-              <div className="p-4 rounded-lg bg-slate-950 border border-slate-800 space-y-1">
-                <div className="text-xs font-medium text-slate-400">National DNC Registry</div>
-                <div className="text-xl font-bold font-mono text-emerald-400">Pre-Dial Scrubbing</div>
-                <div className="text-[11px] text-slate-500">Real-time suppression active</div>
+              <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                <div className="text-xs font-medium text-slate-500">National DNC Registry</div>
+                <div className="text-xl font-bold font-mono text-emerald-700">Pre-Dial Scrubbing</div>
+                <div className="text-[11px] text-slate-400">Real-time suppression active</div>
               </div>
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5 space-y-3">
-            <h4 className="text-sm font-bold text-white flex items-center gap-2">
-              <FileText className="h-4 w-4 text-purple-400" />
+          <div className="rounded-xl border border-slate-200/90 bg-white p-5 space-y-3 shadow-xs">
+            <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <FileText className="h-4 w-4 text-blue-600" />
               Mandatory Consent Disclosure Script
             </h4>
-            <p className="text-xs text-slate-300 leading-relaxed bg-slate-950 p-4 rounded-lg border border-slate-800">
+            <p className="text-xs text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-lg border border-slate-200">
               "This call is conducted by Nexus AI and may be monitored or recorded for quality assurance and compliance.
               By continuing, you consent to this recording in compliance with state two-party and federal regulations."
             </p>
@@ -1688,32 +1698,32 @@ export default function VoiceCallsPage() {
       {/* MODAL: Supervisor Warm Transfer / Escalation                         */}
       {/* ==================================================================== */}
       {showEscalationModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md rounded-xl bg-slate-900 border border-purple-500/40 p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+          <div className="w-full max-w-md rounded-xl bg-white border border-slate-200 p-6 space-y-4 shadow-xl">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <PhoneForwarded className="h-5 w-5 text-purple-400" />
-                <h3 className="text-base font-bold text-white">Supervisor Warm Transfer</h3>
+                <PhoneForwarded className="h-5 w-5 text-blue-600" />
+                <h3 className="text-base font-bold text-slate-900">Supervisor Warm Transfer</h3>
               </div>
               <button
                 onClick={() => setShowEscalationModal(false)}
-                className="text-slate-400 hover:text-slate-200 text-sm"
+                className="text-slate-400 hover:text-slate-600 text-sm"
               >
                 ✕
               </button>
             </div>
 
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               Transfer this call session to a human supervisor with complete structured context and live transcript history.
             </p>
 
             <div className="space-y-3">
               <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1">Assigned Human Supervisor</label>
+                <label className="text-xs font-medium text-slate-700 block mb-1">Assigned Human Supervisor</label>
                 <select
                   value={escalationSupervisor}
                   onChange={(e) => setEscalationSupervisor(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
                 >
                   <option value="Marcus Vance">Marcus Vance (Tier 3 Platform Lead)</option>
                   <option value="Elena Chen">Elena Chen (Commercial Sales Director)</option>
@@ -1722,27 +1732,27 @@ export default function VoiceCallsPage() {
               </div>
 
               <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1">Escalation Trigger Reason</label>
+                <label className="text-xs font-medium text-slate-700 block mb-1">Escalation Trigger Reason</label>
                 <textarea
                   rows={3}
                   value={escalationReason}
                   onChange={(e) => setEscalationReason(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-white focus:outline-none focus:border-purple-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-900 focus:outline-none focus:border-blue-500"
                 />
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
               <button
                 onClick={() => setShowEscalationModal(false)}
-                className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors"
+                className="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium border border-slate-200 transition-colors"
               >
                 Cancel
               </button>
 
               <button
                 onClick={handleConfirmWarmTransfer}
-                className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-medium shadow-lg shadow-purple-600/20 transition-colors flex items-center gap-1.5"
+                className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium shadow-xs transition-colors flex items-center gap-1.5"
               >
                 <PhoneForwarded className="h-3.5 w-3.5" />
                 Execute Warm Transfer

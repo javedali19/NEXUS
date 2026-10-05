@@ -566,21 +566,21 @@ export default function CallCenterPage() {
   return (
     <div className="space-y-6 pb-12">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200/80 pb-5">
         <div>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-tr from-blue-600/30 to-purple-600/20 border border-blue-500/30 text-blue-400">
+            <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-100 text-blue-600">
               <Headphones className="h-6 w-6" />
             </div>
             <div>
               <div className="flex items-center gap-2.5">
-                <h1 className="text-2xl font-bold tracking-tight text-white">Call Center Operations Console</h1>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <h1 className="text-2xl font-bold tracking-tight text-slate-900">Call Center Operations Console</h1>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                   4 Queues Active
                 </span>
               </div>
-              <p className="text-sm text-slate-400 mt-1">
+              <p className="text-sm text-slate-500 mt-1">
                 Unified live console covering all 18 dimensions: call queues, customer 360, sentiment, STT transcripts, promise-to-pay, TCPA compliance, and audit logs.
               </p>
             </div>
@@ -590,25 +590,25 @@ export default function CallCenterPage() {
         <div className="flex items-center gap-3 flex-wrap">
           <Link
             href="/voice-calls"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 shadow-sm transition-colors"
           >
-            <Phone className="h-3.5 w-3.5" />
+            <Phone className="h-3.5 w-3.5 text-slate-500" />
             Softphone & Ledger
           </Link>
 
           <Link
             href="/voice-agent"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 text-xs font-medium border border-purple-500/40 transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 shadow-sm transition-colors"
           >
-            <Layers className="h-3.5 w-3.5" />
+            <Layers className="h-3.5 w-3.5 text-slate-500" />
             Voice-Agent Pipeline
           </Link>
 
           <Link
             href="/support"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 text-xs font-medium border border-emerald-500/40 transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 shadow-sm transition-colors"
           >
-            <LifeBuoy className="h-3.5 w-3.5" />
+            <LifeBuoy className="h-3.5 w-3.5 text-slate-500" />
             Support Console
           </Link>
         </div>
