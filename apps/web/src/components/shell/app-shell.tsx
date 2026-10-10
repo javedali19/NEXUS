@@ -32,7 +32,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
   // Redirect to /login if user is not authenticated and attempting to view protected pages
   useEffect(() => {
     if (!isLoading && !isAuthenticated && !isAuthPage) {
-      router.push("/login");
+      router.replace("/login");
     }
   }, [isLoading, isAuthenticated, isAuthPage, router]);
 
@@ -56,9 +56,16 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
     );
   }
 
-  // If not authenticated, return null while redirecting to /login
+  // If not authenticated, redirect to /login
   if (!isAuthenticated) {
-    return null;
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-[#f8fafc]">
+        <div className="flex flex-col items-center space-y-3">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
+          <p className="text-xs font-mono text-slate-500">Redirecting to login...</p>
+        </div>
+      </div>
+    );
   }
 
   return (

@@ -1,7 +1,7 @@
 use chrono::{Duration, Utc};
 use platform_domain::{
     CallAuditEventRecord, CallPurpose, CallStatus, PromiseToPayRecord, TelephonyCall,
-    TwilioVoiceEngine,
+    TelephonyVoiceEngine,
 };
 use serde_json::json;
 use uuid::Uuid;
@@ -51,7 +51,7 @@ fn test_call_creation_with_18_dimensions() {
 fn test_record_promise_to_pay_commitment() {
     let mut call = sample_call_record();
 
-    let ptp = TwilioVoiceEngine::record_promise_to_pay(
+    let ptp = TelephonyVoiceEngine::record_promise_to_pay(
         &mut call,
         12400.0,
         "USD",
@@ -79,7 +79,7 @@ fn test_schedule_follow_up_action() {
     let mut call = sample_call_record();
     let follow_up_time = Utc::now() + Duration::days(2);
 
-    let follow_up = TwilioVoiceEngine::schedule_follow_up(
+    let follow_up = TelephonyVoiceEngine::schedule_follow_up(
         &mut call,
         follow_up_time,
         "whatsapp",
@@ -102,7 +102,7 @@ fn test_append_only_call_audit_event_logging() {
     let org_id = Uuid::new_v4();
 
     // 1. Log call queued event
-    let event1 = TwilioVoiceEngine::log_call_audit_event(
+    let event1 = TelephonyVoiceEngine::log_call_audit_event(
         call_id,
         org_id,
         "call_queued",
@@ -114,7 +114,7 @@ fn test_append_only_call_audit_event_logging() {
     assert_eq!(event1.actor_type, "system");
 
     // 2. Log consent disclosure played
-    let event2 = TwilioVoiceEngine::log_call_audit_event(
+    let event2 = TelephonyVoiceEngine::log_call_audit_event(
         call_id,
         org_id,
         "consent_disclosed",
@@ -125,7 +125,7 @@ fn test_append_only_call_audit_event_logging() {
     assert_eq!(event2.event_type, "consent_disclosed");
 
     // 3. Log PTP commitment
-    let event3 = TwilioVoiceEngine::log_call_audit_event(
+    let event3 = TelephonyVoiceEngine::log_call_audit_event(
         call_id,
         org_id,
         "promise_to_pay_logged",

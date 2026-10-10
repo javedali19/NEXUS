@@ -1,0 +1,1864 @@
+{
+  "totalTables": 185,
+  "tables": [
+    "accounting_connections",
+    "accounting_entity_mappings",
+    "accounting_reconciliation_ledgers",
+    "accounting_sync_logs",
+    "accounts",
+    "agent_actions",
+    "agent_runs",
+    "ai_agent_actions",
+    "ai_agent_approvals",
+    "ai_agent_audit_logs",
+    "ai_agent_capabilities",
+    "ai_agent_failures",
+    "ai_agent_permissions",
+    "ai_agent_policies",
+    "ai_agent_results",
+    "ai_agent_runs",
+    "ai_agent_tools",
+    "ai_agent_versions",
+    "ai_agents",
+    "ai_communications",
+    "ai_sales_configs",
+    "ai_sales_conversations",
+    "ai_sales_handoffs",
+    "ai_sales_leads",
+    "ai_tool_audit_trail",
+    "ai_tool_catalog",
+    "ai_tool_idempotency",
+    "ai_tool_invocations",
+    "ai_tool_rate_limits",
+    "ai_whatsapp_agent_configs",
+    "ai_whatsapp_flow_logs",
+    "ai_whatsapp_sessions",
+    "ai_whatsapp_support_cases",
+    "analytics_snapshots",
+    "analytics_touchpoint_attributions",
+    "audit_events",
+    "audit_logs",
+    "autonomous_collections_runs",
+    "autonomous_collections_stage_logs",
+    "background_dead_letter_queue",
+    "background_tasks",
+    "business_units",
+    "calls",
+    "cicd_deployments",
+    "cicd_pipeline_runs",
+    "cicd_validation_gates",
+    "collections_cases",
+    "collections_executions",
+    "collections_policies",
+    "collections_promises_to_pay",
+    "command_audit_log",
+    "companies",
+    "consents",
+    "contacts",
+    "conversations",
+    "credential_leak_scans",
+    "crm_deals",
+    "customer_timeline_events",
+    "customers",
+    "deals",
+    "document_access_audits",
+    "document_versions",
+    "documents",
+    "e2e_lifecycle_audit_runs",
+    "e2e_lifecycle_step_results",
+    "e2e_provider_connectivity_snapshots",
+    "einvoice_transmission_ledger",
+    "erp_external_connector_configs",
+    "erp_inventory_levels",
+    "erp_invoices",
+    "erp_products",
+    "erp_purchase_order_items",
+    "erp_purchase_orders",
+    "erp_stock_movements",
+    "erp_suppliers",
+    "erp_warehouses",
+    "exceptions",
+    "executive_kpi_snapshots",
+    "executive_operational_alerts",
+    "external_events",
+    "gcp_environment_configs",
+    "gcp_infrastructure_resources",
+    "gcp_secret_vault_catalog",
+    "idempotency_keys",
+    "integration_connections",
+    "integration_health_checks",
+    "integration_webhook_deliveries",
+    "invoice_extractions",
+    "invoice_items",
+    "invoice_line_items",
+    "invoice_payments",
+    "invoice_timeline_events",
+    "invoices",
+    "leads",
+    "memberships",
+    "messages",
+    "observability_metrics",
+    "ocr_anomalies",
+    "ocr_extracted_invoices",
+    "ocr_extracted_line_items",
+    "ocr_extractions",
+    "ocr_provider_credentials",
+    "ocr_review_audit_logs",
+    "omnichannel_messages",
+    "omnichannel_tags",
+    "omnichannel_thread_tags",
+    "omnichannel_threads",
+    "organization_memberships",
+    "organizations",
+    "outbox_events",
+    "payment_allocations",
+    "payment_attempts",
+    "payment_links",
+    "payment_reconciliations",
+    "payment_transactions",
+    "payments",
+    "permissions",
+    "processed_events",
+    "quote_line_items",
+    "quotes",
+    "razorpay_credentials",
+    "razorpay_orders",
+    "razorpay_payments",
+    "razorpay_webhook_deliveries",
+    "regional_connector_configurations",
+    "regional_integration_audit_log",
+    "roi_agent_impact_ledger",
+    "roi_metrics",
+    "role_permissions",
+    "roles",
+    "sales_flow_instances",
+    "sales_flow_stage_transitions",
+    "search_index_entries",
+    "security_audit_findings",
+    "security_compliance_benchmarks",
+    "sentry_error_events",
+    "subsystem_health_status",
+    "support_case_attachments",
+    "support_case_audit_events",
+    "support_case_messages",
+    "support_case_notes",
+    "support_cases",
+    "support_ticket_activities",
+    "support_ticket_comments",
+    "support_tickets",
+    "telephony_call_audit_events",
+    "telephony_call_sessions",
+    "telephony_calling_windows",
+    "telephony_calls",
+    "telephony_configs",
+    "telephony_consent_records",
+    "telephony_escalations",
+    "telephony_phone_numbers",
+    "telephony_queues",
+    "telephony_recordings",
+    "telephony_summaries",
+    "telephony_transcripts",
+    "tenant_country_pack_configs",
+    "tenant_custom_roles",
+    "tenant_dnc_suppression_list",
+    "tenant_retention_schedules",
+    "tenant_settings_and_policies",
+    "tenants",
+    "timeline_entries",
+    "trace_spans",
+    "universal_commands",
+    "user_identities",
+    "user_sessions",
+    "users",
+    "voice_agent_configs",
+    "voice_agent_pipelines",
+    "voice_agent_turns",
+    "voice_provider_credentials",
+    "whatsapp_configs",
+    "whatsapp_contacts_consent",
+    "whatsapp_conversations",
+    "whatsapp_messages",
+    "whatsapp_templates",
+    "whatsapp_webhook_events",
+    "worker_queue_telemetry",
+    "workflow_audit_logs",
+    "workflow_definitions",
+    "workflow_executions",
+    "workflow_steps",
+    "workflows"
+  ],
+  "tableDetails": {
+    "tenants": {
+      "definedIn": "0001_init_schema.sql",
+      "columnsCount": 7,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "users": {
+      "definedIn": "0001_init_schema.sql",
+      "columnsCount": 17,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "accounts": {
+      "definedIn": "0002_unified_customer.sql",
+      "columnsCount": 9,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "customers": {
+      "definedIn": "0002_unified_customer.sql",
+      "columnsCount": 13,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "timeline_entries": {
+      "definedIn": "0003_timeline_outbox.sql",
+      "columnsCount": 10,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "outbox_events": {
+      "definedIn": "0003_timeline_outbox.sql",
+      "columnsCount": 20,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "erp_invoices": {
+      "definedIn": "0004_workflows_audit.sql",
+      "columnsCount": 9,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "crm_deals": {
+      "definedIn": "0004_workflows_audit.sql",
+      "columnsCount": 9,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_communications": {
+      "definedIn": "0004_workflows_audit.sql",
+      "columnsCount": 10,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "workflows": {
+      "definedIn": "0004_workflows_audit.sql",
+      "columnsCount": 18,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "audit_logs": {
+      "definedIn": "0004_workflows_audit.sql",
+      "columnsCount": 10,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "organizations": {
+      "definedIn": "0005_auth_and_memberships.sql",
+      "columnsCount": 18,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "business_units": {
+      "definedIn": "0005_auth_and_memberships.sql",
+      "columnsCount": 21,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "user_identities": {
+      "definedIn": "0005_auth_and_memberships.sql",
+      "columnsCount": 9,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "organization_memberships": {
+      "definedIn": "0005_auth_and_memberships.sql",
+      "columnsCount": 8,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "user_sessions": {
+      "definedIn": "0005_auth_and_memberships.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "roles": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "permissions": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 6,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "role_permissions": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 3,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "memberships": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "companies": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "contacts": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 15,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "leads": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 21,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "deals": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 18,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "quotes": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 19,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "quote_line_items": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "invoices": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 52,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "invoice_line_items": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "payments": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 17,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "payment_links": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 36,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "conversations": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "messages": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 15,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "calls": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 20,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "documents": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 34,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "invoice_extractions": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "workflow_steps": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "workflow_executions": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 29,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "integration_connections": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "external_events": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "agent_runs": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "agent_actions": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "audit_events": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 13,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "exceptions": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "roi_metrics": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "consents": {
+      "definedIn": "0007_canonical_enterprise_schema.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": false
+    },
+    "idempotency_keys": {
+      "definedIn": "0008_event_architecture_and_outbox.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "processed_events": {
+      "definedIn": "0008_event_architecture_and_outbox.sql",
+      "columnsCount": 6,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "customer_timeline_events": {
+      "definedIn": "0009_audit_timeline_exceptions.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "integration_webhook_deliveries": {
+      "definedIn": "0010_integration_framework.sql",
+      "columnsCount": 15,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "invoice_items": {
+      "definedIn": "0011_invoice_domain.sql",
+      "columnsCount": 12,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "invoice_payments": {
+      "definedIn": "0011_invoice_domain.sql",
+      "columnsCount": 13,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "invoice_timeline_events": {
+      "definedIn": "0011_invoice_domain.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "payment_transactions": {
+      "definedIn": "0012_payment_domain.sql",
+      "columnsCount": 29,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "payment_allocations": {
+      "definedIn": "0012_payment_domain.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "payment_attempts": {
+      "definedIn": "0012_payment_domain.sql",
+      "columnsCount": 20,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "payment_reconciliations": {
+      "definedIn": "0012_payment_domain.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "accounting_connections": {
+      "definedIn": "0013_accounting_connectors.sql",
+      "columnsCount": 26,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "accounting_entity_mappings": {
+      "definedIn": "0013_accounting_connectors.sql",
+      "columnsCount": 19,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "accounting_sync_logs": {
+      "definedIn": "0013_accounting_connectors.sql",
+      "columnsCount": 18,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "accounting_reconciliation_ledgers": {
+      "definedIn": "0013_accounting_connectors.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "razorpay_credentials": {
+      "definedIn": "0014_razorpay_production_adapter.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "razorpay_orders": {
+      "definedIn": "0014_razorpay_production_adapter.sql",
+      "columnsCount": 15,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "razorpay_payments": {
+      "definedIn": "0014_razorpay_production_adapter.sql",
+      "columnsCount": 25,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "razorpay_webhook_deliveries": {
+      "definedIn": "0014_razorpay_production_adapter.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "whatsapp_configs": {
+      "definedIn": "0015_meta_whatsapp_business.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "whatsapp_templates": {
+      "definedIn": "0015_meta_whatsapp_business.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "whatsapp_conversations": {
+      "definedIn": "0015_meta_whatsapp_business.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "whatsapp_messages": {
+      "definedIn": "0015_meta_whatsapp_business.sql",
+      "columnsCount": 25,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "whatsapp_contacts_consent": {
+      "definedIn": "0015_meta_whatsapp_business.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "whatsapp_webhook_events": {
+      "definedIn": "0015_meta_whatsapp_business.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "omnichannel_threads": {
+      "definedIn": "0016_omnichannel_inbox.sql",
+      "columnsCount": 21,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "omnichannel_messages": {
+      "definedIn": "0016_omnichannel_inbox.sql",
+      "columnsCount": 20,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "omnichannel_tags": {
+      "definedIn": "0016_omnichannel_inbox.sql",
+      "columnsCount": 5,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "omnichannel_thread_tags": {
+      "definedIn": "0016_omnichannel_inbox.sql",
+      "columnsCount": 3,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "workflow_definitions": {
+      "definedIn": "0017_workflow_automation_engine.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "workflow_audit_logs": {
+      "definedIn": "0017_workflow_automation_engine.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "background_tasks": {
+      "definedIn": "0018_cloud_tasks_background_execution.sql",
+      "columnsCount": 24,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "background_dead_letter_queue": {
+      "definedIn": "0018_cloud_tasks_background_execution.sql",
+      "columnsCount": 13,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "document_versions": {
+      "definedIn": "0019_secure_document_storage.sql",
+      "columnsCount": 15,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "document_access_audits": {
+      "definedIn": "0019_secure_document_storage.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ocr_provider_credentials": {
+      "definedIn": "0020_mathpix_invoice_ocr.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ocr_extractions": {
+      "definedIn": "0020_mathpix_invoice_ocr.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ocr_extracted_invoices": {
+      "definedIn": "0020_mathpix_invoice_ocr.sql",
+      "columnsCount": 20,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ocr_extracted_line_items": {
+      "definedIn": "0020_mathpix_invoice_ocr.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ocr_anomalies": {
+      "definedIn": "0020_mathpix_invoice_ocr.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ocr_review_audit_logs": {
+      "definedIn": "0021_ocr_review_console.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "collections_policies": {
+      "definedIn": "0022_collections_policy_engine.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "collections_cases": {
+      "definedIn": "0022_collections_policy_engine.sql",
+      "columnsCount": 13,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "collections_promises_to_pay": {
+      "definedIn": "0022_collections_policy_engine.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "collections_executions": {
+      "definedIn": "0022_collections_policy_engine.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "autonomous_collections_runs": {
+      "definedIn": "0023_autonomous_collections_workflow.sql",
+      "columnsCount": 19,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "autonomous_collections_stage_logs": {
+      "definedIn": "0023_autonomous_collections_workflow.sql",
+      "columnsCount": 13,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agents": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agent_versions": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 13,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agent_capabilities": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 7,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agent_tools": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agent_permissions": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 7,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agent_policies": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 7,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agent_runs": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 13,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agent_actions": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agent_results": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 8,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agent_approvals": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agent_failures": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_agent_audit_logs": {
+      "definedIn": "0024_ai_agent_control_plane.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_tool_catalog": {
+      "definedIn": "0025_ai_tool_gateway.sql",
+      "columnsCount": 14,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": false
+    },
+    "ai_tool_idempotency": {
+      "definedIn": "0025_ai_tool_gateway.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_tool_rate_limits": {
+      "definedIn": "0025_ai_tool_gateway.sql",
+      "columnsCount": 7,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_tool_invocations": {
+      "definedIn": "0025_ai_tool_gateway.sql",
+      "columnsCount": 15,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_tool_audit_trail": {
+      "definedIn": "0025_ai_tool_gateway.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_sales_configs": {
+      "definedIn": "0026_ai_sales_agent.sql",
+      "columnsCount": 17,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_sales_leads": {
+      "definedIn": "0026_ai_sales_agent.sql",
+      "columnsCount": 20,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_sales_conversations": {
+      "definedIn": "0026_ai_sales_agent.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_sales_handoffs": {
+      "definedIn": "0026_ai_sales_agent.sql",
+      "columnsCount": 13,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_whatsapp_agent_configs": {
+      "definedIn": "0027_ai_whatsapp_sales_support_agent.sql",
+      "columnsCount": 15,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_whatsapp_sessions": {
+      "definedIn": "0027_ai_whatsapp_sales_support_agent.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_whatsapp_support_cases": {
+      "definedIn": "0027_ai_whatsapp_sales_support_agent.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "ai_whatsapp_flow_logs": {
+      "definedIn": "0027_ai_whatsapp_sales_support_agent.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_configs": {
+      "definedIn": "0028_ai_voice_telephony_foundation.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_queues": {
+      "definedIn": "0028_ai_voice_telephony_foundation.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_phone_numbers": {
+      "definedIn": "0028_ai_voice_telephony_foundation.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_calls": {
+      "definedIn": "0028_ai_voice_telephony_foundation.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_call_sessions": {
+      "definedIn": "0028_ai_voice_telephony_foundation.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_recordings": {
+      "definedIn": "0028_ai_voice_telephony_foundation.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_transcripts": {
+      "definedIn": "0028_ai_voice_telephony_foundation.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_summaries": {
+      "definedIn": "0028_ai_voice_telephony_foundation.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_consent_records": {
+      "definedIn": "0028_ai_voice_telephony_foundation.sql",
+      "columnsCount": 8,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_calling_windows": {
+      "definedIn": "0028_ai_voice_telephony_foundation.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_escalations": {
+      "definedIn": "0028_ai_voice_telephony_foundation.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "voice_agent_configs": {
+      "definedIn": "0029_ai_voice_agent_integration.sql",
+      "columnsCount": 22,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "voice_agent_pipelines": {
+      "definedIn": "0029_ai_voice_agent_integration.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "voice_agent_turns": {
+      "definedIn": "0029_ai_voice_agent_integration.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "voice_provider_credentials": {
+      "definedIn": "0029_ai_voice_agent_integration.sql",
+      "columnsCount": 7,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "telephony_call_audit_events": {
+      "definedIn": "0030_call_center_extensions.sql",
+      "columnsCount": 8,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "support_cases": {
+      "definedIn": "0031_customer_support_module.sql",
+      "columnsCount": 33,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "support_case_messages": {
+      "definedIn": "0031_customer_support_module.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "support_case_notes": {
+      "definedIn": "0031_customer_support_module.sql",
+      "columnsCount": 8,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "support_case_attachments": {
+      "definedIn": "0031_customer_support_module.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "support_case_audit_events": {
+      "definedIn": "0031_customer_support_module.sql",
+      "columnsCount": 8,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "executive_kpi_snapshots": {
+      "definedIn": "0032_executive_command_center.sql",
+      "columnsCount": 64,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "executive_operational_alerts": {
+      "definedIn": "0032_executive_command_center.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "analytics_snapshots": {
+      "definedIn": "0033_analytics_and_roi.sql",
+      "columnsCount": 37,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "analytics_touchpoint_attributions": {
+      "definedIn": "0033_analytics_and_roi.sql",
+      "columnsCount": 13,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "roi_agent_impact_ledger": {
+      "definedIn": "0033_analytics_and_roi.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "tenant_country_pack_configs": {
+      "definedIn": "0034_regional_country_pack_engine.sql",
+      "columnsCount": 24,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "einvoice_transmission_ledger": {
+      "definedIn": "0034_regional_country_pack_engine.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "regional_connector_configurations": {
+      "definedIn": "0035_regional_integration_connectors.sql",
+      "columnsCount": 18,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "regional_integration_audit_log": {
+      "definedIn": "0035_regional_integration_connectors.sql",
+      "columnsCount": 7,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "tenant_settings_and_policies": {
+      "definedIn": "0036_enterprise_settings_and_policies.sql",
+      "columnsCount": 145,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "tenant_custom_roles": {
+      "definedIn": "0036_enterprise_settings_and_policies.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "tenant_dnc_suppression_list": {
+      "definedIn": "0036_enterprise_settings_and_policies.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "tenant_retention_schedules": {
+      "definedIn": "0036_enterprise_settings_and_policies.sql",
+      "columnsCount": 8,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "erp_products": {
+      "definedIn": "0037_erp_procurement_inventory.sql",
+      "columnsCount": 17,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "erp_warehouses": {
+      "definedIn": "0037_erp_procurement_inventory.sql",
+      "columnsCount": 13,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "erp_suppliers": {
+      "definedIn": "0037_erp_procurement_inventory.sql",
+      "columnsCount": 18,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "erp_inventory_levels": {
+      "definedIn": "0037_erp_procurement_inventory.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "erp_stock_movements": {
+      "definedIn": "0037_erp_procurement_inventory.sql",
+      "columnsCount": 15,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "erp_purchase_orders": {
+      "definedIn": "0037_erp_procurement_inventory.sql",
+      "columnsCount": 18,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "erp_purchase_order_items": {
+      "definedIn": "0037_erp_procurement_inventory.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "erp_external_connector_configs": {
+      "definedIn": "0037_erp_procurement_inventory.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "sales_flow_instances": {
+      "definedIn": "0038_complete_sales_flow.sql",
+      "columnsCount": 26,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "sales_flow_stage_transitions": {
+      "definedIn": "0038_complete_sales_flow.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "search_index_entries": {
+      "definedIn": "0039_global_search_universal_commands.sql",
+      "columnsCount": 15,
+      "hasOrgId": true,
+      "hasBuId": true,
+      "rlsEnabled": true
+    },
+    "universal_commands": {
+      "definedIn": "0039_global_search_universal_commands.sql",
+      "columnsCount": 14,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "command_audit_log": {
+      "definedIn": "0039_global_search_universal_commands.sql",
+      "columnsCount": 13,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "subsystem_health_status": {
+      "definedIn": "0040_production_observability_telemetry.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "observability_metrics": {
+      "definedIn": "0040_production_observability_telemetry.sql",
+      "columnsCount": 7,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "integration_health_checks": {
+      "definedIn": "0040_production_observability_telemetry.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "worker_queue_telemetry": {
+      "definedIn": "0040_production_observability_telemetry.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "trace_spans": {
+      "definedIn": "0040_production_observability_telemetry.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "sentry_error_events": {
+      "definedIn": "0040_production_observability_telemetry.sql",
+      "columnsCount": 15,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "cicd_pipeline_runs": {
+      "definedIn": "0041_cicd_deployment_telemetry.sql",
+      "columnsCount": 17,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "cicd_validation_gates": {
+      "definedIn": "0041_cicd_deployment_telemetry.sql",
+      "columnsCount": 9,
+      "hasOrgId": false,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "cicd_deployments": {
+      "definedIn": "0041_cicd_deployment_telemetry.sql",
+      "columnsCount": 16,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "gcp_infrastructure_resources": {
+      "definedIn": "0042_gcp_infrastructure_telemetry.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "gcp_environment_configs": {
+      "definedIn": "0042_gcp_infrastructure_telemetry.sql",
+      "columnsCount": 12,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "gcp_secret_vault_catalog": {
+      "definedIn": "0042_gcp_infrastructure_telemetry.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "security_audit_findings": {
+      "definedIn": "0043_comprehensive_security_audit.sql",
+      "columnsCount": 11,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "credential_leak_scans": {
+      "definedIn": "0043_comprehensive_security_audit.sql",
+      "columnsCount": 9,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "security_compliance_benchmarks": {
+      "definedIn": "0043_comprehensive_security_audit.sql",
+      "columnsCount": 8,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "e2e_lifecycle_audit_runs": {
+      "definedIn": "0044_complete_e2e_audit_telemetry.sql",
+      "columnsCount": 14,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "e2e_lifecycle_step_results": {
+      "definedIn": "0044_complete_e2e_audit_telemetry.sql",
+      "columnsCount": 18,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "e2e_provider_connectivity_snapshots": {
+      "definedIn": "0044_complete_e2e_audit_telemetry.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "support_tickets": {
+      "definedIn": "0045_ticket_raising_module.sql",
+      "columnsCount": 33,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "support_ticket_activities": {
+      "definedIn": "0045_ticket_raising_module.sql",
+      "columnsCount": 10,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    },
+    "support_ticket_comments": {
+      "definedIn": "0045_ticket_raising_module.sql",
+      "columnsCount": 8,
+      "hasOrgId": true,
+      "hasBuId": false,
+      "rlsEnabled": true
+    }
+  },
+  "rlsTablesCount": 154,
+  "rlsTables": [
+    "accounting_connections",
+    "accounting_entity_mappings",
+    "accounting_reconciliation_ledgers",
+    "accounting_sync_logs",
+    "accounts",
+    "ai_agent_actions",
+    "ai_agent_approvals",
+    "ai_agent_audit_logs",
+    "ai_agent_capabilities",
+    "ai_agent_failures",
+    "ai_agent_permissions",
+    "ai_agent_policies",
+    "ai_agent_results",
+    "ai_agent_runs",
+    "ai_agent_tools",
+    "ai_agent_versions",
+    "ai_agents",
+    "ai_communications",
+    "ai_sales_configs",
+    "ai_sales_conversations",
+    "ai_sales_handoffs",
+    "ai_sales_leads",
+    "ai_tool_audit_trail",
+    "ai_tool_idempotency",
+    "ai_tool_invocations",
+    "ai_tool_rate_limits",
+    "ai_whatsapp_agent_configs",
+    "ai_whatsapp_flow_logs",
+    "ai_whatsapp_sessions",
+    "ai_whatsapp_support_cases",
+    "analytics_snapshots",
+    "analytics_touchpoint_attributions",
+    "audit_logs",
+    "autonomous_collections_runs",
+    "autonomous_collections_stage_logs",
+    "background_dead_letter_queue",
+    "background_tasks",
+    "business_units",
+    "cicd_deployments",
+    "cicd_pipeline_runs",
+    "cicd_validation_gates",
+    "collections_cases",
+    "collections_executions",
+    "collections_policies",
+    "collections_promises_to_pay",
+    "command_audit_log",
+    "credential_leak_scans",
+    "crm_deals",
+    "customer_timeline_events",
+    "customers",
+    "document_access_audits",
+    "document_versions",
+    "documents",
+    "e2e_lifecycle_audit_runs",
+    "e2e_lifecycle_step_results",
+    "e2e_provider_connectivity_snapshots",
+    "einvoice_transmission_ledger",
+    "erp_external_connector_configs",
+    "erp_inventory_levels",
+    "erp_invoices",
+    "erp_products",
+    "erp_purchase_order_items",
+    "erp_purchase_orders",
+    "erp_stock_movements",
+    "erp_suppliers",
+    "erp_warehouses",
+    "executive_kpi_snapshots",
+    "executive_operational_alerts",
+    "gcp_environment_configs",
+    "gcp_infrastructure_resources",
+    "gcp_secret_vault_catalog",
+    "idempotency_keys",
+    "integration_health_checks",
+    "integration_webhook_deliveries",
+    "invoice_items",
+    "invoice_payments",
+    "invoice_timeline_events",
+    "invoices",
+    "observability_metrics",
+    "ocr_anomalies",
+    "ocr_extracted_invoices",
+    "ocr_extracted_line_items",
+    "ocr_extractions",
+    "ocr_provider_credentials",
+    "ocr_review_audit_logs",
+    "omnichannel_messages",
+    "omnichannel_tags",
+    "omnichannel_thread_tags",
+    "omnichannel_threads",
+    "outbox_events",
+    "payment_allocations",
+    "payment_attempts",
+    "payment_links",
+    "payment_reconciliations",
+    "payment_transactions",
+    "processed_events",
+    "razorpay_credentials",
+    "razorpay_orders",
+    "razorpay_payments",
+    "razorpay_webhook_deliveries",
+    "regional_connector_configurations",
+    "regional_integration_audit_log",
+    "roi_agent_impact_ledger",
+    "sales_flow_instances",
+    "sales_flow_stage_transitions",
+    "search_index_entries",
+    "security_audit_findings",
+    "security_compliance_benchmarks",
+    "sentry_error_events",
+    "subsystem_health_status",
+    "support_case_attachments",
+    "support_case_audit_events",
+    "support_case_messages",
+    "support_case_notes",
+    "support_cases",
+    "support_ticket_activities",
+    "support_ticket_comments",
+    "support_tickets",
+    "telephony_call_audit_events",
+    "telephony_call_sessions",
+    "telephony_calling_windows",
+    "telephony_calls",
+    "telephony_configs",
+    "telephony_consent_records",
+    "telephony_escalations",
+    "telephony_phone_numbers",
+    "telephony_queues",
+    "telephony_recordings",
+    "telephony_summaries",
+    "telephony_transcripts",
+    "tenant_country_pack_configs",
+    "tenant_custom_roles",
+    "tenant_dnc_suppression_list",
+    "tenant_retention_schedules",
+    "tenant_settings_and_policies",
+    "timeline_entries",
+    "trace_spans",
+    "universal_commands",
+    "users",
+    "voice_agent_configs",
+    "voice_agent_pipelines",
+    "voice_agent_turns",
+    "voice_provider_credentials",
+    "whatsapp_configs",
+    "whatsapp_contacts_consent",
+    "whatsapp_conversations",
+    "whatsapp_messages",
+    "whatsapp_templates",
+    "whatsapp_webhook_events",
+    "worker_queue_telemetry",
+    "workflow_audit_logs",
+    "workflow_definitions",
+    "workflow_executions",
+    "workflows"
+  ],
+  "functionsCount": 7,
+  "functions": [
+    "current_business_unit_id",
+    "current_tenant_id",
+    "current_user_role",
+    "prevent_ai_tool_audit_tampering",
+    "prevent_audit_tampering",
+    "update_search_vector",
+    "verify_user_organization_membership"
+  ],
+  "indexesCount": 228,
+  "categories": {
+    "IDENTITY": [
+      "organizations",
+      "business_units",
+      "users",
+      "roles",
+      "permissions",
+      "role_permissions",
+      "memberships",
+      "user_sessions",
+      "tenant_custom_roles"
+    ],
+    "CRM": [
+      "companies",
+      "contacts",
+      "customers",
+      "leads",
+      "deals",
+      "quotes",
+      "quote_line_items",
+      "sales_flow_instances",
+      "sales_flow_stage_transitions"
+    ],
+    "ERP": [
+      "invoices",
+      "invoice_line_items",
+      "payments",
+      "payment_links",
+      "collections_policies",
+      "autonomous_collections_runs",
+      "erp_products",
+      "erp_warehouses",
+      "erp_suppliers",
+      "erp_inventory_levels",
+      "erp_stock_movements",
+      "erp_purchase_orders",
+      "erp_purchase_order_items",
+      "erp_external_connector_configs",
+      "einvoice_transmission_ledger",
+      "accounting_sync_logs"
+    ],
+    "COMMUNICATIONS": [
+      "conversations",
+      "messages",
+      "telephony_configs",
+      "telephony_queues",
+      "telephony_phone_numbers",
+      "telephony_calls",
+      "telephony_call_sessions",
+      "telephony_recordings",
+      "telephony_transcripts",
+      "telephony_summaries",
+      "telephony_consent_records",
+      "telephony_calling_windows",
+      "telephony_escalations",
+      "telephony_call_audit_events",
+      "voice_agent_configs",
+      "voice_agent_pipelines",
+      "voice_agent_turns",
+      "voice_provider_credentials",
+      "ai_whatsapp_agent_configs",
+      "ai_whatsapp_sessions",
+      "ai_whatsapp_support_cases",
+      "ai_whatsapp_flow_logs",
+      "support_cases",
+      "support_case_messages",
+      "support_case_notes",
+      "support_case_attachments",
+      "support_case_audit_events",
+      "support_tickets"
+    ],
+    "DOCUMENTS": [
+      "documents",
+      "ocr_extractions"
+    ],
+    "WORKFLOWS": [
+      "workflows",
+      "workflow_steps",
+      "workflow_executions",
+      "background_tasks"
+    ],
+    "AI": [
+      "ai_agents",
+      "ai_agent_runs",
+      "ai_agent_actions"
+    ],
+    "INTEGRATIONS": [
+      "integration_connections",
+      "razorpay_orders",
+      "whatsapp_templates"
+    ],
+    "SECURITY_AND_AUDIT": [
+      "audit_logs",
+      "tenant_settings_and_policies",
+      "tenant_dnc_suppression_list",
+      "tenant_retention_schedules",
+      "command_audit_log"
+    ],
+    "ANALYTICS_AND_TELEMETRY": [
+      "analytics_snapshots",
+      "analytics_touchpoint_attributions",
+      "roi_agent_impact_ledger",
+      "search_index_entries",
+      "universal_commands",
+      "observability_metrics",
+      "cicd_pipeline_runs",
+      "cicd_validation_gates",
+      "cicd_deployments"
+    ],
+    "OTHER_TABLES": [
+      "tenants",
+      "accounts",
+      "timeline_entries",
+      "outbox_events",
+      "erp_invoices",
+      "crm_deals",
+      "ai_communications",
+      "user_identities",
+      "organization_memberships",
+      "calls",
+      "invoice_extractions",
+      "external_events",
+      "agent_runs",
+      "agent_actions",
+      "audit_events",
+      "exceptions",
+      "roi_metrics",
+      "consents",
+      "idempotency_keys",
+      "processed_events",
+      "customer_timeline_events",
+      "integration_webhook_deliveries",
+      "invoice_items",
+      "invoice_payments",
+      "invoice_timeline_events",
+      "payment_transactions",
+      "payment_allocations",
+      "payment_attempts",
+      "payment_reconciliations",
+      "accounting_connections",
+      "accounting_entity_mappings",
+      "accounting_reconciliation_ledgers",
+      "razorpay_credentials",
+      "razorpay_payments",
+      "razorpay_webhook_deliveries",
+      "whatsapp_configs",
+      "whatsapp_conversations",
+      "whatsapp_messages",
+      "whatsapp_contacts_consent",
+      "whatsapp_webhook_events",
+      "omnichannel_threads",
+      "omnichannel_messages",
+      "omnichannel_tags",
+      "omnichannel_thread_tags",
+      "workflow_definitions",
+      "workflow_audit_logs",
+      "background_dead_letter_queue",
+      "document_versions",
+      "document_access_audits",
+      "ocr_provider_credentials",
+      "ocr_extracted_invoices",
+      "ocr_extracted_line_items",
+      "ocr_anomalies",
+      "ocr_review_audit_logs",
+      "collections_cases",
+      "collections_promises_to_pay",
+      "collections_executions",
+      "autonomous_collections_stage_logs",
+      "ai_agent_versions",
+      "ai_agent_capabilities",
+      "ai_agent_tools",
+      "ai_agent_permissions",
+      "ai_agent_policies",
+      "ai_agent_results",
+      "ai_agent_approvals",
+      "ai_agent_failures",
+      "ai_agent_audit_logs",
+      "ai_tool_catalog",
+      "ai_tool_idempotency",
+      "ai_tool_rate_limits",
+      "ai_tool_invocations",
+      "ai_tool_audit_trail",
+      "ai_sales_configs",
+      "ai_sales_leads",
+      "ai_sales_conversations",
+      "ai_sales_handoffs",
+      "executive_kpi_snapshots",
+      "executive_operational_alerts",
+      "tenant_country_pack_configs",
+      "regional_connector_configurations",
+      "regional_integration_audit_log",
+      "subsystem_health_status",
+      "integration_health_checks",
+      "worker_queue_telemetry",
+      "trace_spans",
+      "sentry_error_events",
+      "gcp_infrastructure_resources",
+      "gcp_environment_configs",
+      "gcp_secret_vault_catalog",
+      "security_audit_findings",
+      "credential_leak_scans",
+      "security_compliance_benchmarks",
+      "e2e_lifecycle_audit_runs",
+      "e2e_lifecycle_step_results",
+      "e2e_provider_connectivity_snapshots",
+      "support_ticket_activities",
+      "support_ticket_comments"
+    ]
+  }
+}

@@ -7,10 +7,8 @@ locals {
   platform_secrets = [
     "stripe-secret-key",
     "razorpay-key-secret",
-    "twilio-auth-token",
     "meta-whatsapp-token",
     "gemini-api-key",
-    "elevenlabs-api-key",
     "deepgram-api-key",
     "sentry-dsn",
     "platform-db-password",

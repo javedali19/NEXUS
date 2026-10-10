@@ -54,11 +54,12 @@ import {
   LogOut,
   ChevronRight,
   Zap,
+  Ticket,
 } from "lucide-react";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   LayoutDashboard: <LayoutDashboard className="h-4 w-4" />,
-  Users: <Cloud className="h-4 w-4" />,
+  Users: <Users className="h-4 w-4" />,
   Building2: <Building2 className="h-4 w-4" />,
   Contact: <Contact className="h-4 w-4" />,
   UserPlus: <UserPlus className="h-4 w-4" />,
@@ -75,6 +76,7 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   Headphones: <Headphones className="h-4 w-4" />,
   Volume2: <Volume2 className="h-4 w-4" />,
   LifeBuoy: <LifeBuoy className="h-4 w-4" />,
+  Ticket: <Ticket className="h-4 w-4" />,
   Bot: <Bot className="h-4 w-4" />,
   GitBranch: <GitBranch className="h-4 w-4" />,
   BarChart3: <BarChart3 className="h-4 w-4" />,

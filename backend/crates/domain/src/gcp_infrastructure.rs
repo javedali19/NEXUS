@@ -281,12 +281,6 @@ pub fn simulate_terraform_provisioning(
             is_value_hidden: true,
         },
         SecretVaultEntry {
-            secret_id: format!("{}-twilio-auth-token", env_str),
-            provider_name: "twilio".to_string(),
-            referencing_services: vec!["platform-api-gateway".to_string(), "platform-worker".to_string()],
-            is_value_hidden: true,
-        },
-        SecretVaultEntry {
             secret_id: format!("{}-meta-whatsapp-token", env_str),
             provider_name: "meta_whatsapp".to_string(),
             referencing_services: vec!["platform-api-gateway".to_string(), "platform-worker".to_string()],

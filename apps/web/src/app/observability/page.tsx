@@ -182,14 +182,14 @@ const INTEGRATIONS: IntegrationItem[] = [
     authType: "System User Permanent Token",
   },
   {
-    name: "Twilio Telephony & SIP Trunk",
-    provider: "Twilio Voice PSTN",
+    name: "Telephony Carrier Gateway",
+    provider: "SIP Trunk Gateway",
     category: "Telephony",
     status: "healthy",
     latencyMs: 65,
     successRate: 99.9,
     lastChecked: "2m ago",
-    authType: "Account SID + Auth Token",
+    authType: "SIP Trunk Auth",
   },
   {
     name: "Google Gemini 1.5 Pro",

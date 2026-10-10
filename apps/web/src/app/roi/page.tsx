@@ -287,7 +287,7 @@ export default function RoiPage() {
                 <span className="text-slate-300">AI Compute & Telephony:</span>
                 <span className="text-emerald-400 font-bold">$1,800/mo</span>
               </div>
-              <p className="text-[10px] text-slate-400">Tokens, Twilio, Deepgram & ElevenLabs</p>
+              <p className="text-[10px] text-slate-400">Tokens, Telephony & Deepgram STT</p>
             </div>
 
             <div className="p-3 rounded-lg bg-emerald-950/20 border border-emerald-800/40 space-y-1">

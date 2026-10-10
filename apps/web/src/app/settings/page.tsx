@@ -1195,7 +1195,7 @@ export default function SettingsAndPolicyCenterPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                   {[
                     { name: "Stripe Enterprise Payments", status: "Active (Vault Ref sk_live_...)", type: "Global Payments" },
-                    { name: "Twilio VoIP & WhatsApp SIP", status: "Active (Vault Ref AC...)", type: "Telephony Carrier" },
+                    { name: "Telephony & VoIP SIP Gateway", status: "Provider-Neutral (Simulation/Carrier)", type: "Telephony Carrier" },
                     { name: "Singapore DBS RAPID & PayNow", status: "Configured (SGQR Direct)", type: "Regional SG" },
                     { name: "Malaysia Curlec & LHDN MyInvois", status: "Configured (DuitNow FPX)", type: "Regional MY" },
                     { name: "Thailand Omise & RD e-Tax", status: "Configured (PromptPay)", type: "Regional TH" },

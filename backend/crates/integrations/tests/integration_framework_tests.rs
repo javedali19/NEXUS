@@ -1,6 +1,6 @@
 use platform_integrations::{
     ApiKeyConfig, ConnectorRegistry, IntegrationCapability, OAuth2Config, RateLimiter,
-    RetryPolicy, StripeConnector, TwilioConnector,
+    RetryPolicy, StripeConnector,
 };
 use serde_json::json;
 
@@ -10,7 +10,6 @@ async fn test_connector_discovery_and_registry() {
     let providers = registry.list_providers();
 
     assert!(providers.contains(&"stripe".to_string()));
-    assert!(providers.contains(&"twilio".to_string()));
     assert!(providers.contains(&"salesforce".to_string()));
 
     let stripe = registry.get("stripe").unwrap();
@@ -33,30 +32,6 @@ async fn test_stripe_connection_testing() {
     let res2 = stripe.test_connection(&valid_creds).await.unwrap();
     assert!(res2.is_successful);
     assert!(res2.detected_account_id.is_some());
-}
-
-#[tokio::test]
-async fn test_twilio_webhook_normalization() {
-    let twilio = TwilioConnector;
-    let payload = json!({
-        "MessageSid": "SM9988112233",
-        "From": "whatsapp:+15550199",
-        "Body": "Payment wire initiated successfully"
-    });
-
-    let normalized = twilio
-        .normalize_webhook("whatsapp_inbound", &payload)
-        .unwrap();
-
-    assert_eq!(
-        normalized.canonical_event_type,
-        "whatsapp.message_received.v1"
-    );
-    assert_eq!(normalized.entity_type, "conversations");
-    assert_eq!(
-        normalized.normalized_payload["text_body"],
-        "Payment wire initiated successfully"
-    );
 }
 
 #[test]

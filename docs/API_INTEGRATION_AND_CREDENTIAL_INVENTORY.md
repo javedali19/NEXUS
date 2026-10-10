@@ -34,9 +34,9 @@ This audit provides a comprehensive, evidence-based inventory of every external 
 | 7 | **Curlec / DuitNow** | Regional Payments | App ID / Secret Key | `MY_CURLEC_APP_ID`, `MY_CURLEC_SECRET_KEY` | `integrations/src/regional_connectors.rs` | Malaysia DuitNow QR & Direct Debit | IMPLEMENTED (BLOCKED BY MISSING CREDENTIAL) | YES (in Malaysia) |
 | 8 | **Omise / PromptPay** | Regional Payments | Public Key / Secret Key | `TH_OMISE_PUBLIC_KEY`, `TH_OMISE_SECRET_KEY` | `integrations/src/regional_connectors.rs` | Thailand PromptPay QR Invoicing | IMPLEMENTED (BLOCKED BY MISSING CREDENTIAL) | YES (in Thailand) |
 | 9 | **Meta WhatsApp Cloud API** | Communications | Access Token / App Secret / Verify Token / WABA ID / Phone ID | `META_WHATSAPP_TOKEN`, `meta-whatsapp-token`, `WHATSAPP_APP_SECRET`, `WHATSAPP_VERIFY_TOKEN` | `integrations/src/communications/whatsapp.rs` | Unified Inbox, HSM Templates, Customer 360 | IMPLEMENTED (BLOCKED BY MISSING CREDENTIAL) | YES |
-| 10 | **Twilio** | Telephony & SMS | Account SID / Auth Token / Phone Number | `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_PHONE_NUMBER`, `twilio-auth-token` | `integrations/src/providers/twilio.rs` | AI Voice Agent Calls, Call Center, SMS | IMPLEMENTED (BLOCKED BY MISSING CREDENTIAL) | YES |
+| 10 | **Twilio** | Telephony & SMS | N/A | None (Removed) | None | Former Telephony & SMS Provider | REMOVED (Replaced by provider-neutral telephony gateway) | NO (Provider Removed) |
 | 11 | **Deepgram** | Speech-to-Text | API Key | `DEEPGRAM_API_KEY`, `deepgram-api-key` | `integrations/src/providers/deepgram.rs` | Real-time Streaming STT (Nova-2), Call Transcription | IMPLEMENTED (BLOCKED BY MISSING CREDENTIAL) | YES |
-| 12 | **ElevenLabs** | Voice AI | API Key / Voice ID / Model ID | `ELEVENLABS_API_KEY`, `elevenlabs-api-key`, `ELEVENLABS_VOICE_ID`, `ELEVENLABS_MODEL_ID` | `integrations/src/providers/elevenlabs.rs` | Real-time Voice Synthesis (Turbo v2.5), AI Telephony | IMPLEMENTED (BLOCKED BY MISSING CREDENTIAL) | YES |
+| 12 | **ElevenLabs** | Voice AI | N/A | None (Removed) | None | Former Voice Synthesis (Turbo v2.5) | REMOVED (Zero active dependencies) | NO (Provider Removed) |
 | 13 | **Google Gemini** | AI Reasoning | API Key | `GEMINI_API_KEY`, `gemini-api-key` | `domain/src/ai_sales_agent.rs`, `domain/src/e2e_audit.rs` | Autonomous Sales Agent Copilot, Conversation AI | IMPLEMENTED (BLOCKED BY MISSING CREDENTIAL) | YES (or OpenAI) |
 | 14 | **OpenAI** | AI Reasoning | API Key | `OPENAI_API_KEY` | `domain/src/ai_sales_agent.rs`, `domain/src/ai_whatsapp_agent.rs` | GPT-4o Agent Reasoning, Tool Execution | IMPLEMENTED (BLOCKED BY MISSING CREDENTIAL) | YES (or Gemini) |
 | 15 | **Anthropic** | AI Reasoning | API Key | `ANTHROPIC_API_KEY` | `domain/src/ai_sales_agent.rs` | Claude 3.5 Sonnet Reasoning | PARTIALLY IMPLEMENTED (CONFIGURED ONLY) | Optional Fallback |
@@ -104,19 +104,12 @@ This audit provides a comprehensive, evidence-based inventory of every external 
 11. **Mocked:** Webhook parser and handshake test suites verify payload processing
 12. **Production Required:** YES
 
-### 3.4 Twilio Voice & Telephony
-1. **Variable Name:** `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` / `twilio-auth-token`, `TWILIO_PHONE_NUMBER`
-2. **File Defined:** `.env.example`, `infrastructure/terraform/secrets.tf` (Line 10)
-3. **File Read:** `infrastructure/terraform/compute.tf` (Line 73), `backend/crates/integrations/src/providers/twilio.rs` (Lines 33-40)
-4. **Backend Service:** `platform_integrations::providers::twilio::TwilioConnector`
-5. **Function/Module:** `TwilioConnector::test_connection`, `TwilioConnector::normalize_webhook`, `domain::voice_telephony::CallingWindowValidator`
-6. **External API Endpoint:** `https://api.twilio.com/2010-04-01/Accounts/{AccountSid}/Calls.json`
-7. **Business Feature:** AI Voice Agent calling, WebRTC audio streaming, PSTN dialing, local compliance window checking
-8. **Active:** No (Blocked by missing live Account SID and Auth Token)
-9. **Configured but Unused:** No
-10. **Partially Implemented:** No
-11. **Mocked:** Format validator (`AC...`) checked in tests
-12. **Production Required:** YES
+### 3.4 Twilio Voice & Telephony (REMOVED)
+1. **Status:** REMOVED / NO LONGER USED
+2. **Provider Removal Rationale:** Intentionally removed from the platform. Telephony operates via a provider-neutral audio stream and SIP bridge layer.
+3. **Backend Service:** Deleted (`TwilioConnector` and module exports removed; domain engine converted to `TelephonyVoiceEngine`).
+4. **Active:** No (Provider removed).
+5. **Production Required:** NO (Removed).
 
 ### 3.5 Deepgram Real-Time Speech-to-Text
 1. **Variable Name:** `DEEPGRAM_API_KEY` / `deepgram-api-key`
@@ -132,19 +125,12 @@ This audit provides a comprehensive, evidence-based inventory of every external 
 11. **Mocked:** Offline fixture fallback active when unconfigured
 12. **Production Required:** YES
 
-### 3.6 ElevenLabs Neural Voice Synthesis
-1. **Variable Name:** `ELEVENLABS_API_KEY` / `elevenlabs-api-key`, `ELEVENLABS_VOICE_ID`, `ELEVENLABS_MODEL_ID`
-2. **File Defined:** `.env.example` (Lines 56-58), `infrastructure/terraform/secrets.tf` (Line 13)
-3. **File Read:** `backend/crates/integrations/src/providers/elevenlabs.rs` (Lines 63-70), `backend/crates/domain/src/e2e_audit.rs` (Line 327)
-4. **Backend Service:** `platform_integrations::providers::elevenlabs::ElevenLabsConnector`
-5. **Function/Module:** `ElevenLabsConnector::test_connection`, `ElevenLabsConnector::preset_voices`
-6. **External API Endpoint:** `https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream`
-7. **Business Feature:** Autonomous Voice Agent voice output (Rachel, Adam, Nicole models)
-8. **Active:** No (Blocked by missing live key)
-9. **Configured but Unused:** No
-10. **Partially Implemented:** No
-11. **Mocked:** Text development mode active when unconfigured
-12. **Production Required:** YES
+### 3.6 ElevenLabs Neural Voice Synthesis (REMOVED)
+1. **Status:** REMOVED / NO LONGER USED
+2. **Provider Removal Rationale:** Intentionally removed from the platform. Voice pipeline operates gracefully in text/telephony fallback.
+3. **Backend Service:** Removed (`ElevenLabsConnector` and module exports deleted).
+4. **Active:** No (Provider removed).
+5. **Production Required:** NO (Removed).
 
 ### 3.7 Google Gemini & OpenAI LLMs
 1. **Variable Name:** `GEMINI_API_KEY` / `gemini-api-key`, `OPENAI_API_KEY`
@@ -225,7 +211,7 @@ This audit provides a comprehensive, evidence-based inventory of every external 
 | **Meta WhatsApp** | `/api/v1/webhooks/whatsapp` | `messages`, `message_deliveries`, `message_reads`, `template_status_update` | Constant-Time HMAC-SHA256 & GET Challenge Handshake | `WHATSAPP_APP_SECRET`, `WHATSAPP_VERIFY_TOKEN` | `sha256=` header comparison via `constant_time_compare` | `wamid` message deduplication key | Customer 360, AI WhatsApp Agent, Unified Inbox | IMPLEMENTED |
 | **Stripe** | `/api/v1/webhooks/stripe` | `payment_intent.succeeded`, `payment_intent.payment_failed`, `charge.refunded` | Constant-Time HMAC-SHA256 | `STRIPE_WEBHOOK_SECRET` | Header `t={ts},v1={sig}` parsed and verified against payload | Stripe Event ID (`evt_...`) idempotency check | Invoices, Autonomous Collections, Ledger | IMPLEMENTED |
 | **Razorpay** | `/api/v1/webhooks/razorpay` | `payment.captured`, `payment.failed`, `order.paid`, `refund.processed` | Constant-Time HMAC-SHA256 | `RAZORPAY_WEBHOOK_SECRET` | Header `X-Razorpay-Signature` hex comparison | Razorpay Payment ID (`pay_...`) idempotency table | Sales Flow Engine, Invoices, Customer Timeline | IMPLEMENTED |
-| **Twilio** | `/api/v1/webhooks/twilio` | `call.initiated`, `call.answered`, `call.completed`, `recording.available` | HMAC-SHA1 URL & Param Signing | `TWILIO_AUTH_TOKEN` | `X-Twilio-Signature` signature validation | Twilio `CallSid` unique constraint | Voice Telephony, Call Compliance, Transcripts | IMPLEMENTED |
+| **Twilio** | `/api/v1/webhooks/twilio` | N/A | REMOVED | N/A | N/A | N/A | Telephony (Purged) | REMOVED |
 | **Salesforce** | `/api/v1/webhooks/salesforce` | `Account.Updated`, `Contact.Created`, `Opportunity.Won` | Shared Secret Bearer Token | `SALESFORCE_WEBHOOK_SECRET` | Authorization Bearer header constant-time match | Salesforce Event UUID idempotency table | CRM Bidirectional Sync, Pipeline Engine | IMPLEMENTED |
 | **Generic Custom ERP** | `/api/v1/webhooks/generic` | `custom.event.v1` | HMAC-SHA256 Header | `GENERIC_WEBHOOK_SECRET` | `X-Hub-Signature-256` validation | `Idempotency-Key` HTTP header validation | Workflow Engine Trigger | IMPLEMENTED |
 
@@ -247,14 +233,12 @@ This audit provides a comprehensive, evidence-based inventory of every external 
 ### 6.1 Provisioned Secrets in Terraform (`infrastructure/terraform/secrets.tf`):
 1. `stripe-secret-key`
 2. `razorpay-key-secret`
-3. `twilio-auth-token`
-4. `meta-whatsapp-token`
-5. `gemini-api-key`
-6. `elevenlabs-api-key`
-7. `deepgram-api-key`
-8. `sentry-dsn`
-9. `platform-db-password`
-10. `platform-db-url`
+3. `meta-whatsapp-token`
+4. `gemini-api-key`
+6. `deepgram-api-key`
+7. `sentry-dsn`
+8. `platform-db-password`
+9. `platform-db-url`
 
 ### 6.2 Cloud Run Injection Mapping (`infrastructure/terraform/compute.tf`):
 * `google_cloud_run_v2_service.api_service` mounts secrets directly as container environment variables using `value_source.secret_key_ref`.
@@ -297,11 +281,11 @@ This audit provides a comprehensive, evidence-based inventory of every external 
 | `SENTRY_DSN` | Yes (blank) | No | Yes (`sentry-dsn`) | Sentry project ingestion URL |
 | `OPENAI_API_KEY` | Yes (blank) | Yes (dummy) | Recommended in GSM | Required for OpenAI model execution |
 | `GEMINI_API_KEY` | Yes (blank) | Yes (dummy) | Yes (`gemini-api-key`) | Required for Gemini model execution |
-| `TWILIO_ACCOUNT_SID` | Yes (blank) | Yes (dummy) | No (Cloud Run env) | Twilio public account identifier |
-| `TWILIO_AUTH_TOKEN` | Yes (blank) | Yes (dummy) | Yes (`twilio-auth-token`) | Twilio primary authentication token |
-| `TWILIO_PHONE_NUMBER` | Yes (blank) | Yes (dummy) | No (Cloud Run env) | E.164 provisioned telephony number |
+| `TWILIO_ACCOUNT_SID` | No (Removed) | No (Removed) | No (Removed) | REMOVED / NO LONGER USED |
+| `TWILIO_AUTH_TOKEN` | No (Removed) | No (Removed) | No (Removed) | REMOVED / NO LONGER USED |
+| `TWILIO_PHONE_NUMBER` | No (Removed) | No (Removed) | No (Removed) | REMOVED / NO LONGER USED |
 | `DEEPGRAM_API_KEY` | Yes (blank) | Yes (dummy) | Yes (`deepgram-api-key`) | Deepgram Nova-2 streaming key |
-| `ELEVENLABS_API_KEY` | Yes (blank) | Yes (dummy) | Yes (`elevenlabs-api-key`) | ElevenLabs voice synthesis key |
+| `ELEVENLABS_API_KEY` | No (Removed) | No (Removed) | No (Removed) | REMOVED / NO LONGER USED |
 | `STRIPE_SECRET_KEY` | No | Yes (dummy) | Yes (`stripe-secret-key`) | Stripe backend secret key |
 | `RAZORPAY_KEY_SECRET` | No | Yes (dummy) | Yes (`razorpay-key-secret`) | Razorpay backend secret key |
 | `NEXT_PUBLIC_API_URL` | Yes | Yes | No (Web Cloud Run env) | Public frontend routing endpoint |
@@ -326,7 +310,7 @@ This audit provides a comprehensive, evidence-based inventory of every external 
 The platform has zero code-level architecture blockers; however, live external provider functionality is currently blocked by missing production credentials across:
 1. **AI Reasoning:** Neither `GEMINI_API_KEY` nor `OPENAI_API_KEY` is populated in production Secret Manager.
 2. **Payments:** Live payment checkout requires `STRIPE_SECRET_KEY` and/or `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET`.
-3. **Telephony & Audio:** Live outbound dialing requires `TWILIO_ACCOUNT_SID` + `TWILIO_AUTH_TOKEN`, `DEEPGRAM_API_KEY`, and `ELEVENLABS_API_KEY`.
+3. **Telephony & Audio:** Live voice listening requires `DEEPGRAM_API_KEY` (telephony operates via provider-neutral layer; Twilio removed).
 4. **WhatsApp:** Live WhatsApp messaging requires Meta `META_WHATSAPP_TOKEN` and `WHATSAPP_APP_SECRET`.
 5. **OCR:** Live document scanning requires Mathpix `mathpix-app-id` and `mathpix-app-key`.
 6. **Observability:** Production crash reporting requires `SENTRY_DSN`.

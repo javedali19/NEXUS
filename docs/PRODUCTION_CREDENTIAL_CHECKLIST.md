@@ -15,9 +15,9 @@
 | 3 | **Stripe** | Live Secret Key & Webhook Secret | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Card Payments, Customer Checkout, Recurring Subscriptions | AWAITING CONFIGURATION | [Stripe Dashboard → Developers → API Keys](https://dashboard.stripe.com/apikeys) |
 | 4 | **Razorpay** | Key ID & Key Secret | `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` | India UPI QR, Netbanking, Instant Payment Links | AWAITING CONFIGURATION | [Razorpay Dashboard → Settings → API Keys](https://dashboard.razorpay.com/app/keys) |
 | 5 | **Meta WhatsApp** | Permanent System User Token & App Secret | `META_WHATSAPP_TOKEN`, `WHATSAPP_APP_SECRET`, `WHATSAPP_VERIFY_TOKEN` | WhatsApp Unified Inbox, HSM Inbound/Outbound Messages | AWAITING CONFIGURATION | [Meta for Developers → WhatsApp Platform](https://developers.facebook.com/apps/) |
-| 6 | **Twilio** | Account SID, Auth Token & Provisioned Phone Number | `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_PHONE_NUMBER` | AI Voice Agent PSTN Calling, WebRTC SIP Media, SMS | AWAITING CONFIGURATION | [Twilio Console → Account Info](https://console.twilio.com/) |
+| 6 | **Twilio** | N/A | None (Removed) | None (Provider dependency intentionally removed) | REMOVED | N/A (Removed) |
 | 7 | **Deepgram** | API Key | `DEEPGRAM_API_KEY` | Real-time Streaming STT (Nova-2) for Audio Transcription | AWAITING CONFIGURATION | [Deepgram Console → API Keys](https://console.deepgram.com/) |
-| 8 | **ElevenLabs** | API Key & Voice IDs | `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | Real-time Neural Voice Synthesis (Turbo v2.5) | AWAITING CONFIGURATION | [ElevenLabs Developer Settings](https://elevenlabs.io/app/settings/api-keys) |
+| 8 | **ElevenLabs** | N/A | None (Removed) | None (Provider dependency intentionally removed) | REMOVED | N/A (Removed) |
 | 9 | **Mathpix** | App ID & App Key | `mathpix-app-id`, `mathpix-app-key` | Accounts Payable OCR & Line Item Mathematical Parsing | AWAITING CONFIGURATION | [Mathpix Account Dashboard](https://accounts.mathpix.com/) |
 | 10 | **Sentry** | Production DSN | `SENTRY_DSN` | Production Exception Capture & Performance Tracing | AWAITING CONFIGURATION | [Sentry Project Settings → Client Keys (DSN)](https://sentry.io/settings/) |
 | 11 | **Xero** | OAuth 2.0 Client ID, Client Secret & Tenant ID | `XERO_CLIENT_ID`, `XERO_CLIENT_SECRET`, `XERO_TENANT_ID` | General Ledger & Chart of Accounts Synchronization | AWAITING CONFIGURATION | [Xero Developer Portal](https://developer.xero.com/myapps/) |
@@ -84,13 +84,10 @@
   * **Env / Secret Manager Name:** `META_WHATSAPP_TOKEN` (Secret Manager: `meta-whatsapp-token`), `WHATSAPP_APP_SECRET`, `WHATSAPP_VERIFY_TOKEN`.
   * **Status:** Blocked by missing key.
 
-* **Service:** Twilio
-  * **Credential:** Account SID (`AC...`), Auth Token, and Provisioned E.164 Phone Number.
-  * **Purpose:** Inbound/outbound voice calls, PSTN dialing, WebRTC media gateway, SMS.
-  * **Required for:** Autonomous AI Voice Agent and Call Center operations.
-  * **Where to obtain:** Twilio Console → Project Dashboard.
-  * **Env / Secret Manager Name:** `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` (Secret Manager: `twilio-auth-token`), `TWILIO_PHONE_NUMBER`.
-  * **Status:** Blocked by missing key.
+* **Service:** Twilio (REMOVED)
+  * **Status:** REMOVED / NO LONGER USED
+  * **Reason:** Provider dependency intentionally removed from the platform. Telephony operates via provider-neutral SIP gateway and call dispatch layer.
+  * **Env / Secret Manager Name:** None (Purged).
 
 ---
 
@@ -103,13 +100,10 @@
   * **Env / Secret Manager Name:** `DEEPGRAM_API_KEY` (Secret Manager: `deepgram-api-key`).
   * **Status:** Blocked by missing key.
 
-* **Service:** ElevenLabs
-  * **Credential:** API Key, Voice Model ID (`eleven_turbo_v2_5`), Preferred Voice ID (`21m00Tcm4TlvDq8ikWAM`).
-  * **Purpose:** Real-time conversational voice synthesis for AI voice agent responses.
-  * **Required for:** Autonomous voice calling and spoken audio responses.
-  * **Where to obtain:** ElevenLabs Website → Profile → API Keys.
-  * **Env / Secret Manager Name:** `ELEVENLABS_API_KEY` (Secret Manager: `elevenlabs-api-key`).
-  * **Status:** Blocked by missing key.
+* **Service:** ElevenLabs (REMOVED)
+  * **Status:** REMOVED / NO LONGER USED
+  * **Reason:** Provider dependency intentionally removed from the platform. Voice pipeline operates in graceful text/telephony fallback.
+  * **Remaining Pipeline:** Provider-neutral SIP Telephony + Deepgram STT + AI Reasoning Layer remain fully functional.
 
 ---
 

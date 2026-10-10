@@ -11,9 +11,9 @@
 ```text
                                   ┌─── Google Gemini / OpenAI (LLM Reasoning)
                                   ├─── Deepgram (Nova-2 Speech-to-Text)
-                                  ├─── ElevenLabs (Turbo v2.5 Voice Synthesis)
+                                  ├─── [REMOVED] ElevenLabs (Provider Removed / Optional Text Mode)
                                   │
-                                  ├─── Twilio (Voice Telephony & SIP)
+                                  ├─── [REMOVED] Twilio (Provider-Neutral Telephony Gateway Active)
                                   ├─── Meta WhatsApp Business Cloud API
                                   ├─── LINE Messaging API (Thailand)
                                   │
@@ -92,17 +92,17 @@ Real-time Two-Way Chat, HSM Template Dispatches, Autonomous Inbound Support Bot
 
 ---
 
-### 2.3 Autonomous Voice Agent (Quad-Gate Architecture)
+### 2.3 Autonomous Voice Agent (Provider-Neutral Telephony Architecture)
 
 ```text
-   Gate 1: Telephony               Gate 2: STT                  Gate 3: Reasoning               Gate 4: Voice
+   Gate 1: Telephony               Gate 2: STT                  Gate 3: Reasoning               Output Stage
   ┌──────────────────┐         ┌─────────────────┐           ┌────────────────────┐          ┌───────────────────┐
-  │  Twilio Carrier  │ ──────> │ Deepgram Nova-2 │ ────────> │ Gemini 1.5 / GPT-4o│ ───────> │ ElevenLabs Turbo  │
-  │  PSTN / WebRTC   │         │ WebSocket Audio │           │ Function Calling   │          │ Neural Streaming  │
+  │ Telephony Bridge │ ──────> │ Deepgram Nova-2 │ ────────> │ Gemini 1.5 / GPT-4o│ ───────> │ Telephony Egress  │
+  │ Provider-Neutral │         │ WebSocket Audio │           │ Function Calling   │          │ (TTS Optional)    │
   └──────────────────┘         └─────────────────┘           └────────────────────┘          └───────────────────┘
            │                            │                              │                               │
-    TWILIO_AUTH_TOKEN           DEEPGRAM_API_KEY              GEMINI_API_KEY /               ELEVENLABS_API_KEY
-    TWILIO_ACCOUNT_SID                                        OPENAI_API_KEY
+  [PROVIDER-NEUTRAL]            DEEPGRAM_API_KEY              GEMINI_API_KEY /               [ELEVENLABS REMOVED]
+   (Twilio Removed)                                           OPENAI_API_KEY
            │                            │                              │                               │
            └────────────────────────────┼──────────────────────────────┴───────────────────────────────┘
                                         ↓

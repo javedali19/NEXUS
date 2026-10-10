@@ -159,7 +159,7 @@ const INITIAL_EXCEPTIONS: ExceptionItem[] = [
     category: "communication",
     serviceName: "nexus-telephony-gateway",
     exceptionType: "SIPTrunkCarrierDrop",
-    message: "Twilio Voice SIP bridge disconnected prematurely during AI audio synthesis. Call hung up at 00:42.",
+    message: "Telephony carrier SIP bridge disconnected prematurely during AI audio synthesis. Call hung up at 00:42.",
     errorCode: "COMMS_SIP_PREMATURE_DISCONNECT",
     severity: "error",
     status: "open",
@@ -170,7 +170,7 @@ const INITIAL_EXCEPTIONS: ExceptionItem[] = [
     maxRetries: 1,
     timestamp: "2026-09-22 13:42:30 UTC",
     stackTrace: `SIPCarrierException: Call leg dropped with error 31005 (WebRTC Media Timeout)
-  at TwilioVoiceConnector.handleCallEvent (crates/telephony/src/twilio.rs:204)
+  at TelephonyGateway.handleCallEvent (crates/telephony/src/gateway.rs:204)
   at MediaStreamBridge.streamAudioToClient (crates/telephony/src/webrtc.rs:98)`,
     requestPayload: { call_sid: "CA99482710182", direction: "outbound", customer_phone: "+15550199" },
   },

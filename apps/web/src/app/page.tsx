@@ -646,7 +646,7 @@ export default function ExecutiveCommandCenterPage() {
               </div>
 
               <div className="flex items-center justify-between pt-1 border-t border-slate-100 text-[11px]">
-                <span className="text-slate-500 font-mono">Twilio + Deepgram + ElevenLabs</span>
+                <span className="text-slate-500 font-mono">Telephony + Deepgram + AI Reasoning</span>
                 <span className="text-emerald-600 font-mono font-medium">Sentiment: +0.82</span>
               </div>
             </div>

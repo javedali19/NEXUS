@@ -13,8 +13,24 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .parse()
         .expect("PORT must be a valid u16 integer");
 
+    let max_conn: u32 = std::env::var("DATABASE_MAX_CONNECTIONS")
+        .unwrap_or_else(|_| "20".to_string())
+        .parse()
+        .unwrap_or(20);
+
+    let db_pool = match platform_db::create_supabase_db_pool(max_conn).await {
+        Ok(pool) => {
+            info!("Connected to primary Supabase PostgreSQL database pool.");
+            Some(pool)
+        }
+        Err(e) => {
+            tracing::warn!("Supabase/PostgreSQL pool not connected (using resilient fallback): {}", e);
+            None
+        }
+    };
+
     let state = AppState {
-        db_pool: None,
+        db_pool,
         start_time: Instant::now(),
     };
 

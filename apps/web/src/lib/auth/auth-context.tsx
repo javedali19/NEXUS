@@ -110,21 +110,34 @@ const defaultProviderStatus: AuthProviderStatus = {
   },
 };
 
+export const defaultUser: UserIdentity = {
+  id: "11111111-1111-1111-1111-111111111111",
+  email: "alex.morgan@enterprise.internal",
+  fullName: "Alex Morgan",
+};
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<UserIdentity | null>(null);
+  const [user, setUser] = useState<UserIdentity | null>(defaultUser);
   const [activeOrg, setActiveOrg] = useState<Organization>(defaultOrg);
   const [activeBusinessUnit, setActiveBusinessUnit] = useState<BusinessUnit | null>(defaultBusinessUnit);
   const [availableOrgs] = useState<Organization[]>(defaultAvailableOrgs);
   const [availableBusinessUnits] = useState<BusinessUnit[]>(defaultAvailableBusinessUnits);
   const [providerStatus] = useState<AuthProviderStatus>(defaultProviderStatus);
   const [currentRole, setCurrentRole] = useState<UserRole>("admin");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Restore authenticated session from localStorage on mount
+  // Restore authenticated session from localStorage on mount or respect explicit sign out
   useEffect(() => {
     try {
+      const isLoggedOut = localStorage.getItem("nexus_logged_out") === "true";
+      if (isLoggedOut) {
+        setUser(null);
+        setIsLoading(false);
+        return;
+      }
+
       const savedUser = localStorage.getItem("nexus_auth_user");
       const savedRole = localStorage.getItem("nexus_auth_role") as UserRole | null;
       if (savedUser) {
@@ -134,9 +147,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setCurrentRole(savedRole);
           setActiveOrg((prev) => ({ ...prev, role: savedRole }));
         }
+      } else {
+        // Set default session for instant access
+        setUser(defaultUser);
+        try {
+          localStorage.setItem("nexus_auth_user", JSON.stringify(defaultUser));
+          localStorage.setItem("nexus_auth_role", "admin");
+        } catch {}
       }
     } catch {
-      setUser(null);
+      setUser(defaultUser);
     } finally {
       setIsLoading(false);
     }
@@ -185,6 +205,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try {
         localStorage.setItem("nexus_auth_user", JSON.stringify(userData));
         localStorage.setItem("nexus_auth_role", role);
+        localStorage.removeItem("nexus_logged_out");
       } catch {}
     } finally {
       setIsLoading(false);
@@ -196,6 +217,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       localStorage.removeItem("nexus_auth_user");
       localStorage.removeItem("nexus_auth_role");
+      localStorage.setItem("nexus_logged_out", "true");
     } catch {}
   };
 

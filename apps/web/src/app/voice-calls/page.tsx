@@ -44,7 +44,10 @@ import {
   ChevronRight,
   BadgeAlert,
   Layers,
+  Ticket,
 } from "lucide-react";
+import { RaiseTicketModal } from "@/components/tickets/raise-ticket-modal";
+import { getStoredTickets, SupportTicket, updateTicketStatus } from "@/lib/tickets-data";
 
 // ============================================================================
 // Types & Domain Interfaces
@@ -420,11 +423,25 @@ const INITIAL_QUEUES: TelephonyQueueItem[] = [
 // ============================================================================
 
 export default function VoiceCallsPage() {
-  const [activeTab, setActiveTab] = useState<"calls" | "dialpad" | "numbers" | "queues" | "compliance">("calls");
+  const [activeTab, setActiveTab] = useState<"calls" | "tickets" | "dialpad" | "numbers" | "queues" | "compliance">("calls");
   const [calls, setCalls] = useState<CallRecord[]>(INITIAL_CALLS);
   const [selectedCall, setSelectedCall] = useState<CallRecord | null>(INITIAL_CALLS[0]);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [audioPlaybackProgress, setAudioPlaybackProgress] = useState(24); // %
+
+  // Ticket Raising State
+  const [isRaiseTicketOpen, setIsRaiseTicketOpen] = useState(false);
+  const [voiceTickets, setVoiceTickets] = useState<SupportTicket[]>([]);
+
+  useEffect(() => {
+    const refreshTickets = () => {
+      const all = getStoredTickets();
+      setVoiceTickets(all.filter((t) => t.sourceChannel === "voice_call" || t.linkedCallSid || t.linkedCallId));
+    };
+    refreshTickets();
+    window.addEventListener("nexus_tickets_updated", refreshTickets);
+    return () => window.removeEventListener("nexus_tickets_updated", refreshTickets);
+  }, []);
 
   // Softphone & Dialpad State
   const [dialNumber, setDialNumber] = useState("");
@@ -606,14 +623,14 @@ export default function VoiceCallsPage() {
     return matchesSearch && matchesPurpose && matchesOutcome;
   });
 
-  // Twilio Connection Test
-  const handleTestTwilioConnection = () => {
+  // Telephony Connection Test
+  const handleTestTelephonyConnection = () => {
     setIsTestingConnection(true);
     setConnectionStatusMessage(null);
     setTimeout(() => {
       setIsTestingConnection(false);
       setConnectionStatusMessage(
-        "Twilio SIP Voice Trunks, WebRTC Media Stream, and DID catalog verified healthy (Latency: 38ms)."
+        "Telephony SIP Carrier Bridge, WebRTC Media Stream, and DID catalog verified healthy (Latency: 38ms)."
       );
     }, 1200);
   };
@@ -632,7 +649,7 @@ export default function VoiceCallsPage() {
                 <h1 className="text-2xl font-bold tracking-tight text-slate-900">AI Voice & Telephony Command Studio</h1>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Twilio SIP Engine Active
+                  Telephony Gateway Active
                 </span>
               </div>
               <p className="text-sm text-slate-500 mt-1">
@@ -667,7 +684,7 @@ export default function VoiceCallsPage() {
         </div>
       </div>
 
-      {/* Twilio Provider Integration Bar */}
+      {/* Telephony Provider Integration Bar */}
       <div className="rounded-xl bg-slate-900 border border-slate-800 p-4 shadow-sm text-white">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div className="flex items-start md:items-center gap-4">
@@ -677,9 +694,9 @@ export default function VoiceCallsPage() {
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Telephony Provider</span>
-                <span className="text-sm font-semibold text-white">Twilio SIP & Voice WebRTC Trunks</span>
+                <span className="text-sm font-semibold text-white">Telephony SIP & Voice WebRTC Gateway</span>
                 <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-800 text-slate-300 border border-slate-700">
-                  SID: AC8f9e••••••••b10a
+                  Trunk: Carrier-SIP-01
                 </span>
                 <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
                   <CheckCircle2 className="h-3 w-3" /> Healthy (38ms)
@@ -694,18 +711,8 @@ export default function VoiceCallsPage() {
           </div>
 
           <div className="flex items-center gap-3 flex-wrap">
-            <a
-              href="https://console.twilio.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition-colors"
-            >
-              Twilio Developer Console
-              <ExternalLink className="h-3 w-3 text-slate-400" />
-            </a>
-
             <button
-              onClick={handleTestTwilioConnection}
+              onClick={handleTestTelephonyConnection}
               disabled={isTestingConnection}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition-colors disabled:opacity-50"
             >
@@ -796,6 +803,18 @@ export default function VoiceCallsPage() {
         >
           <PhoneCall className="h-3.5 w-3.5" />
           Master Calls Ledger & Intelligence ({calls.length})
+        </button>
+
+        <button
+          onClick={() => setActiveTab("tickets")}
+          className={`px-4 py-2.5 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap flex items-center gap-2 ${
+            activeTab === "tickets"
+              ? "border-blue-600 text-blue-600"
+              : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300"
+          }`}
+        >
+          <Ticket className="h-3.5 w-3.5" />
+          Call Action Tickets ({voiceTickets.length})
         </button>
 
         <button
@@ -1224,16 +1243,29 @@ export default function VoiceCallsPage() {
                     </div>
                   </div>
 
-                  {/* Escalation Button if not yet escalated */}
-                  {!selectedCall.escalation && (
+                  {/* Action Buttons: Raise Ticket & Warm Transfer */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
                     <button
-                      onClick={() => setShowEscalationModal(true)}
-                      className="w-full py-2 rounded-lg bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-xs font-medium border border-slate-200 shadow-xs transition-colors flex items-center justify-center gap-2"
+                      onClick={() => setIsRaiseTicketOpen(true)}
+                      className="py-2.5 px-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      <PhoneForwarded className="h-3.5 w-3.5 text-blue-600" />
-                      Initiate Warm Transfer to Human Supervisor
+                      <Ticket className="h-3.5 w-3.5" />
+                      Raise Ticket from Call
                     </button>
-                  )}
+                    {!selectedCall.escalation ? (
+                      <button
+                        onClick={() => setShowEscalationModal(true)}
+                        className="py-2.5 px-3 rounded-lg bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-xs font-medium border border-slate-200 shadow-xs transition-colors flex items-center justify-center gap-2"
+                      >
+                        <PhoneForwarded className="h-3.5 w-3.5 text-blue-600" />
+                        Warm Transfer
+                      </button>
+                    ) : (
+                      <div className="flex items-center justify-center py-2.5 px-3 rounded-lg bg-rose-50 text-rose-700 text-xs font-semibold border border-rose-200">
+                        Transfer Initiated
+                      </div>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-12 text-center text-slate-500">
@@ -1241,6 +1273,170 @@ export default function VoiceCallsPage() {
                 </div>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ==================================================================== */}
+      {/* TAB: Voice Call Action Tickets                                      */}
+      {/* ==================================================================== */}
+      {activeTab === "tickets" && (
+        <div className="space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200/90 p-4 rounded-xl shadow-xs">
+            <div>
+              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Ticket className="h-4 w-4 text-blue-600" />
+                Tickets Raised from AI Voice Telephony & Customer Calls
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Every ticket generated from customer disputes, promise-to-pay confirmations, and voice escalations.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsRaiseTicketOpen(true)}
+                className="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+              >
+                <Ticket className="h-3.5 w-3.5" />
+                Raise Ticket for Current Call
+              </button>
+              <Link
+                href="/tickets"
+                className="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-medium border border-slate-200 transition-colors flex items-center gap-1.5"
+              >
+                All Tickets Console
+                <ExternalLink className="h-3 w-3" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Voice Tickets Ledger Table with Serial Numbers */}
+          <div className="bg-white rounded-xl border border-slate-200/90 shadow-xs overflow-hidden">
+            <div className="px-5 py-3.5 bg-slate-50/80 border-b border-slate-200/80 flex items-center justify-between text-xs text-slate-600 font-semibold">
+              <div className="flex items-center gap-2">
+                <Ticket className="h-4 w-4 text-blue-600" />
+                <span>Voice Calls Ticketing Ledger ({voiceTickets.length})</span>
+              </div>
+              <span className="text-[11px] text-slate-400 font-mono">Sequential S.No Enabled (1 to {voiceTickets.length})</span>
+            </div>
+
+            {voiceTickets.length === 0 ? (
+              <div className="p-12 text-center text-slate-400 text-xs">
+                No tickets raised from voice calls yet. Click "Raise Ticket for Current Call" above or open a call and click "Raise Ticket from Call".
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-100/75 border-b border-slate-200/90 text-slate-600 uppercase tracking-wider font-bold">
+                    <tr>
+                      <th className="px-3.5 py-3.5 text-center font-mono w-14">S.No</th>
+                      <th className="px-4 py-3.5 w-36">Ticket #</th>
+                      <th className="px-4 py-3.5 min-w-[240px]">Subject & Call SID</th>
+                      <th className="px-4 py-3.5 w-44">Customer</th>
+                      <th className="px-3.5 py-3.5 w-36">Department</th>
+                      <th className="px-3.5 py-3.5 text-center w-28">Priority</th>
+                      <th className="px-3.5 py-3.5 font-mono w-32">SLA Target</th>
+                      <th className="px-3.5 py-3.5 text-center w-36">Status</th>
+                      <th className="px-4 py-3.5 text-right w-24">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {voiceTickets.map((t, index) => (
+                      <tr key={t.id} className="hover:bg-slate-50/80 transition-colors">
+                        {/* S.No column */}
+                        <td className="px-3.5 py-3.5 text-center">
+                          <span className="inline-flex items-center justify-center h-6 w-7 rounded-md font-mono text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200 shadow-2xs">
+                            {index + 1}
+                          </span>
+                        </td>
+
+                        {/* Ticket # */}
+                        <td className="px-4 py-3.5">
+                          <span className="font-mono text-xs font-bold text-blue-600">
+                            {t.ticketNumber}
+                          </span>
+                        </td>
+
+                        {/* Subject & Call SID */}
+                        <td className="px-4 py-3.5">
+                          <div className="font-semibold text-slate-900 leading-snug">{t.title}</div>
+                          <div className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">{t.description}</div>
+                          {t.linkedCallSid && (
+                            <div className="mt-1 inline-flex items-center gap-1 font-mono text-[10px] text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded border border-blue-200/60">
+                              <PhoneCall className="h-2.5 w-2.5 text-blue-600" />
+                              SID: {t.linkedCallSid.slice(0, 16)}...
+                            </div>
+                          )}
+                        </td>
+
+                        {/* Customer */}
+                        <td className="px-4 py-3.5">
+                          <div className="font-medium text-slate-800">{t.customerName}</div>
+                          {t.companyName && (
+                            <div className="text-[11px] text-slate-400">{t.companyName}</div>
+                          )}
+                        </td>
+
+                        {/* Department */}
+                        <td className="px-3.5 py-3.5 text-slate-700 font-medium">
+                          {t.assignedDepartment}
+                        </td>
+
+                        {/* Priority */}
+                        <td className="px-3.5 py-3.5 text-center">
+                          <span className={`px-2 py-0.5 rounded text-[10px] uppercase font-bold ${
+                            t.priority === "critical"
+                              ? "bg-rose-100 text-rose-800 border border-rose-200"
+                              : t.priority === "high"
+                              ? "bg-amber-100 text-amber-800 border border-amber-200"
+                              : "bg-blue-100 text-blue-800 border border-blue-200"
+                          }`}>
+                            {t.priority}
+                          </span>
+                        </td>
+
+                        {/* SLA */}
+                        <td className="px-3.5 py-3.5 font-mono text-[11px] text-amber-700 font-medium">
+                          {t.slaResponseDue}
+                        </td>
+
+                        {/* Status dropdown */}
+                        <td className="px-3.5 py-3.5 text-center">
+                          <select
+                            value={t.status}
+                            onChange={(e) => {
+                              updateTicketStatus(t.id, e.target.value as any, "Telephony Agent");
+                              const all = getStoredTickets();
+                              setVoiceTickets(all.filter((tk) => tk.sourceChannel === "voice_call" || tk.linkedCallSid || tk.linkedCallId));
+                            }}
+                            className="px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold bg-white text-slate-800 shadow-2xs outline-hidden"
+                          >
+                            <option value="new">New</option>
+                            <option value="assigned">Assigned</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="closed">Closed</option>
+                          </select>
+                        </td>
+
+                        {/* Action */}
+                        <td className="px-4 py-3.5 text-right">
+                          <Link
+                            href="/tickets"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition-colors"
+                            title="Open in Tickets Console"
+                          >
+                            <ExternalLink className="h-3 w-3" />
+                            <span>Open</span>
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -1526,7 +1722,7 @@ export default function VoiceCallsPage() {
             <div>
               <h3 className="text-base font-bold text-slate-900">Provisioned Direct Inward Dialing (DID) Catalog</h3>
               <p className="text-xs text-slate-500">
-                Managed phone numbers attached to Twilio SIP voice trunks and routing queues.
+                Managed phone numbers attached to Telephony SIP voice trunks and routing queues.
               </p>
             </div>
             <button className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium shadow-xs transition-colors">
@@ -1760,6 +1956,29 @@ export default function VoiceCallsPage() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Global Raise Ticket Modal for Voice Calls */}
+      {selectedCall && (
+        <RaiseTicketModal
+          isOpen={isRaiseTicketOpen}
+          onClose={() => setIsRaiseTicketOpen(false)}
+          onTicketCreated={() => {
+            const all = getStoredTickets();
+            setVoiceTickets(all.filter((t) => t.sourceChannel === "voice_call" || t.linkedCallSid || t.linkedCallId));
+          }}
+          sourceChannel="voice_call"
+          sourceReferenceId={selectedCall.callSid}
+          linkedCallId={selectedCall.id}
+          linkedCallSid={selectedCall.callSid}
+          customerName={selectedCall.customerName}
+          customerPhone={selectedCall.fromNumber}
+          companyName={selectedCall.companyName}
+          initialTitle={`Voice Follow-up: ${selectedCall.purpose.replace(/_/g, " ")} (${selectedCall.customerName})`}
+          initialDescription={`Auto-synced from Voice Call ${selectedCall.callSid}\n\nSummary:\n${selectedCall.executiveSummary}\n\nAction Items:\n${selectedCall.actionItems.join("\n")}`}
+          initialType="voice_call_followup"
+          initialPriority={selectedCall.sentimentScore < -0.3 ? "critical" : "high"}
+        />
       )}
     </div>
   );

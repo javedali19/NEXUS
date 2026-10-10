@@ -16,13 +16,13 @@
                        │             └─── Omise / PromptPay (Thailand)
                        │
                        │             ┌─── Meta WhatsApp Business Cloud API
-                       ├─ Comms ─────┼─── Twilio (Voice Telephony & PSTN)
+                       ├─ Comms ─────┼─── [REMOVED] Twilio (Provider-Neutral Telephony Gateway Active)
                        │             └─── LINE Official Account (Thailand)
                        │
                        │             ┌─── Google Gemini 1.5 Pro (Primary LLM)
 Customer 360 Core ─────┼─ AI Engine ─┼─── OpenAI GPT-4o (Fallback Reasoning)
                        │             ├─── Deepgram Nova-2 (Streaming STT)
-                       │             └─── ElevenLabs Turbo v2.5 (Neural TTS)
+                       │             └─── [REMOVED] ElevenLabs (TTS Removed / Text Fallback Active)
                        │
                        │             ┌─── Mathpix (Table & Invoice OCR)
                        ├─ Vision ────┼─── Google Cloud Vision (Document AI)
@@ -43,17 +43,17 @@ Customer 360 Core ─────┼─ AI Engine ─┼─── OpenAI GPT-4o 
 
 ## 2. Multi-API Dependency Chains
 
-### Chain 1: The Autonomous AI Voice Agent ("The Quad-Gate")
+### Chain 1: The Autonomous AI Voice Agent (Provider-Neutral Telephony Architecture — Post-Twilio & ElevenLabs Removal)
 
-The Voice Agent is an integrated real-time pipeline requiring four external services operating concurrently:
+The Voice Agent is an integrated real-time pipeline operating with provider-neutral telephony, Deepgram STT, and AI reasoning engines (with Twilio and ElevenLabs removed):
 
 ```text
-               Caller Speaks into Telephone
+               Caller Speaks into Telephone / WebRTC
                            │
                            ▼
                   ┌──────────────────┐
-                  │      Twilio      │  (Gate 1: Telephony Carrier)
-                  │  PSTN / WebRTC   │  • Connects phone call
+                  │ Telephony Gateway│  (Gate 1: Telephony Carrier Bridge)
+                  │  PSTN / WebRTC   │  • Provider-neutral session bridge
                   └────────┬─────────┘  • Streams raw audio chunks over WebSocket
                            │
                            ▼
@@ -70,19 +70,19 @@ The Voice Agent is an integrated real-time pipeline requiring four external serv
                            │
                            ▼
                   ┌──────────────────┐
-                  │ ElevenLabs Turbo │  (Gate 4: Voice Synthesis)
-                  │  v2.5 Streaming  │  • Generates ultra-realistic human speech
-                  └────────┬─────────┘  • Returns audio chunks in ~110ms
+                  │ Telephony Egress │  (Output Stage: TTS Optional / Text Mode)
+                  │  Media Stream    │  • Telephony sessions & transcripts preserved
+                  └────────┬─────────┘
                            │
                            ▼
-                  Caller Hears Audio in Ear
+                  Caller Hears Call / Interacts
 ```
 
 #### Dependency Matrix for Voice:
-* If **Twilio** is missing: No call can be placed or received.
-* If **Deepgram** is missing: Twilio connects, but the AI cannot hear or transcribe the caller.
+* **Telephony Gateway**: Operates via provider-neutral telephony gateway; Twilio removed.
+* If **Deepgram** is missing: Telephony connects, but the AI cannot hear or transcribe the caller.
 * If **Gemini/OpenAI** is missing: The audio transcribes, but the AI cannot formulate a reply.
-* If **ElevenLabs** is missing: The AI formulates a text answer, but cannot speak it back to the caller.
+* **Twilio & ElevenLabs**: REMOVED. The system continues operation gracefully in provider-neutral conversational mode without vendor lock-in.
 
 ---
 
@@ -215,9 +215,9 @@ Ensures zero data loss and guaranteed message delivery between Postgres and Goog
 | External Service | Direct Code Dependents | Business Features Blocked If Service Is Down |
 |---|---|---|
 | **Google Cloud IAM (ADC)** | GCS, Pub/Sub, Cloud Tasks, Secret Manager, Cloud KMS | **Entire Platform Infrastructure** (storage, events, workers, secrets) |
-| **Twilio** | `VoiceTelephonyEngine`, `CallingWindowValidator` | Autonomous Voice Agent, Call Center Dialpad, SMS dispatch |
+| **Twilio (REMOVED)** | None (Purged) | None (Provider dependency removed; replaced with provider-neutral telephony gateway) |
 | **Deepgram** | `VoiceAgentCoordinator` | Live call transcription, speech understanding |
-| **ElevenLabs** | `VoiceAgentCoordinator` | Live conversational speech generation |
+| **ElevenLabs (REMOVED)** | None (Removed) | None (Provider dependency intentionally removed; voice pipeline continues in text fallback) |
 | **Gemini / OpenAI** | `AiSalesAgent`, `AiWhatsAppAgent`, `AiToolGateway` | Autonomous sales qualification, WhatsApp bot, deal copilot |
 | **Stripe** | `SalesFlowEngine`, `PaymentRouter` | International credit card checkout, hosted payment links |
 | **Razorpay** | `AutonomousCollectionsEngine`, `RazorpayAdapter` | Indian UPI dynamic QR, netbanking, collections payment links |

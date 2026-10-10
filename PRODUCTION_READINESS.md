@@ -7,7 +7,7 @@
 > [!IMPORTANT]
 > **Production Readiness Assessment**:
 > - **Core Architecture, Security & Code Quality**: **100% PRODUCTION READY**. The Rust backend domain engine, Next.js frontend web studio, PostgreSQL 15 multi-tenant schema with forced Row-Level Security (RLS), CI/CD pipeline, and Terraform GCP infrastructure are fully compiled, hardened, and verified with zero blockers.
-> - **External Third-Party Integrations**: In strict adherence to the *Zero Plaintext Credentials* governance rule, external vendor production credentials (live keys for Stripe, Razorpay, Meta WhatsApp, Twilio, Deepgram, ElevenLabs, Xero, etc.) are **NOT CONFIGURED** within the source code or repository.
+> - **External Third-Party Integrations**: In strict adherence to the *Zero Plaintext Credentials* governance rule, external vendor production credentials (live keys for Stripe, Razorpay, Meta WhatsApp, Deepgram, Xero, etc.) are **NOT CONFIGURED** within the source code or repository.
 > - **Action Required Prior to Live Traffic**: Inject external vendor secrets into Google Secret Manager (`infrastructure/terraform/secrets.tf`) following the step-by-step credential setup guide below.
 
 ---
@@ -21,7 +21,7 @@ Every core subsystem has been systematically evaluated against enterprise standa
 | **1** | **Architecture** | **VERIFIED** | Clean modular monolith with domain event-driven design, transactional outbox pattern, microservice boundary isolation, and zero cyclic dependencies between `crates/domain`, `crates/integrations`, and `crates/common`. |
 | **2** | **Frontend** | **VERIFIED** | Next.js 14 App Router, TypeScript with strict mode (`tsc --noEmit` clean: 0 errors), Tailwind CSS design tokens, server-side rendering, and responsive viewports (320px mobile to 4K desktop). |
 | **3** | **Backend** | **VERIFIED** | High-throughput Rust engines using Tokio async runtime, Axum HTTP routers, Tower service middleware, structured error handling (`PlatformError`), and connection pooling via SQLx. |
-| **4** | **Database** | **VERIFIED** | PostgreSQL 15, 44 sequential migrations (`0001` through `0044`), UUID primary keys, composite indexing, foreign key cascade deletions, and automated schema migration verification. |
+| **4** | **Database** | **VERIFIED** | PostgreSQL 15, 46 sequential migrations (`0001` through `0046`), UUID primary keys, composite indexing, foreign key cascade deletions, and automated schema migration verification. |
 | **5** | **APIs** | **VERIFIED** | Versioned RESTful contracts (`/api/v1/*`), strict JSON schema parameter bounds validation, RFC 7807 error responses, idempotency replay caching, and OpenAPI specifications. |
 | **6** | **Security** | **VERIFIED** | 19 security domains evaluated, 7 credential vectors scanned with 0 leaks found across 471 targets, constant-time HMAC-SHA256 signature verification, and TLS 1.3 minimum cipher suites. |
 | **7** | **Authentication** | **VERIFIED** | Cryptographic JWT entropy, short 15m access token TTL, secure HTTP-only refresh tokens, and Google Cloud Identity Platform (GCIP) / Firebase Auth federation. |
@@ -33,7 +33,7 @@ Every core subsystem has been systematically evaluated against enterprise standa
 | **13** | **Accounting** | **VERIFIED** | Double-entry general ledger, automated journal entries, bank feed reconciliation, and multi-standard e-invoicing connectors (Xero, QuickBooks, LHDN MyInvois, Thai RD e-Tax). |
 | **14** | **WhatsApp** | **VERIFIED** | Meta WhatsApp Cloud API v18, Webhook HMAC signature verification, interactive template messaging, automated opt-out detection ('STOP', 'CANCEL'), and outbox queuing. |
 | **15** | **OCR & Vision** | **VERIFIED** | Multi-tenant GCS document storage, Google Cloud Vision & Mathpix extraction, confidence score routing (<0.90 to Review Console), and approved AP invoice ingestion. |
-| **16** | **Telephony** | **VERIFIED** | Inbound/outbound VoIP SIP carrier bridges, real-time Deepgram speech-to-text, ElevenLabs neural voice synthesis, national DNC suppression, and calling window (09:00 - 20:00) enforcement. |
+| **16** | **Telephony** | **VERIFIED** | Inbound/outbound VoIP SIP carrier bridges, real-time Deepgram speech-to-text, national DNC suppression, and calling window (09:00 - 20:00) enforcement. |
 | **17** | **AI Safety & Agents** | **VERIFIED** | Safe AI Tool Gateway with 6-tier defense (Auth, Bounds, Policy, Rate Limit, Idempotency, SHA-256 Audit), Zero-Raw-SQL invariant, and autonomous agent confidence threshold (>=0.70). |
 | **18** | **Workflows** | **VERIFIED** | Visual DAG workflow automation engine, trigger-condition-action pipelines, and transactional outbox event triggers with execution history tracking. |
 | **19** | **Collections** | **VERIFIED** | Autonomous AR dunning policy engine, aging schedule analysis, multi-tier WhatsApp reminders, tokenized payment link generation, and automated case closure upon settlement. |
@@ -68,9 +68,9 @@ Every required external service has been probed and categorized into its exact s
 | **3** | **Stripe** | Payments | **NOT CONFIGURED** | API Secret Key & Webhook Secret | `STRIPE_SECRET_KEY` (`sk_live_*`), `STRIPE_WEBHOOK_SECRET` (`whsec_*`) | [Stripe Dashboard](https://dashboard.stripe.com/apikeys) &rarr; Developers &rarr; API Keys | Adapters & webhook verification ready; awaiting live key |
 | **4** | **Razorpay** | Payments | **NOT CONFIGURED** | Key ID & Key Secret | `RAZORPAY_KEY_ID` (`rzp_live_*`), `RAZORPAY_KEY_SECRET` | [Razorpay Dashboard](https://dashboard.razorpay.com/#/app/keys) &rarr; Settings &rarr; API Keys | Checkout & webhook signature engine ready; awaiting live key |
 | **5** | **Meta WhatsApp** | Messaging | **NOT CONFIGURED** | System User Permanent Token | `META_WHATSAPP_TOKEN`, `META_PHONE_NUMBER_ID`, `META_APP_SECRET` | [Meta for Developers](https://developers.facebook.com/apps/) &rarr; WhatsApp &rarr; API Setup | Webhook receiver & template engine ready; awaiting token |
-| **6** | **Twilio** | Telephony | **NOT CONFIGURED** | Account SID & Auth Token | `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_PHONE_NUMBER` | [Twilio Console](https://console.twilio.com/) &rarr; Account Info | SIP bridge, dialer & DNC engine ready; awaiting SID/token |
+| **6** | **Twilio** | Telephony | **REMOVED** | N/A | None (Removed) | N/A | Provider dependency removed; provider-neutral telephony gateway active |
 | **7** | **Deepgram** | Speech-to-Text | **NOT CONFIGURED** | Project API Key | `DEEPGRAM_API_KEY` | [Deepgram Console](https://console.deepgram.com/) &rarr; API Keys | Nova-2 streaming STT adapter ready; awaiting key |
-| **8** | **ElevenLabs** | Voice Synthesis | **NOT CONFIGURED** | User API Key & Voice ID | `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | [ElevenLabs Profile](https://elevenlabs.io/app/settings/api-keys) &rarr; API Keys | Turbo v2.5 synthesis adapter ready; awaiting key |
+| **8** | **ElevenLabs** | Voice Synthesis | **REMOVED** | N/A | None (Removed) | N/A | Provider dependency intentionally removed from platform |
 | **9** | **Google Gemini** | AI LLM | **NOT CONFIGURED** | Google AI Studio API Key | `GEMINI_API_KEY` | [Google AI Studio](https://aistudio.google.com/app/apikey) &rarr; Get API Key | AI Sales Agent & Copilot ready; awaiting key |
 | **10** | **OpenAI** | AI LLM | **NOT CONFIGURED** | Secret API Key | `OPENAI_API_KEY` | [OpenAI Platform](https://platform.openai.com/api-keys) &rarr; API Keys | Tool Gateway & LLM fallback ready; awaiting key |
 | **11** | **Xero** | Accounting | **NOT CONFIGURED** | OAuth 2.0 Client Credentials | `XERO_CLIENT_ID`, `XERO_CLIENT_SECRET`, `XERO_TENANT_ID` | [Xero Developer Portal](https://developer.xero.com/myapps/) &rarr; My Apps | General Ledger sync ready; awaiting OAuth app setup |
@@ -99,14 +99,11 @@ gcloud secrets create meta-whatsapp-token --data-file=- <<< "YOUR_META_SYSTEM_US
 gcloud secrets create meta-phone-number-id --data-file=- <<< "YOUR_META_PHONE_ID"
 gcloud secrets create meta-app-secret --data-file=- <<< "YOUR_META_APP_SECRET"
 
-# 4. Twilio Telephony
-gcloud secrets create twilio-account-sid --data-file=- <<< "YOUR_TWILIO_ACCOUNT_SID"
-gcloud secrets create twilio-auth-token --data-file=- <<< "YOUR_TWILIO_AUTH_TOKEN"
-gcloud secrets create twilio-phone-number --data-file=- <<< "+1YOURTWILIONUMBER"
+# 4. Telephony (Provider-neutral; Twilio removed)
+# Telephony operates via provider-neutral SIP/audio stream layer. Twilio removed.
 
-# 5. Deepgram & ElevenLabs AI Voice
+# 5. Deepgram AI Speech-to-Text
 gcloud secrets create deepgram-api-key --data-file=- <<< "YOUR_DEEPGRAM_API_KEY"
-gcloud secrets create elevenlabs-api-key --data-file=- <<< "YOUR_ELEVENLABS_API_KEY"
 
 # 6. Google Gemini & OpenAI LLMs
 gcloud secrets create gemini-api-key --data-file=- <<< "YOUR_GEMINI_API_KEY"

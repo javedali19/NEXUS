@@ -68,6 +68,7 @@ export const NAVIGATION_GROUPS: NavGroup[] = [
       { id: "conversations", label: "Conversations", href: "/conversations", iconName: "MessagesSquare", requiredRoles: ["admin", "manager", "sales_agent"] },
       { id: "call-center", label: "Call Center", href: "/call-center", iconName: "Headphones", badge: "Live Ops", badgeVariant: "ai", requiredRoles: ["admin", "manager", "sales_agent", "finance_officer"] },
       { id: "support", label: "Customer Support", href: "/support", iconName: "LifeBuoy", badge: "SLA Ready", badgeVariant: "ai", requiredRoles: ["admin", "manager", "sales_agent", "finance_officer"] },
+      { id: "tickets", label: "Support Tickets", href: "/tickets", iconName: "Ticket", requiredRoles: ALL_ROLES },
       { id: "voice-calls", label: "Voice Calls", href: "/voice-calls", iconName: "PhoneCall", badge: "AI Transcribed", badgeVariant: "ai", requiredRoles: ["admin", "manager", "sales_agent"] },
       { id: "voice-agent", label: "AI Voice Agent", href: "/voice-agent", iconName: "Volume2", badge: "Full-Duplex", badgeVariant: "ai", requiredRoles: ["admin", "manager", "sales_agent"] },
       { id: "ai-agents", label: "AI Agents", href: "/ai-agents", iconName: "Bot", badge: "Copilot", badgeVariant: "ai", requiredRoles: ["admin", "manager"] },

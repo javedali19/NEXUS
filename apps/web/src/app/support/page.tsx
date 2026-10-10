@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   LifeBuoy,
@@ -38,7 +38,10 @@ import {
   GitBranch,
   CreditCard,
   DollarSign,
+  Ticket,
 } from "lucide-react";
+import { RaiseTicketModal } from "@/components/tickets/raise-ticket-modal";
+import { getStoredTickets, SupportTicket } from "@/lib/tickets-data";
 
 // ============================================================================
 // Types & Domain Interfaces
@@ -420,7 +423,19 @@ export default function SupportConsolePage() {
   const [selectedCase, setSelectedCase] = useState<SupportCaseItem | null>(INITIAL_SUPPORT_CASES[0]);
 
   // Tab navigation inside drawer
-  const [drawerTab, setDrawerTab] = useState<"conversations" | "copilot" | "notes" | "attachments" | "connections" | "audit">("conversations");
+  const [drawerTab, setDrawerTab] = useState<"conversations" | "copilot" | "tickets" | "notes" | "attachments" | "connections" | "audit">("conversations");
+
+  // Ticket Raising Modal State
+  const [showRaiseTicketModal, setShowRaiseTicketModal] = useState(false);
+  const [raiseTicketInitialData, setRaiseTicketInitialData] = useState<any>(null);
+  const [ticketsList, setTicketsList] = useState<SupportTicket[]>([]);
+
+  useEffect(() => {
+    setTicketsList(getStoredTickets());
+    const handleUpdate = () => setTicketsList(getStoredTickets());
+    window.addEventListener("nexus_tickets_updated", handleUpdate);
+    return () => window.removeEventListener("nexus_tickets_updated", handleUpdate);
+  }, []);
 
   // Filters
   const [filterStatus, setFilterStatus] = useState<string>("all");
@@ -582,6 +597,23 @@ export default function SupportConsolePage() {
         </div>
 
         <div className="flex items-center gap-3 flex-wrap">
+          <button
+            onClick={() => {
+              setRaiseTicketInitialData(null);
+              setShowRaiseTicketModal(true);
+            }}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-xs transition-colors cursor-pointer"
+          >
+            <Ticket className="h-3.5 w-3.5" />
+            Raise Ticket
+          </button>
+          <Link
+            href="/tickets"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-300 text-xs font-medium border border-blue-500/30 transition-colors"
+          >
+            <Ticket className="h-3.5 w-3.5 text-blue-400" />
+            Tickets Module
+          </Link>
           <Link
             href="/call-center"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition-colors"
@@ -853,6 +885,29 @@ export default function SupportConsolePage() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      setRaiseTicketInitialData({
+                        sourceChannel: selectedCase.channelSource === "phone" ? "voice_call" : selectedCase.channelSource === "whatsapp" ? "whatsapp" : "portal",
+                        sourceReferenceId: selectedCase.linkedCallSid || selectedCase.caseNumber,
+                        linkedSupportCaseId: selectedCase.caseNumber,
+                        linkedCallSid: selectedCase.linkedCallSid,
+                        customerId: selectedCase.customerId,
+                        customerName: selectedCase.customerName,
+                        customerPhone: selectedCase.customerPhone,
+                        customerEmail: selectedCase.customerEmail,
+                        companyName: selectedCase.companyName,
+                        initialTitle: `Action Ticket: ${selectedCase.subject}`,
+                        initialDescription: selectedCase.description,
+                        initialPriority: selectedCase.priority === "urgent" ? "critical" : selectedCase.priority === "high" ? "high" : "medium",
+                      });
+                      setShowRaiseTicketModal(true);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 text-xs font-bold border border-blue-500/30 transition-colors flex items-center gap-1.5"
+                  >
+                    <Ticket className="h-3.5 w-3.5" />
+                    Raise Ticket
+                  </button>
                   {selectedCase.status !== "resolved" && (
                     <button
                       onClick={() => setShowResolveModal(true)}
@@ -1000,6 +1055,18 @@ export default function SupportConsolePage() {
                 >
                   <Sparkles className="h-3 w-3" />
                   AI Copilot
+                </button>
+
+                <button
+                  onClick={() => setDrawerTab("tickets")}
+                  className={`px-3 py-2 font-medium border-b-2 transition-colors whitespace-nowrap flex items-center gap-1 ${
+                    drawerTab === "tickets"
+                      ? "border-blue-500 text-blue-400"
+                      : "border-transparent text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  <Ticket className="h-3 w-3" />
+                  Action Tickets ({ticketsList.filter((t) => t.linkedSupportCaseId === selectedCase.caseNumber || t.customerName === selectedCase.customerName).length})
                 </button>
 
                 <button
@@ -1161,6 +1228,89 @@ export default function SupportConsolePage() {
                       </button>
                     </div>
                   </div>
+                </div>
+              )}
+
+              {/* TAB: Action Tickets */}
+              {drawerTab === "tickets" && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold text-slate-300">
+                      Connected Tickets for {selectedCase.caseNumber}
+                    </span>
+                    <button
+                      onClick={() => {
+                        setRaiseTicketInitialData({
+                          sourceChannel: selectedCase.channelSource === "phone" ? "voice_call" : selectedCase.channelSource === "whatsapp" ? "whatsapp" : "portal",
+                          sourceReferenceId: selectedCase.linkedCallSid || selectedCase.caseNumber,
+                          linkedSupportCaseId: selectedCase.caseNumber,
+                          linkedCallSid: selectedCase.linkedCallSid,
+                          customerId: selectedCase.customerId,
+                          customerName: selectedCase.customerName,
+                          customerPhone: selectedCase.customerPhone,
+                          customerEmail: selectedCase.customerEmail,
+                          companyName: selectedCase.companyName,
+                          initialTitle: `Follow-up Ticket: ${selectedCase.subject}`,
+                          initialDescription: selectedCase.description,
+                          initialPriority: selectedCase.priority === "urgent" ? "critical" : selectedCase.priority === "high" ? "high" : "medium",
+                        });
+                        setShowRaiseTicketModal(true);
+                      }}
+                      className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-bold flex items-center gap-1 shadow-xs transition-colors"
+                    >
+                      <Ticket className="h-3 w-3" />
+                      Raise New Ticket
+                    </button>
+                  </div>
+
+                  {ticketsList.filter((t) => t.linkedSupportCaseId === selectedCase.caseNumber || t.customerName === selectedCase.customerName).length === 0 ? (
+                    <div className="p-6 text-center text-slate-500 text-xs bg-slate-950 rounded-lg border border-dashed border-slate-800">
+                      No tickets raised for this support case yet. Click "Raise New Ticket" to create one.
+                    </div>
+                  ) : (
+                    <div className="space-y-2 max-h-60 overflow-y-auto">
+                      {ticketsList
+                        .filter((t) => t.linkedSupportCaseId === selectedCase.caseNumber || t.customerName === selectedCase.customerName)
+                        .map((t, index) => (
+                          <div
+                            key={t.id}
+                            className="p-3 rounded-lg bg-slate-950 border border-slate-800 text-xs space-y-1.5"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <span className="px-1.5 py-0.2 rounded font-mono text-[10px] font-bold bg-slate-800 text-cyan-300 border border-slate-700">
+                                  #{index + 1}
+                                </span>
+                                <span className="font-mono text-cyan-400 font-bold">{t.ticketNumber}</span>
+                                <span className={`px-1.5 py-0.2 rounded text-[10px] uppercase font-bold ${
+                                  t.priority === "critical"
+                                    ? "bg-red-500/20 text-red-400 border border-red-500/30"
+                                    : t.priority === "high"
+                                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                                    : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                                }`}>
+                                  {t.priority}
+                                </span>
+                                <span className="px-1.5 py-0.2 rounded text-[10px] bg-slate-800 text-slate-300 capitalize">
+                                  {t.status.replace(/_/g, " ")}
+                                </span>
+                              </div>
+                              <Link
+                                href="/tickets"
+                                className="text-cyan-400 hover:text-cyan-300 text-[11px] flex items-center gap-0.5"
+                              >
+                                View Ticket →
+                              </Link>
+                            </div>
+                            <div className="font-semibold text-white">{t.title}</div>
+                            <div className="text-[11px] text-slate-400 flex items-center justify-between">
+                              <span>Dept: {t.assignedDepartment}</span>
+                              <span className="font-mono text-amber-400">{t.slaResponseDue}</span>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -1363,6 +1513,30 @@ export default function SupportConsolePage() {
           </div>
         </div>
       )}
+
+      {/* Global Raise Ticket Modal */}
+      <RaiseTicketModal
+        isOpen={showRaiseTicketModal}
+        onClose={() => {
+          setShowRaiseTicketModal(false);
+          setRaiseTicketInitialData(null);
+        }}
+        onTicketCreated={() => {
+          setTicketsList(getStoredTickets());
+        }}
+        sourceChannel={raiseTicketInitialData?.sourceChannel || "portal"}
+        sourceReferenceId={raiseTicketInitialData?.sourceReferenceId}
+        linkedSupportCaseId={raiseTicketInitialData?.linkedSupportCaseId}
+        linkedCallSid={raiseTicketInitialData?.linkedCallSid}
+        customerId={raiseTicketInitialData?.customerId}
+        customerName={raiseTicketInitialData?.customerName}
+        customerPhone={raiseTicketInitialData?.customerPhone}
+        customerEmail={raiseTicketInitialData?.customerEmail}
+        companyName={raiseTicketInitialData?.companyName}
+        initialTitle={raiseTicketInitialData?.initialTitle}
+        initialDescription={raiseTicketInitialData?.initialDescription}
+        initialPriority={raiseTicketInitialData?.initialPriority}
+      />
     </div>
   );
 }

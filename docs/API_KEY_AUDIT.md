@@ -35,9 +35,9 @@ This table reflects the actual codebase verification of every external API and c
 | 7 | **Curlec DuitNow** | YES | YES | YES | NO | `.env.example` | YES | `integrations::regional_connectors`, `domain::country_pack` | IMPLEMENTED BUT NOT CONFIGURED |
 | 8 | **Omise PromptPay** | YES | YES | YES | NO | `.env.example` | YES | `integrations::regional_connectors`, `domain::country_pack` | IMPLEMENTED BUT NOT CONFIGURED |
 | 9 | **Meta WhatsApp Cloud API** | YES | YES | YES | NO (Mock in test) | GSM / `.env.test` | YES | `integrations::communications::whatsapp`, `domain::ai_whatsapp_agent` | IMPLEMENTED BUT NOT CONFIGURED |
-| 10 | **Twilio Telephony** | YES | YES | YES | NO (Mock in test) | GSM / `.env.test` | YES | `integrations::providers::twilio`, `domain::voice_telephony` | IMPLEMENTED BUT NOT CONFIGURED |
+| 10 | ~~Twilio Telephony~~ | NO | NO | NO | NO | REMOVED | NO | REMOVED (Replaced by provider-neutral telephony gateway) | REMOVED (NO LONGER USED) |
 | 11 | **Deepgram STT** | YES | YES | YES | NO (Mock in test) | GSM / `.env.test` | YES | `integrations::providers::deepgram`, `domain::voice_agent_integration` | IMPLEMENTED BUT NOT CONFIGURED |
-| 12 | **ElevenLabs Voice AI** | YES | YES | YES | NO (Mock in test) | GSM / `.env.test` | YES | `integrations::providers::elevenlabs`, `domain::voice_agent_integration` | IMPLEMENTED BUT NOT CONFIGURED |
+| 12 | ~~ElevenLabs Voice AI~~ | NO | NO | NO | NO | REMOVED | NO | REMOVED (`domain::voice_agent_integration` uses graceful text fallback) | REMOVED (NO LONGER USED) |
 | 13 | **Google Gemini** | YES | YES | YES | NO (Mock in test) | GSM / `.env.test` | YES | `domain::ai_sales_agent`, `domain::ai_tool_gateway` | IMPLEMENTED BUT NOT CONFIGURED |
 | 14 | **OpenAI** | YES | YES | YES | NO (Mock in test) | `.env.example`, `.env.test` | YES | `domain::ai_sales_agent`, `domain::ai_whatsapp_agent` | IMPLEMENTED BUT NOT CONFIGURED |
 | 15 | **Anthropic** | NO | YES | YES | NO | `domain::ai_sales_agent` | NO | Fallback enum variant | CREDENTIAL PRESENT BUT NOT CONNECTED |
@@ -73,13 +73,13 @@ This table reflects the actual codebase verification of every external API and c
 | 6 | Meta WhatsApp | `META_WHATSAPP_TOKEN` | Bearer Token | Mock in test only | `.env.test`, GSM | `communications::whatsapp` | Send WhatsApp messages & HSM | IMPLEMENTED (AWAITING PROD KEY) |
 | 7 | Meta WhatsApp | `WHATSAPP_APP_SECRET` | App Secret | Expected | GSM / Vault | `communications::whatsapp` | Webhook HMAC verification | IMPLEMENTED (AWAITING PROD KEY) |
 | 8 | Meta WhatsApp | `WHATSAPP_VERIFY_TOKEN` | Token | Expected | GSM / Vault | `communications::whatsapp` | Webhook handshake challenge | IMPLEMENTED (AWAITING PROD KEY) |
-| 9 | Twilio | `TWILIO_ACCOUNT_SID` | Account SID | Mock in test only | `.env.test`, `.env.example` | `providers::twilio` | Telephony API authentication | IMPLEMENTED (AWAITING PROD KEY) |
-| 10 | Twilio | `TWILIO_AUTH_TOKEN` | Auth Token | Mock in test only | `.env.test`, GSM | `providers::twilio` | Call dispatch & SMS delivery | IMPLEMENTED (AWAITING PROD KEY) |
-| 11 | Twilio | `TWILIO_PHONE_NUMBER` | Phone Number | Mock in test only | `.env.test`, `.env.example` | `providers::twilio` | Caller ID provisioning | IMPLEMENTED (AWAITING PROD KEY) |
+| 9 | ~~Twilio~~ | ~~`TWILIO_ACCOUNT_SID`~~ | Account SID | NO | REMOVED | REMOVED | Telephony auth (purged) | REMOVED (NO LONGER USED) |
+| 10 | ~~Twilio~~ | ~~`TWILIO_AUTH_TOKEN`~~ | Auth Token | NO | REMOVED | REMOVED | Call dispatch (purged) | REMOVED (NO LONGER USED) |
+| 11 | ~~Twilio~~ | ~~`TWILIO_PHONE_NUMBER`~~ | Phone Number | NO | REMOVED | REMOVED | Caller ID (purged) | REMOVED (NO LONGER USED) |
 | 12 | Deepgram | `DEEPGRAM_API_KEY` | API Key | Mock in test only | `.env.test`, GSM | `providers::deepgram` | Nova-2 audio transcription | IMPLEMENTED (AWAITING PROD KEY) |
-| 13 | ElevenLabs | `ELEVENLABS_API_KEY` | API Key | Mock in test only | `.env.test`, GSM | `providers::elevenlabs` | Turbo v2.5 voice synthesis | IMPLEMENTED (AWAITING PROD KEY) |
-| 14 | ElevenLabs | `ELEVENLABS_VOICE_ID` | Resource ID | Preset configured | `.env.example` | `providers::elevenlabs` | Voice character selection | CONFIGURED & CONNECTED |
-| 15 | ElevenLabs | `ELEVENLABS_MODEL_ID` | Model ID | Preset configured | `.env.example` | `providers::elevenlabs` | TTS model engine | CONFIGURED & CONNECTED |
+| 13 | ~~ElevenLabs~~ | ~~`ELEVENLABS_API_KEY`~~ | API Key | NO | REMOVED | REMOVED | Voice synthesis (purged) | REMOVED (NO LONGER USED) |
+| 14 | ~~ElevenLabs~~ | ~~`ELEVENLABS_VOICE_ID`~~ | Resource ID | NO | REMOVED | REMOVED | Voice selection (purged) | REMOVED (NO LONGER USED) |
+| 15 | ~~ElevenLabs~~ | ~~`ELEVENLABS_MODEL_ID`~~ | Model ID | NO | REMOVED | REMOVED | TTS model engine (purged) | REMOVED (NO LONGER USED) |
 | 16 | Google Gemini | `GEMINI_API_KEY` | API Key | Mock in test only | `.env.test`, GSM | `domain::ai_sales_agent` | Sales agent LLM reasoning | IMPLEMENTED (AWAITING PROD KEY) |
 | 17 | OpenAI | `OPENAI_API_KEY` | API Key | Mock in test only | `.env.test`, `.env.example` | `domain::ai_sales_agent` | GPT-4o reasoning fallback | IMPLEMENTED (AWAITING PROD KEY) |
 | 18 | Anthropic | `ANTHROPIC_API_KEY` | API Key | Blank in example | `.env.example` | `domain::ai_sales_agent` | Claude 3.5 Sonnet fallback | CONFIGURED BUT UNUSED |
@@ -128,7 +128,7 @@ Every variable in `apps/web` was analyzed for frontend exposure vectors (`NEXT_P
 * **Variables Found in Web Bundle:** Exactly **ONE** frontend environment variable exists:
   * `NEXT_PUBLIC_API_URL` (points to `http://localhost:8080/api/v1` in dev or Cloud Run API URI in prod).
 * **Zero Secret Exposure:**
-  * No `STRIPE_SECRET_KEY`, `RAZORPAY_KEY_SECRET`, `TWILIO_AUTH_TOKEN`, or `GEMINI_API_KEY` are prefixed with `NEXT_PUBLIC_`.
+  * No `STRIPE_SECRET_KEY`, `RAZORPAY_KEY_SECRET`, or `GEMINI_API_KEY` are prefixed with `NEXT_PUBLIC_`.
   * The frontend Next.js app communicates strictly via server-side API proxy routes or direct requests to Axum API Gateway using tenant JWT session tokens.
 * **Rating:** **`SAFE`** (Zero client-side credential exposure).
 
@@ -143,10 +143,8 @@ Google Secret Manager                          Cloud Run Container (backend-api)
 ─────────────────────────────────────────────────────────────────────────────────
 projects/{id}/secrets/{env}-stripe-secret-key    ──>  STRIPE_SECRET_KEY
 projects/{id}/secrets/{env}-razorpay-key-secret  ──>  RAZORPAY_KEY_SECRET
-projects/{id}/secrets/{env}-twilio-auth-token    ──>  TWILIO_AUTH_TOKEN
 projects/{id}/secrets/{env}-meta-whatsapp-token  ──>  META_WHATSAPP_TOKEN
 projects/{id}/secrets/{env}-gemini-api-key       ──>  GEMINI_API_KEY
-projects/{id}/secrets/{env}-elevenlabs-api-key   ──>  ELEVENLABS_API_KEY
 projects/{id}/secrets/{env}-deepgram-api-key     ──>  DEEPGRAM_API_KEY
 projects/{id}/secrets/{env}-sentry-dsn           ──>  SENTRY_DSN
 projects/{id}/secrets/{env}-platform-db-password ──>  DATABASE_PASSWORD
@@ -163,7 +161,7 @@ Access is restricted via IAM: `roles/secretmanager.secretAccessor` is granted ex
 | **Meta WhatsApp** | `/api/v1/webhooks/whatsapp` | `WHATSAPP_APP_SECRET`, `WHATSAPP_VERIFY_TOKEN` | HMAC-SHA256 (`sha256=...`) + GET Hub Challenge | YES (`communications/whatsapp.rs`) | `whatsapp.message_received.v1` |
 | **Stripe** | `/api/v1/webhooks/stripe` | `STRIPE_WEBHOOK_SECRET` | HMAC-SHA256 (`t=...,v1=...`) | YES (`providers/stripe.rs`) | `payment.succeeded.v1` |
 | **Razorpay** | `/api/v1/webhooks/razorpay` | `RAZORPAY_WEBHOOK_SECRET` | HMAC-SHA256 (`X-Razorpay-Signature`) | YES (`payments/razorpay.rs`) | `payment.captured.v1` |
-| **Twilio** | `/api/v1/webhooks/twilio` | `TWILIO_AUTH_TOKEN` | HMAC-SHA1 URL/Param Signing | YES (`providers/twilio.rs`) | `voice.call_completed.v1` |
+| **Twilio** | `/api/v1/webhooks/twilio` | N/A | REMOVED | NO (Removed) | N/A (Endpoint purged) |
 | **Salesforce** | `/api/v1/webhooks/salesforce` | `SALESFORCE_WEBHOOK_SECRET` | Bearer Token Validation | YES (`providers/salesforce.rs`) | `crm.entity_synced.v1` |
 
 ---

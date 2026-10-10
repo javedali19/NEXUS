@@ -19,8 +19,8 @@ This section lists every configuration variable and credential physically presen
 | Google Storage | `GCP_STORAGE_BUCKET` | YES | `.env.example`, `.env.test`, Terraform | `storage::gcs` | Asset storage bucket | Encrypted Vault | Verified via ADC | **CONNECTED** |
 | Google KMS | `GCP_KMS_KEY_NAME` | YES | `.env.example`, `.env.test`, Terraform | Terraform CMEK | Cryptographic key ring | Database & Bucket CMEK | Verified via ADC | **CONNECTED** |
 | OpenTelemetry | `OTEL_EXPORTER_OTLP_ENDPOINT` | YES | `.env.example`, `.env.test`, Docker | `domain::observability`| OTLP gRPC endpoint | Distributed Tracing | Connected to Jaeger | **CONNECTED** |
-| ElevenLabs | `ELEVENLABS_VOICE_ID` | YES | `.env.example` | `providers::elevenlabs` | Preset voice ID (Rachel) | Voice Agent Model | Active parameter | **CONNECTED** |
-| ElevenLabs | `ELEVENLABS_MODEL_ID` | YES | `.env.example` | `providers::elevenlabs` | Preset model engine | Voice Agent Model | Active parameter | **CONNECTED** |
+| ElevenLabs | `ELEVENLABS_VOICE_ID` | NO | None (Removed) | None | Former voice ID parameter | Voice Agent Model | REMOVED | **REMOVED** |
+| ElevenLabs | `ELEVENLABS_MODEL_ID` | NO | None (Removed) | None | Former model engine parameter | Voice Agent Model | REMOVED | **REMOVED** |
 | PostgreSQL | `platform-db-password` | YES | Terraform `random_password` | Cloud SQL & Cloud Run | Database password | Core Persistence | Injected via GSM | **CONNECTED** |
 | PostgreSQL (Local)| `POSTGRES_PASSWORD` | YES | `docker-compose.yml` | Local Docker | Dev database password | Local Development | Local container | **CONNECTED** |
 | Next.js Web | `NEXT_PUBLIC_API_URL` | YES | `.env.example`, `.env.test`, Terraform | `apps/web/src` | API Gateway endpoint | Frontend Routing | Active client routing | **CONNECTED** |
@@ -51,9 +51,9 @@ These services are essential to the platform's core business capabilities, their
 | **Stripe** | `STRIPE_SECRET_KEY` + `STRIPE_WEBHOOK_SECRET` | International credit card checkout, automated subscriptions | Invoices, Checkout, Autonomous Collections | [Stripe Dashboard](https://dashboard.stripe.com/apikeys) |
 | **Razorpay** | `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET` + `RAZORPAY_WEBHOOK_SECRET` | Indian Rupee payments, UPI QR links, automated dunning settlement | Invoices, UPI Checkout, Collections Engine | [Razorpay Dashboard](https://dashboard.razorpay.com/app/keys) |
 | **Meta WhatsApp** | `META_WHATSAPP_TOKEN` + `WHATSAPP_APP_SECRET` + `WHATSAPP_VERIFY_TOKEN` | 2-way customer chat, pre-approved HSM templates, billing alerts | Unified Inbox, AI WhatsApp Bot, CRM | [Meta for Developers](https://developers.facebook.com/apps/) |
-| **Twilio** | `TWILIO_ACCOUNT_SID` + `TWILIO_AUTH_TOKEN` + `TWILIO_PHONE_NUMBER` | Outbound/inbound phone calls over telecom network, SMS | AI Voice Agent, Call Center Dialpad | [Twilio Console](https://console.twilio.com/) |
+| **Twilio** | `TWILIO_ACCOUNT_SID` + `TWILIO_AUTH_TOKEN` + `TWILIO_PHONE_NUMBER` | REMOVED / NO LONGER USED | Provider dependency intentionally removed from platform | N/A (Removed) |
 | **Deepgram** | `DEEPGRAM_API_KEY` | Real-time streaming Speech-to-Text (<150ms latency) | AI Voice Agent (Gate 2: Listening) | [Deepgram Console](https://console.deepgram.com/) |
-| **ElevenLabs** | `ELEVENLABS_API_KEY` | Neural streaming voice synthesis (Turbo v2.5) | AI Voice Agent (Gate 4: Voice) | [ElevenLabs Settings](https://elevenlabs.io/app/settings/api-keys) |
+| **ElevenLabs** | `ELEVENLABS_API_KEY` | REMOVED / NO LONGER USED | Provider dependency intentionally removed | N/A (Removed) |
 | **Mathpix** | `mathpix-app-id` + `mathpix-app-key` | Accounts Payable bill OCR, line items & table parsing | Accounts Payable, Review Gate | [Mathpix Accounts](https://accounts.mathpix.com/) |
 | **Sentry** | `SENTRY_DSN` | Production panic capturing and distributed span tracing | Platform Observability, Error Alerting | [Sentry Project Settings](https://sentry.io/settings/) |
 | **Google Identity** | `GCP_IDENTITY_PLATFORM_API_KEY` | Multi-tenant Firebase/GCIP user authentication | Cloud Authentication (Prod mode) | [GCP Identity Platform](https://console.cloud.google.com/customer-identity) |
@@ -78,7 +78,7 @@ These credentials appear in configuration or enum variants, but have no confirme
 | 3 | `AIRWALLEX_CLIENT_ID`, `AIRWALLEX_API_KEY` | `.env.example`, `airwallex.rs` | Airwallex Global Accounts | Alternative multi-currency FX gateway | Unused; Stripe is primary international gateway | Retain as enterprise FX option |
 | 4 | `SALESFORCE_CLIENT_ID`, `SALESFORCE_CLIENT_SECRET` | `.env.example`, `salesforce.rs` | Salesforce CRM | External CRM sync bridge | Unused; internal CRM is primary | Retain as external bridge |
 | 5 | `LINE_CHANNEL_SECRET`, `LINE_CHANNEL_ACCESS_TOKEN` | `.env.example`, `regional_connectors.rs` | LINE Official Account | Regional messaging for Thailand | Inactive unless Thailand pack enabled | Retain for Thai deployment |
-| 6 | `REGIONAL_SIP_TRUNK_DOMAIN`, `REGIONAL_SIP_AUTH_USER` | `.env.example`, `regional_connectors.rs` | Regional SIP Trunks | Direct telco trunking | Inactive; Twilio is primary telephony provider | Retain as bypass option |
+| 6 | `REGIONAL_SIP_TRUNK_DOMAIN`, `REGIONAL_SIP_AUTH_USER` | `.env.example`, `regional_connectors.rs` | Regional SIP Trunks | Direct telco trunking | Inactive; Provider-neutral SIP trunking available | Retain as bypass option |
 
 ---
 
@@ -89,7 +89,7 @@ These credentials appear in configuration or enum variants, but have no confirme
 | **Meta WhatsApp** | `/api/v1/webhooks/whatsapp` | `WHATSAPP_APP_SECRET`, `WHATSAPP_VERIFY_TOKEN` | Constant-Time HMAC-SHA256 (`sha256=...`) + GET Hub Handshake | YES (`communications/whatsapp.rs`) | `whatsapp.message_received.v1` |
 | **Stripe** | `/api/v1/webhooks/stripe` | `STRIPE_WEBHOOK_SECRET` | Constant-Time HMAC-SHA256 (`t=...,v1=...`) | YES (`providers/stripe.rs`) | `payment.succeeded.v1` |
 | **Razorpay** | `/api/v1/webhooks/razorpay` | `RAZORPAY_WEBHOOK_SECRET` | Constant-Time HMAC-SHA256 (`X-Razorpay-Signature`) | YES (`payments/razorpay.rs`) | `payment.captured.v1` |
-| **Twilio** | `/api/v1/webhooks/twilio` | `TWILIO_AUTH_TOKEN` | HMAC-SHA1 URL/Param Signing (`X-Twilio-Signature`) | YES (`providers/twilio.rs`) | `voice.call_completed.v1` |
+| **Twilio** | `/api/v1/webhooks/twilio` | N/A | REMOVED | NO (Removed) | N/A (Endpoint purged) |
 | **Salesforce** | `/api/v1/webhooks/salesforce` | `SALESFORCE_WEBHOOK_SECRET` | Bearer Token Match | YES (`providers/salesforce.rs`) | `crm.entity_synced.v1` |
 | **Generic Custom ERP** | `/api/v1/webhooks/generic` | `GENERIC_WEBHOOK_SECRET` | HMAC-SHA256 Header (`X-Hub-Signature-256`) | YES (`providers/generic_rest.rs`) | `workflow.event_received.v1` |
 
@@ -115,10 +115,8 @@ Google Secret Manager (GCP)                       Cloud Run Container (backend-a
 ───────────────────────────────────────────────────────────────────────────────────
 projects/{id}/secrets/{env}-stripe-secret-key     ──>  STRIPE_SECRET_KEY
 projects/{id}/secrets/{env}-razorpay-key-secret   ──>  RAZORPAY_KEY_SECRET
-projects/{id}/secrets/{env}-twilio-auth-token     ──>  TWILIO_AUTH_TOKEN
 projects/{id}/secrets/{env}-meta-whatsapp-token   ──>  META_WHATSAPP_TOKEN
 projects/{id}/secrets/{env}-gemini-api-key        ──>  GEMINI_API_KEY
-projects/{id}/secrets/{env}-elevenlabs-api-key    ──>  ELEVENLABS_API_KEY
 projects/{id}/secrets/{env}-deepgram-api-key      ──>  DEEPGRAM_API_KEY
 projects/{id}/secrets/{env}-sentry-dsn            ──>  SENTRY_DSN
 projects/{id}/secrets/{env}-platform-db-password  ──>  DATABASE_PASSWORD

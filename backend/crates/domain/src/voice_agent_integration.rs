@@ -27,7 +27,7 @@ pub enum VoiceProviderStatus {
 pub struct VoiceAgentConfig {
     pub organization_id: Uuid,
     pub agent_name: String,
-    // 1. Telephony Provider (Twilio)
+    // 1. Telephony Provider (Provider-Neutral / Supported Carrier)
     pub telephony_provider: String,
     pub telephony_status: VoiceProviderStatus,
     // 2. Speech-to-Text Provider (Deepgram)
@@ -38,12 +38,8 @@ pub struct VoiceAgentConfig {
     pub ai_provider: AiProvider,
     pub ai_model_name: String,
     pub ai_provider_status: ProviderConnectionStatus,
-    // 4. Voice Synthesis Provider (ElevenLabs)
+    // 4. Voice Synthesis Provider (Optional / Disabled)
     pub tts_provider: String,
-    pub elevenlabs_voice_id: String,
-    pub elevenlabs_model_id: String,
-    pub elevenlabs_stability: f64,
-    pub elevenlabs_similarity_boost: f64,
     pub tts_status: VoiceProviderStatus,
     // Policy Check Status
     pub policy_checks_passed: bool,
@@ -56,7 +52,7 @@ impl Default for VoiceAgentConfig {
         Self {
             organization_id: Uuid::nil(),
             agent_name: "Nexus Autonomous Voice Agent".to_string(),
-            telephony_provider: "twilio".to_string(),
+            telephony_provider: "provider_neutral".to_string(),
             telephony_status: VoiceProviderStatus::Unconfigured,
             stt_provider: "deepgram".to_string(),
             stt_model: "nova-2".to_string(),
@@ -64,11 +60,7 @@ impl Default for VoiceAgentConfig {
             ai_provider: AiProvider::Openai,
             ai_model_name: "gpt-4o".to_string(),
             ai_provider_status: ProviderConnectionStatus::Unconfigured,
-            tts_provider: "elevenlabs".to_string(),
-            elevenlabs_voice_id: "21m00Tcm4TlvDq8ikWAM".to_string(), // Rachel
-            elevenlabs_model_id: "eleven_turbo_v2_5".to_string(),
-            elevenlabs_stability: 0.50,
-            elevenlabs_similarity_boost: 0.75,
+            tts_provider: "disabled".to_string(),
             tts_status: VoiceProviderStatus::Unconfigured,
             policy_checks_passed: false,
             is_live_calling_authorized: false,
@@ -91,12 +83,12 @@ pub struct QuadGateEvaluation {
 pub struct QuadGateValidator;
 
 impl QuadGateValidator {
-    /// Inviolable Quad-Gate Invariant Evaluator:
-    /// Live outbound calling is strictly prohibited unless:
-    /// 1. Twilio Telephony connection is validated.
+    /// Inviolable Calling Gate Invariant Evaluator:
+    /// Live outbound calling is strictly authorized when:
+    /// 1. Telephony carrier / communication provider connection is validated.
     /// 2. Deepgram Speech-to-Text connection is validated.
     /// 3. AI Reasoning Provider (OpenAI/Gemini/Anthropic) connection is validated.
-    /// 4. ElevenLabs Voice Synthesis connection is validated.
+    /// 4. Voice Synthesis is validated or operating in graceful disabled/text mode.
     /// 5. Recipient is cleared against TCPA calling hours (08:00 - 21:00) and National DNC list.
     pub fn evaluate(
         config: &VoiceAgentConfig,
@@ -105,14 +97,17 @@ impl QuadGateValidator {
         let telephony_passed = config.telephony_status == VoiceProviderStatus::Validated;
         let stt_passed = config.stt_status == VoiceProviderStatus::Validated;
         let ai_provider_passed = config.ai_provider_status == ProviderConnectionStatus::Validated;
-        let tts_passed = config.tts_status == VoiceProviderStatus::Validated;
+        // TTS is optional/graceful after ElevenLabs removal:
+        let tts_passed = config.tts_status == VoiceProviderStatus::Validated 
+            || config.tts_provider == "disabled" 
+            || config.tts_status == VoiceProviderStatus::Unconfigured;
         let policy_passed = compliance_check.is_permitted;
 
         let mut blocking_reasons = Vec::new();
 
         if !telephony_passed {
             blocking_reasons.push(
-                "Gate 1 Failed: Twilio Telephony SIP provider is unconfigured or failed validation."
+                "Gate 1 Failed: Telephony carrier provider is unconfigured or failed validation."
                     .to_string(),
             );
         }
@@ -131,13 +126,6 @@ impl QuadGateValidator {
             );
         }
 
-        if !tts_passed {
-            blocking_reasons.push(
-                "Gate 4 Failed: ElevenLabs Voice Synthesis API key is unconfigured or quota exceeded."
-                    .to_string(),
-            );
-        }
-
         if !policy_passed {
             let reason = compliance_check
                 .rejection_reason
@@ -149,7 +137,6 @@ impl QuadGateValidator {
         let is_fully_authorized = telephony_passed
             && stt_passed
             && ai_provider_passed
-            && tts_passed
             && policy_passed;
 
         QuadGateEvaluation {
@@ -173,7 +160,7 @@ impl QuadGateValidator {
 pub struct TurnLatencyTelemetry {
     pub stt_latency_ms: u64,
     pub llm_latency_ms: u64,
-    pub elevenlabs_tts_latency_ms: u64,
+    pub tts_latency_ms: u64,
     pub total_roundtrip_ms: u64,
     pub meets_sla: bool, // true if total < 800ms
 }
@@ -184,7 +171,7 @@ pub struct ConversationalTurnResult {
     pub turn_index: u32,
     pub customer_speech_transcript: String,
     pub ai_response_text: String,
-    pub elevenlabs_audio_bytes: usize,
+    pub audio_bytes: usize,
     pub latency: TurnLatencyTelemetry,
     pub tool_calls_executed: Vec<String>,
     pub sentiment_score: f64,
@@ -194,7 +181,7 @@ pub struct VoiceAgentPipelineOrchestrator;
 
 impl VoiceAgentPipelineOrchestrator {
     /// Executes a full-duplex conversational voice turn:
-    /// Telephony Ingest -> Deepgram STT -> AI Reasoning Layer -> ElevenLabs TTS -> Telephony Egress.
+    /// Telephony Ingest -> Deepgram STT -> AI Reasoning Layer -> Optional TTS Egress.
     pub fn process_turn(
         config: &VoiceAgentConfig,
         compliance_check: &CallComplianceCheckResult,
@@ -202,11 +189,11 @@ impl VoiceAgentPipelineOrchestrator {
         simulated_customer_speech: Option<&str>,
         customer_context_summary: &str,
     ) -> Result<ConversationalTurnResult, PlatformError> {
-        // Enforce Invariant: Quad-Gate & Policy Check
+        // Enforce Invariant: Calling Gate & Policy Check
         let gate_eval = QuadGateValidator::evaluate(config, compliance_check);
         if !gate_eval.is_fully_authorized {
             return Err(PlatformError::PolicyViolation(format!(
-                "Live voice-agent turn rejected by Quad-Gate invariant: {}",
+                "Live voice-agent turn rejected by Calling Gate invariant: {}",
                 gate_eval.blocking_reasons.join(" | ")
             )));
         }
@@ -241,17 +228,19 @@ impl VoiceAgentPipelineOrchestrator {
             )
         };
 
-        // 3. ElevenLabs TTS (Voice Synthesis) Stage
-        // Streaming chunk synthesis using eleven_turbo_v2_5
-        let tts_latency = 175; // typical ElevenLabs turbo v2.5 time-to-first-byte in ms
-        let simulated_audio_bytes = ai_response.len() * 320; // 16kHz PCM audio equivalent
+        // 3. Voice Synthesis Stage (Optional / Graceful Text Fallback)
+        // ElevenLabs has been intentionally removed from the platform.
+        // When TTS is unavailable or disabled, the conversational pipeline
+        // continues gracefully without crashing or fabricating audio.
+        let tts_latency = 0;
+        let audio_bytes = 0;
 
         // 4. End-to-End Latency Waterfall Calculation
         let total_rtt = stt_latency + llm_latency + tts_latency;
         let latency = TurnLatencyTelemetry {
             stt_latency_ms: stt_latency,
             llm_latency_ms: llm_latency,
-            elevenlabs_tts_latency_ms: tts_latency,
+            tts_latency_ms: tts_latency,
             total_roundtrip_ms: total_rtt,
             meets_sla: total_rtt < 800,
         };
@@ -260,7 +249,7 @@ impl VoiceAgentPipelineOrchestrator {
             turn_index,
             customer_speech_transcript: transcript.to_string(),
             ai_response_text: ai_response,
-            elevenlabs_audio_bytes: simulated_audio_bytes,
+            audio_bytes,
             latency,
             tool_calls_executed: tool_calls,
             sentiment_score: sentiment,

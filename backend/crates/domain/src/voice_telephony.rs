@@ -144,7 +144,7 @@ pub enum EscalationStatus {
 pub struct TelephonyConfig {
     pub id: Uuid,
     pub organization_id: Uuid,
-    pub provider: String, // "twilio"
+    pub provider: String, // "provider_neutral"
     pub account_sid: Option<String>,
     pub auth_token_secret_ref: Option<String>,
     pub primary_phone_number: Option<String>,
@@ -461,12 +461,12 @@ impl CallingWindowValidator {
 }
 
 // ============================================================================
-// 4. Twilio Voice Adapter & TwiML Dispatcher
+// 4. Telephony Voice Adapter & Media Stream Dispatcher (Provider-Neutral)
 // ============================================================================
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct TwilioVoiceCredentials {
-    pub account_sid: String,
+pub struct TelephonyCredentials {
+    pub account_id: String,
     pub auth_token: String,
     pub phone_number: String,
 }
@@ -486,36 +486,28 @@ pub struct InitiateCallResult {
     pub call_id: Uuid,
     pub provider_call_sid: String,
     pub status: CallStatus,
-    pub twiml_response: String,
+    pub session_descriptor: String,
     pub is_simulation: bool,
 }
 
-pub struct TwilioVoiceEngine;
+pub struct TelephonyVoiceEngine;
 
-impl TwilioVoiceEngine {
-    /// Generates standard Twilio Voice TwiML XML with speech greeting, recording consent disclosure, and bidirectional media stream.
-    pub fn build_twiml_media_stream(
+impl TelephonyVoiceEngine {
+    /// Generates standard voice session descriptor with speech greeting, recording consent disclosure, and bidirectional media stream.
+    pub fn build_session_media_stream(
         stream_url: &str,
         disclosure_text: &str,
         session_token: &str,
     ) -> String {
         format!(
-            r#"<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-    <Say voice="Polly.Danielle-Neural">{}</Say>
-    <Connect>
-        <Stream url="{}">
-            <Parameter name="sessionToken" value="{}" />
-        </Stream>
-    </Connect>
-</Response>"#,
-            disclosure_text, stream_url, session_token
+            r#"{{"stream_url":"{}","disclosure":"{}","session_token":"{}"}}"#,
+            stream_url, disclosure_text, session_token
         )
     }
 
     /// Dispatches an outbound AI voice call, verifying credentials and generating session.
     pub fn initiate_call(
-        creds: Option<&TwilioVoiceCredentials>,
+        creds: Option<&TelephonyCredentials>,
         req: InitiateCallRequest,
         websocket_base_url: &str,
     ) -> Result<InitiateCallResult, PlatformError> {
@@ -524,16 +516,16 @@ impl TwilioVoiceEngine {
         let stream_url = format!("{}/v1/voice/stream/{}", websocket_base_url, session_token);
         let disclosure = "This call is conducted by Nexus AI and may be monitored or recorded for quality assurance.";
 
-        let twiml = Self::build_twiml_media_stream(&stream_url, disclosure, &session_token);
+        let session_descriptor = Self::build_session_media_stream(&stream_url, disclosure, &session_token);
 
         let (provider_call_sid, is_simulation) = match creds {
-            Some(c) if c.account_sid.starts_with("AC") && !c.auth_token.is_empty() => {
-                // In production with validated Twilio credentials
-                (format!("CA{}", Uuid::new_v4().simple()), false)
+            Some(c) if !c.account_id.is_empty() && !c.auth_token.is_empty() => {
+                // In production with validated carrier credentials
+                (format!("CALL_{}", Uuid::new_v4().simple()), false)
             }
             _ => {
                 // Verified developer sandbox simulation mode
-                (format!("CA_SIM_{}", Uuid::new_v4().simple()), true)
+                (format!("CALL_SIM_{}", Uuid::new_v4().simple()), true)
             }
         };
 
@@ -541,7 +533,7 @@ impl TwilioVoiceEngine {
             call_id,
             provider_call_sid,
             status: CallStatus::Ringing,
-            twiml_response: twiml,
+            session_descriptor,
             is_simulation,
         })
     }

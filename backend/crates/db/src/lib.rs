@@ -18,6 +18,16 @@ pub async fn create_db_pool(database_url: &str, max_connections: u32) -> Result<
     Ok(pool)
 }
 
+/// Initializes the primary database pool for Supabase PostgreSQL
+pub async fn create_supabase_db_pool(max_connections: u32) -> Result<DbPool, PlatformError> {
+    let url = std::env::var("SUPABASE_DB_URL")
+        .or_else(|_| std::env::var("DATABASE_URL"))
+        .map_err(|_| PlatformError::ConfigurationError("Neither SUPABASE_DB_URL nor DATABASE_URL is configured".to_string()))?;
+
+    info!("Connecting to Supabase PostgreSQL platform pool...");
+    create_db_pool(&url, max_connections).await
+}
+
 /// Executes a database transaction with PostgreSQL Row Level Security (RLS) tenant isolation.
 /// Sets `app.current_tenant_id` for the transaction session before yields.
 pub async fn with_tenant_tx<'a, F, T, E>(

@@ -73,7 +73,7 @@ impl ApiKeyConfig {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HmacSecretConfig {
     pub webhook_secret: String,
-    pub signature_header: String, // e.g. "Stripe-Signature", "X-Twilio-Signature"
+    pub signature_header: String, // e.g. "Stripe-Signature", "X-Hub-Signature-256"
     pub algorithm: String,        // "sha256", "sha1"
 }
 

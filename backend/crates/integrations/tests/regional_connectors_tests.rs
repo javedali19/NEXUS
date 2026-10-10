@@ -32,7 +32,7 @@ fn test_unconfigured_connectors_fail_cleanly_without_inventing_credentials() {
     assert!(line_res.unwrap_err().contains("credentials missing or unconfigured"));
 
     // 5. Regional Messaging unconfigured
-    let msg_unconfigured = RegionalMessagingConnector::new("twilio", None, None);
+    let msg_unconfigured = RegionalMessagingConnector::new("carrier_default", None, None);
     assert!(!msg_unconfigured.is_configured());
     let msg_res = msg_unconfigured.route_message("+6591234567", "Your verification code is 123456");
     assert!(msg_res.is_err());

@@ -70,15 +70,6 @@ resource "google_cloud_run_v2_service" "api_service" {
         }
       }
       env {
-        name = "TWILIO_AUTH_TOKEN"
-        value_source {
-          secret_key_ref {
-            secret  = google_secret_manager_secret.secrets["twilio-auth-token"].secret_id
-            version = "latest"
-          }
-        }
-      }
-      env {
         name = "META_WHATSAPP_TOKEN"
         value_source {
           secret_key_ref {

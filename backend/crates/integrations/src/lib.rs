@@ -22,7 +22,6 @@ pub use connector::{ConnectionTestResult, Connector, HealthStatus, IntegrationCa
 pub use providers::generic_rest::GenericRestConnector;
 pub use providers::salesforce::SalesforceConnector;
 pub use providers::stripe::StripeConnector;
-pub use providers::twilio::TwilioConnector;
 pub use registry::ConnectorRegistry;
 pub use resilience::{RateLimiter, RetryPolicy};
 

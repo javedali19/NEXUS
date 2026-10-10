@@ -231,13 +231,13 @@ const SERVICES_DATA: ServiceItem[] = [
     category: "security",
     resourceId: "production-secrets-vault",
     status: "healthy",
-    spec: "10 Managed Secrets • Auto-replication • Zero plaintext stored in repo",
+    spec: "9 Managed Secrets • Auto-replication • Zero plaintext stored in repo",
     cmekEncrypted: false,
     haEnabled: true,
     description: "Centralized secret store injecting third-party API credentials directly into Cloud Run.",
     terraformFile: "secrets.tf",
     details: {
-      "Third-Party Secrets": "Stripe, Razorpay, Twilio, WhatsApp, Gemini, ElevenLabs, Deepgram, Sentry",
+      "Third-Party Secrets": "Stripe, Razorpay, WhatsApp, Gemini, Deepgram, Sentry",
       "IAM Accessor": "roles/secretmanager.secretAccessor",
       "Runtime Injection": "value_source.secret_key_ref",
       "Plaintext in Code": "0 (Strictly Forbidden)",
@@ -378,15 +378,7 @@ const SECRET_VAULT: SecretVaultItem[] = [
     status: "active",
     version: "v1 (latest)",
   },
-  {
-    id: "sec-3",
-    secretName: "twilio-auth-token",
-    provider: "Twilio Telephony",
-    referencingServices: ["platform-api-gateway", "platform-worker"],
-    rotationDays: 90,
-    status: "active",
-    version: "v1 (latest)",
-  },
+
   {
     id: "sec-4",
     secretName: "meta-whatsapp-token",
@@ -401,15 +393,6 @@ const SECRET_VAULT: SecretVaultItem[] = [
     secretName: "gemini-api-key",
     provider: "Google Gemini 1.5 Pro AI",
     referencingServices: ["platform-api-gateway", "platform-worker"],
-    rotationDays: 90,
-    status: "active",
-    version: "v1 (latest)",
-  },
-  {
-    id: "sec-6",
-    secretName: "elevenlabs-api-key",
-    provider: "ElevenLabs Voice AI",
-    referencingServices: ["platform-api-gateway"],
     rotationDays: 90,
     status: "active",
     version: "v1 (latest)",
@@ -638,7 +621,7 @@ export default function InfrastructurePage() {
             </div>
           </div>
           <div className="text-[11px] text-slate-500 mt-3 truncate">
-            Stripe, Razorpay, Twilio, WhatsApp, AI APIs
+            Stripe, Razorpay, WhatsApp, AI APIs
           </div>
         </Card>
       </div>

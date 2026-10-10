@@ -32,9 +32,9 @@ pub enum IntegrationCapability {
     CrmDealSync,
     /// Document AI & OCR invoice/receipt data extraction
     DocumentOcrVision,
-    /// Real-time streaming Speech-to-Text transcription (Deepgram/AssemblyAI/Google)
+    /// Streaming Speech-to-Text transcription (Deepgram nova-2)
     SpeechToText,
-    /// Ultra-low latency Neural Voice Synthesis (ElevenLabs turbo_v2_5)
+    /// Neural Voice Synthesis & Audio Generation
     VoiceSynthesis,
     /// Pub/Sub & CloudEvent streaming message broker
     CloudEventStreaming,
@@ -96,7 +96,7 @@ pub struct NormalizedEvent {
 /// Translates between proprietary vendor protocols and normalized platform domains.
 #[async_trait]
 pub trait Connector: Send + Sync {
-    /// Unique provider identifier (e.g. "stripe", "twilio", "salesforce", "google_vision")
+    /// Unique provider identifier (e.g. "stripe", "salesforce", "deepgram", "google_vision")
     fn provider_name(&self) -> &'static str;
 
     /// Returns all discoverable capabilities supported by this provider connector.

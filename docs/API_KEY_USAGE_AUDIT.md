@@ -14,9 +14,9 @@
 | 1 | **Stripe** | `STRIPE_SECRET_KEY` + `STRIPE_WEBHOOK_SECRET` | Authenticates backend requests to Stripe & verifies webhook signatures | Global Card Payments & Subscriptions | Customer checkout creates PaymentIntent, charges card, verifies webhook, marks invoice PAID | Card checkout fails; payments cannot be charged; automated subscription billing halts |
 | 2 | **Razorpay** | `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET` | Authenticates India payments, UPI links & order creation | India Payments & Autonomous Collections | Generates UPI dynamic QR / checkout links, verifies webhook, triggers invoice settlement | UPI & Netbanking payment links cannot be created; collections workflow cannot auto-settle |
 | 3 | **Meta WhatsApp** | `META_WHATSAPP_TOKEN` + `WHATSAPP_APP_SECRET` | Authenticates Graph API v18.0 & verifies incoming webhook HMAC | Unified Inbox & AI WhatsApp Agent | Sends/receives messages, renders HSM pre-approved templates, dispatches billing alerts | WhatsApp messaging fails; inbound chats cannot be received; automated WhatsApp bot goes offline |
-| 4 | **Twilio** | `TWILIO_ACCOUNT_SID` + `TWILIO_AUTH_TOKEN` | Authenticates REST calls & controls PSTN/WebRTC audio streams | Autonomous Voice Agent & Call Center | Dials phone numbers, sets up bidirectional media websocket streams, sends SMS | Outbound and inbound voice calling fails; telephone compliance validator blocks dialing |
+| 4 | ~~Twilio~~ | ~~`TWILIO_ACCOUNT_SID` + `TWILIO_AUTH_TOKEN`~~ | REMOVED | Telephony (REMOVED) | Provider-neutral telephony gateway; zero Twilio dependency | Not applicable (Twilio removed, provider-neutral gateway active) |
 | 5 | **Deepgram** | `DEEPGRAM_API_KEY` | Authenticates streaming WebSocket to Nova-2 STT engine | Real-Time Voice Transcription | Transcribes caller audio chunks to text with <150ms latency | Voice agent cannot listen to caller; voice call fallback text simulation active |
-| 6 | **ElevenLabs** | `ELEVENLABS_API_KEY` | Authenticates neural TTS streaming endpoint | Ultra-Low Latency Voice Synthesis | Generates natural human voice audio (Rachel, Adam, Nicole) from text responses | Voice agent cannot speak back to caller; calls drop or fallback to text mode |
+| 6 | ~~ElevenLabs~~ | ~~`ELEVENLABS_API_KEY`~~ | REMOVED | Voice Synthesis (REMOVED) | Text fallback mode used; zero external TTS dependency | Not applicable (TTS removed, graceful text mode active) |
 | 7 | **Google Gemini** | `GEMINI_API_KEY` | Authenticates Google AI Studio / Gemini 1.5 Pro REST API | AI Sales Agent & Deal Copilot | Analyzes customer messages, qualifies leads, reasons on pricing, executes tools | Autonomous sales agent disabled; deal copilot and tool execution fallback to human routing |
 | 8 | **OpenAI** | `OPENAI_API_KEY` | Authenticates OpenAI API for GPT-4o function calling | Secondary AI Reasoning & Bot Fallback | Provides redundant multi-model reasoning and natural language tool selection | Redundant AI fallback unavailable if Gemini experiences latency or rate limits |
 | 9 | **Mathpix** | `mathpix-app-id` + `mathpix-app-key` | Authenticates Mathpix v3 text & table extraction API | Accounts Payable Document OCR | Parses scanned vendor bills, extracts line items, validates arithmetic consistency | Automated AP bill scanning halts; bills must be manually keyed in by human accountants |
@@ -356,107 +356,32 @@ IMPLEMENTED BUT CREDENTIAL MISSING
 
 ---
 
-### 2.4 Twilio Telephony (`TWILIO_ACCOUNT_SID` & `TWILIO_AUTH_TOKEN`)
+### 2.4 Twilio Telephony (REMOVED)
 
 ```text
 ==================================================
-API / SERVICE: Twilio Voice & Telephony
+API / SERVICE: Twilio Voice & Telephony (REMOVED)
 ==================================================
 
-Credential:
-TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN / TWILIO_PHONE_NUMBER
+Status:
+REMOVED / NO LONGER USED
 
-Credential Type:
-Account Identifier / Primary Auth Secret / Caller ID
+Reason for Removal:
+Provider dependency completely removed from NEXUS ERP + CRM + TELI platform.
+Telephony functions are preserved via a provider-neutral telephony layer and audio stream gateway.
 
-Credential Present:
-NO in live environment (Synthetically mocked in .env.test)
+Purged Resources:
+- TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER purged from .env, .env.local, .env.example
+- Terraform Secret Manager twilio-auth-token purged
+- Backend twilio connector (integrations/src/providers/twilio.rs) deleted
+- Database credentials and probe configurations purged (migration 0047)
+- UI carrier references neutralized to provider-neutral telephony
 
-Credential Location:
-Google Secret Manager (projects/{id}/secrets/{env}-twilio-auth-token)
-Injected into Cloud Run via value_source.secret_key_ref
-
-==================================================
-WHAT IS THIS KEY FOR?
-==================================================
-Authenticates Twilio REST API requests to initiate voice phone calls, establish
-bidirectional WebRTC media streams, and enforce calling window compliance.
-
-==================================================
-WHAT DOES THIS KEY ENABLE?
-==================================================
-Enables the Autonomous Voice Agent to make and receive real telephone calls over
-the global PSTN network, perform DNC compliance checks, and record call audio.
-
-==================================================
-WHICH PROJECT FEATURE USES IT?
-==================================================
-Autonomous AI Voice Agent, Call Center Dialpad, Telephony Compliance Engine.
-
-==================================================
-WHICH CODE USES IT?
-==================================================
-backend/crates/integrations/src/providers/twilio.rs
-platform_integrations::providers::twilio::TwilioConnector::test_connection
-platform_integrations::providers::twilio::TwilioConnector::normalize_webhook
-backend/crates/domain/src/voice_telephony.rs
-platform_domain::voice_telephony::CallingWindowValidator
-backend/crates/domain/src/voice_agent_integration.rs
-platform_domain::voice_agent_integration::VoiceAgentCoordinator
-
-==================================================
-WHAT HAPPENS WHEN IT IS USED?
-==================================================
-1. Operator or AI initiates call to customer.
-2. CallingWindowValidator checks destination country (e.g. US 8am-9pm, SG 8am-8pm).
-3. If compliant, backend calls Twilio /2010-04-01/Accounts/{SID}/Calls.json.
-4. Twilio places PSTN call to customer's phone.
-5. Customer answers; Twilio establishes bidirectional WebSocket audio stream.
-6. Twilio streams caller audio chunks to backend media gateway.
-7. Backend pipes audio to Deepgram (STT) and returns ElevenLabs synthesized voice.
-8. Call ends; Twilio dispatches "call.completed" webhook with duration.
-9. Call record, duration, and transcript saved to Customer 360 timeline.
-
-==================================================
-WHAT DATA IS SENT?
-==================================================
-- To (customer phone number)
-- From (provisioned Twilio phone number)
-- TwiML instruction URL (WebSocket stream endpoint)
-- recording_channels & status_callback URLs
-
-==================================================
-WHAT DOES THE PROJECT RECEIVE?
-==================================================
-- CallSid (CA...)
-- call_status ("queued", "ringing", "in-progress", "completed")
-- call_duration_seconds
-- audio stream packets
-
-==================================================
-WHERE DOES THE RESULT GO?
-==================================================
-Twilio API
-    ↓
-TwilioConnector
-    ↓
-VoiceTelephonyEngine
-    ↓
-PostgreSQL (calls & call_transcripts tables)
-    ↓
-Customer 360 Timeline & Call Center Console (/telephony)
-
-==================================================
-WHAT HAPPENS IF THE KEY IS MISSING?
-==================================================
-Voice calls cannot be placed or received.
-Telephony connection test fails with "Account SID or Auth Token missing".
-AI Voice Agent runs only in local text simulation mode.
-
-==================================================
-CURRENT STATUS:
-==================================================
-IMPLEMENTED BUT CREDENTIAL MISSING
+Remaining Telephony Architecture:
+- Provider-neutral TelephonyVoiceEngine and CallLedger remain active
+- Bidirectional media websocket stream architecture preserved
+- Deepgram STT streaming (Nova-2) and AI reasoning (Gemini/OpenAI) intact
+- Zero vendor lock-in; provider-agnostic telephony adapter pattern
 ```
 
 ---
@@ -509,7 +434,7 @@ platform_domain::voice_agent_integration::VoiceAgentConfig
 WHAT HAPPENS WHEN IT IS USED?
 ==================================================
 1. Customer speaks during a live phone call.
-2. Raw PCM audio chunks stream from Twilio into the backend.
+2. Raw PCM audio chunks stream from the telephony gateway into the backend.
 3. Backend forwards audio stream over WebSocket to wss://api.deepgram.com/v1/listen.
 4. Deepgram returns streaming JSON transcripts with word-level timestamps & punctuation.
 5. Once a sentence or pause is detected, transcript is passed to Gemini/GPT-4o.
@@ -557,95 +482,34 @@ IMPLEMENTED BUT CREDENTIAL MISSING
 
 ---
 
-### 2.6 ElevenLabs Voice Synthesis (`ELEVENLABS_API_KEY`)
+### 2.6 ElevenLabs Voice Synthesis (REMOVED — NO LONGER USED)
 
 ```text
 ==================================================
-API / SERVICE: ElevenLabs Neural Voice Synthesis
+API / SERVICE: ElevenLabs Voice Synthesis (PURGED)
 ==================================================
 
-Credential:
-ELEVENLABS_API_KEY / ELEVENLABS_VOICE_ID / ELEVENLABS_MODEL_ID
+Status:
+REMOVED FROM REPOSITORY — ZERO EXTERNAL DEPENDENCY
 
-Credential Type:
-API Key / Resource IDs
+Prior Credentials:
+ELEVENLABS_API_KEY / ELEVENLABS_VOICE_ID / ELEVENLABS_MODEL_ID (PURGED)
 
-Credential Present:
-API Key: NO in live (mocked in .env.test)
-Voice ID & Model ID: YES (Configured in .env.example)
-
-Credential Location:
-Google Secret Manager (projects/{id}/secrets/{env}-elevenlabs-api-key)
-Injected into Cloud Run via value_source.secret_key_ref
+Former Location:
+Google Secret Manager (elevenlabs-api-key) — REMOVED FROM TERRAFORM & RUNTIME
 
 ==================================================
-WHAT IS THIS KEY FOR?
+REMOVAL SUMMARY
 ==================================================
-Authenticates HTTP requests to ElevenLabs streaming text-to-speech API.
-
-==================================================
-WHAT DOES THIS KEY ENABLE?
-==================================================
-Enables high-fidelity neural voice synthesis (Turbo v2.5 model) with preset enterprise
-voice personas (Rachel: calm customer service; Adam: collections; Nicole: sales).
-
-==================================================
-WHICH PROJECT FEATURE USES IT?
-==================================================
-Autonomous Voice Agent (Quad-Gate Gate 4: Voice Synthesis).
-
-==================================================
-WHICH CODE USES IT?
-==================================================
-backend/crates/integrations/src/providers/elevenlabs.rs
-platform_integrations::providers::elevenlabs::ElevenLabsConnector::test_connection
-platform_integrations::providers::elevenlabs::ElevenLabsConnector::preset_voices
-backend/crates/domain/src/voice_agent_integration.rs
-platform_domain::voice_agent_integration::VoiceAgentConfig
-
-==================================================
-WHAT HAPPENS WHEN IT IS USED?
-==================================================
-1. AI Reasoning engine generates text reply for caller.
-2. Backend calls https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream.
-3. ElevenLabs returns ultra-low-latency chunked MP3/PCM audio stream.
-4. Backend streams audio chunks directly back into Twilio WebSocket.
-5. Customer hears realistic, natural-sounding human speech on their phone.
-
-==================================================
-WHAT DATA IS SENT?
-==================================================
-- text to speak
-- model_id ("eleven_turbo_v2_5")
-- voice_settings (stability: 0.75, similarity_boost: 0.85)
-
-==================================================
-WHAT DOES THE PROJECT RECEIVE?
-==================================================
-- streaming audio byte chunks (audio/mpeg)
-- latency metrics (~110ms first-chunk latency)
-
-==================================================
-WHERE DOES THE RESULT GO?
-==================================================
-ElevenLabs API
-    ↓
-ElevenLabsConnector
-    ↓
-Twilio WebSocket Audio Stream
-    ↓
-Customer's Telephone Earpiece
-
-==================================================
-WHAT HAPPENS IF THE KEY IS MISSING?
-==================================================
-Voice generation fails with 401 Unauthorized.
-Voice agent cannot speak. Inbound/outbound calling drops voice response.
+All ElevenLabs code, endpoints, database defaults, and UI widgets have been
+completely excised from the platform. Voice agent Gate 4 now defaults to
+tts_provider: "disabled" with graceful text-only and telephony fallback.
+Live call authorization succeeds without requiring any ElevenLabs API key.
 
 ==================================================
 CURRENT STATUS:
 ==================================================
-IMPLEMENTED BUT CREDENTIAL MISSING
+REMOVED AND PURGED (STABLE FALLBACK ACTIVE)
 ```
 
 ---
@@ -1059,13 +923,13 @@ CONNECTED & PRODUCTION READY
 * **With the key:** The business phone number goes live on WhatsApp. The Unified Inbox receives real customer messages in real-time, human agents can chat back, pre-approved HSM payment alerts can be sent automatically, and the AI WhatsApp bot can handle inquiries 24/7.
 * **Without the key:** The WhatsApp inbox is completely disconnected from Meta.
 
-### 4. Twilio Telephony Credentials (`TWILIO_ACCOUNT_SID` + `TWILIO_AUTH_TOKEN`)
-* **With the keys:** The platform can dial real phone numbers over the PSTN network. The Autonomous AI Voice Agent can conduct outbound collections calls or qualify incoming sales leads over the phone.
-* **Without the keys:** The phone dialpad cannot connect to the telecom network.
+### 4. Twilio Telephony (REMOVED)
+* **Status:** REMOVED / NO LONGER USED.
+* **Architecture:** Replaced by provider-neutral telephony gateway; zero vendor lock-in.
 
-### 5. Deepgram + ElevenLabs (`DEEPGRAM_API_KEY` + `ELEVENLABS_API_KEY`)
-* **With the keys:** When used alongside Twilio, the AI voice agent gains ears and a voice: it understands spoken customer speech in 150ms and replies with an ultra-realistic human voice.
-* **Without the keys:** Even if Twilio connects a call, the AI cannot transcribe the caller's voice or speak back.
+### 5. Deepgram STT (`DEEPGRAM_API_KEY`) [ElevenLabs TTS Removed]
+* **With the key:** Ingests streaming audio chunks via provider-neutral telephony/WebRTC and transcribes speech in <150ms. AI reasoning generates responses; telephony operates with graceful TTS fallback (ElevenLabs removed).
+* **Without the key:** Even if telephony connects audio, the AI cannot transcribe the caller's voice.
 
 ### 6. Google Gemini / OpenAI (`GEMINI_API_KEY` / `OPENAI_API_KEY`)
 * **With the key:** The Autonomous Sales Agent unlocks: it reads incoming chats, qualifies deals, checks inventory, drafts quotes, and reasons on sales objections autonomously.
@@ -1084,13 +948,13 @@ Several platform capabilities require multiple external services working togethe
 ```text
 1. Autonomous AI Voice Calling Feature:
    ┌──────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-   │    Twilio    │ ──> │   Deepgram   │ ──> │ Gemini/GPT-4o│ ──> │  ElevenLabs  │ ──> Audio to
-   │ (Phone Line) │     │ (Listen/STT) │     │(Reason/Brain)│     │ (Voice/TTS)  │     Caller
+   │Telephony/SIP │ ──> │   Deepgram   │ ──> │ Gemini/GPT-4o│ ──> │ Graceful Text│ ──> Telephony
+   │(Audio Stream)│     │ (Listen/STT) │     │(Reason/Brain)│     │ / Fallback   │     Session
    └──────────────┘     └──────────────┘     └──────────────┘     └──────────────┘
-   * If Twilio is missing: No call can be placed.
+   * Telephony Provider: Provider-neutral gateway (Twilio removed).
    * If Deepgram is missing: AI cannot hear caller.
    * If Gemini is missing: AI cannot decide what to say.
-   * If ElevenLabs is missing: AI cannot speak.
+   * ElevenLabs: Completely removed; calls proceed with graceful audio/text handling.
 
 2. Omnichannel WhatsApp Automated Collections:
    ┌──────────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
@@ -1121,9 +985,9 @@ Several platform capabilities require multiple external services working togethe
 | **Stripe** | Live card checkout & automated billing activates | Card charges fail; customer sees "Payment processor unavailable" | Stored customer & invoice records remain safe in PostgreSQL | **Isolated** (Only card payments affected; manual payments still work) |
 | **Razorpay** | Instant UPI links and QR codes activate | UPI generation fails; collections links fail | Historical payments & invoices remain untouched | **Isolated** (Only India payments affected) |
 | **Meta WhatsApp** | Unified Inbox and WhatsApp bot go live | Messages fail to send; incoming webhooks rejected with 401 | Past conversations and messages remain intact in database | **Isolated** (Only WhatsApp chat affected; web app unaffected) |
-| **Twilio** | Voice calls dial out over telecom network | Dialpad throws "Provider unconfigured"; calls fail to ring | Call logs, recordings, and past transcripts remain safe | **Isolated** (Only telephony affected) |
+| ~~Twilio~~ | REMOVED | REMOVED (Provider purged) | Historical call logs, recordings, and transcripts remain intact | **Removed** (Telephony layer operates via provider-neutral gateway) |
 | **Deepgram** | Live speech transcribes into real-time text | Transcripts fail; voice agent cannot hear caller | Past transcripts remain searchable in CRM | **Isolated** (Only live voice sessions affected) |
-| **ElevenLabs** | Voice agent speaks with natural human voice | Audio streaming drops; agent goes silent | Saved voice configurations remain in database | **Isolated** (Only live voice synthesis affected) |
+| ~~ElevenLabs~~ | REMOVED | REMOVED (TTS disabled gracefully) | Purged from database / configuration | **Removed** (Zero runtime dependency) |
 | **Gemini / OpenAI** | Autonomous agents activate and execute tools | Agents automatically disable themselves (safety invariant) | All deals, leads, quotes, and CRM records remain safe | **Isolated** (System falls back to human manual mode) |
 | **Mathpix** | Drag-and-drop AP bill extraction activates | Automated OCR parsing halts | All uploaded PDFs remain stored safely in GCS | **Isolated** (Only automated extraction halts; manual entry works) |
 | **Xero / QuickBooks** | Invoices & payments auto-sync to external GL | Sync queue pauses; events marked "Pending Sync" | Local general ledger continues tracking all entries | **Isolated** (External sync pauses; internal ERP unaffected) |

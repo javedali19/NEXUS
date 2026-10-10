@@ -119,10 +119,10 @@ impl LifecycleId {
             LifecycleId::CollectionsToPayment => "meta_whatsapp",
             LifecycleId::DocumentToInvoice => "google_cloud_storage",
             LifecycleId::ConversationToHuman => "google_gemini",
-            LifecycleId::CallToFollowup => "twilio",
+            LifecycleId::CallToFollowup => "telephony",
             LifecycleId::PaymentToReconciliation => "xero",
             LifecycleId::AiAgentToAction => "openai",
-            LifecycleId::CountryPolicyToCommunication => "twilio",
+            LifecycleId::CountryPolicyToCommunication => "telephony",
             LifecycleId::WorkflowToEventResult => "google_cloud_tasks",
         }
     }
@@ -283,26 +283,6 @@ pub fn probe_all_external_providers() -> Vec<ProviderProbeResult> {
         probed_at: now,
     });
 
-    // 4. Twilio Voice Telephony
-    let twilio_sid = std::env::var("TWILIO_ACCOUNT_SID").ok();
-    let twilio_token = std::env::var("TWILIO_AUTH_TOKEN").ok();
-    let mut missing_twilio = Vec::new();
-    if twilio_sid.is_none() { missing_twilio.push("TWILIO_ACCOUNT_SID".to_string()); }
-    if twilio_token.is_none() { missing_twilio.push("TWILIO_AUTH_TOKEN".to_string()); }
-    results.push(ProviderProbeResult {
-        provider_name: "twilio".to_string(),
-        category: "telephony".to_string(),
-        status: if missing_twilio.is_empty() { ProviderConnectionStatus::Connected } else { ProviderConnectionStatus::Unconfigured },
-        is_connected: missing_twilio.is_empty(),
-        missing_credentials: missing_twilio.clone(),
-        ping_latency_ms: if missing_twilio.is_empty() { 74 } else { 0 },
-        message: if missing_twilio.is_empty() {
-            "Twilio SIP carrier trunk connected. Calling window and DNC gates active.".to_string()
-        } else {
-            "Twilio unconfigured. Voice dialer running in simulation & verification mode.".to_string()
-        },
-        probed_at: now,
-    });
 
     // 5. Deepgram Speech-to-Text
     let deepgram_key = std::env::var("DEEPGRAM_API_KEY").ok();
@@ -323,26 +303,7 @@ pub fn probe_all_external_providers() -> Vec<ProviderProbeResult> {
         probed_at: now,
     });
 
-    // 6. ElevenLabs Voice Synthesis
-    let el_key = std::env::var("ELEVENLABS_API_KEY").ok();
-    let mut missing_el = Vec::new();
-    if el_key.is_none() { missing_el.push("ELEVENLABS_API_KEY".to_string()); }
-    results.push(ProviderProbeResult {
-        provider_name: "elevenlabs".to_string(),
-        category: "ai_tts".to_string(),
-        status: if missing_el.is_empty() { ProviderConnectionStatus::Connected } else { ProviderConnectionStatus::Unconfigured },
-        is_connected: missing_el.is_empty(),
-        missing_credentials: missing_el.clone(),
-        ping_latency_ms: if missing_el.is_empty() { 110 } else { 0 },
-        message: if missing_el.is_empty() {
-            "ElevenLabs Turbo v2.5 connected. Neural voice streaming active.".to_string()
-        } else {
-            "ElevenLabs unconfigured. Speech synthesis running in development text mode.".to_string()
-        },
-        probed_at: now,
-    });
-
-    // 7. Google Cloud Storage
+    // 6. Google Cloud Storage
     let gcp_proj = std::env::var("GCP_PROJECT_ID").ok();
     let is_gcs_configured = gcp_proj.is_some();
     results.push(ProviderProbeResult {

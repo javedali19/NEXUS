@@ -419,13 +419,13 @@ impl ObservabilityEngine {
                 details: json!({"phone_number_status": "CONNECTED", "quality_rating": "GREEN"}),
             },
             IntegrationHealth {
-                name: "Twilio Telephony & SIP Trunk".into(),
+                name: "Telephony & SIP Gateway".into(),
                 status: "healthy".into(),
                 latency_ms: 65,
                 success_rate: 99.9,
                 error_count_last_hour: 0,
                 last_checked: Utc::now(),
-                details: json!({"sip_domain": "pstn.twilio.com", "codec": "PCMU/PCMA"}),
+                details: json!({"sip_gateway": "sip.internal", "codec": "PCMU/PCMA"}),
             },
             IntegrationHealth {
                 name: "Google Gemini 1.5 Pro (AI Agent)".into(),

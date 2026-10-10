@@ -113,30 +113,7 @@ const INITIAL_CATALOG: ProviderCatalogItem[] = [
     environment: "production",
     settings: { account_id: "acct_1EnterpriseProd99", live_mode: true },
   },
-  {
-    id: "twilio",
-    provider: "twilio",
-    name: "Twilio Telephony & WhatsApp",
-    category: "telephony",
-    description: "Inbound & Outbound VoIP SIP carrier bridge, WebRTC audio media streaming, and WhatsApp Business API.",
-    authType: "api_key",
-    requiredCredentials: [
-      "Twilio Account SID (AC...)",
-      "Auth Token (Secret)",
-      "Registered Phone Number (+1...)",
-      "WhatsApp Business Sender ID",
-    ],
-    capabilities: ["Voice Telephony", "Audio Streaming", "WhatsApp Messaging", "SMS / MMS"],
-    setupStatus: "configured",
-    connectionStatus: "healthy",
-    latencyMs: 46,
-    rateLimitPerMin: 300,
-    lastHealthCheck: "2 mins ago",
-    webhookUrl: "https://api.nexus.internal/api/v1/webhooks/conn-twilio-01",
-    webhookSecret: "tw_sig_secret_8844aa22",
-    environment: "production",
-    settings: { account_sid: "AC998811223344556677", phone_numbers: ["+15550199"] },
-  },
+
   {
     id: "salesforce",
     provider: "salesforce",
@@ -377,7 +354,7 @@ const INITIAL_CATALOG: ProviderCatalogItem[] = [
     description: "Multi-carrier SMS and OTT messaging (Viber, SMS) routing across Singapore (+65), Malaysia (+60), and Thailand (+66).",
     authType: "api_key",
     requiredCredentials: [
-      "Regional SMS Provider (Twilio/Infobip)",
+      "Regional SMS Provider (Infobip/Direct Carrier)",
       "SMS API Key",
       "Registered Sender ID",
     ],
@@ -431,7 +408,7 @@ const INITIAL_WEBHOOK_DELIVERIES: WebhookDeliveryLog[] = [
   },
   {
     id: "wh-log-02",
-    provider: "twilio",
+    provider: "meta_whatsapp",
     eventType: "whatsapp_inbound",
     canonicalType: "whatsapp.message_received.v1",
     signatureVerified: true,
@@ -476,16 +453,7 @@ const INITIAL_ERROR_HISTORY: ErrorHistoryItem[] = [
     timestamp: "2026-09-22 14:22:45 UTC",
     resolved: false,
   },
-  {
-    id: "err-03",
-    provider: "twilio",
-    errorCode: "TWILIO_SIP_DROP",
-    message: "WebRTC media leg dropped prematurely during Voice AI synthesis.",
-    httpStatus: 500,
-    retryCount: 1,
-    timestamp: "2026-09-22 13:42:30 UTC",
-    resolved: true,
-  },
+
 ];
 
 export default function IntegrationCenterPage() {

@@ -6,7 +6,6 @@ use crate::connector::Connector;
 use crate::providers::generic_rest::GenericRestConnector;
 use crate::providers::salesforce::SalesforceConnector;
 use crate::providers::stripe::StripeConnector;
-use crate::providers::twilio::TwilioConnector;
 
 /// Central Connector Registry storing and looking up provider adapters.
 #[derive(Default, Clone)]
@@ -22,7 +21,6 @@ impl ConnectorRegistry {
 
         // Register default out-of-the-box connectors
         registry.register(Arc::new(StripeConnector));
-        registry.register(Arc::new(TwilioConnector));
         registry.register(Arc::new(SalesforceConnector));
         registry.register(Arc::new(GenericRestConnector));
 

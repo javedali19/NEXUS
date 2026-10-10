@@ -1,7 +1,7 @@
 use chrono::{DateTime, TimeZone, Utc};
 use platform_domain::{
     CallComplianceCheckResult, CallPurpose, CallStatus, CallingWindowValidator, EscalationPriority,
-    InitiateCallRequest, TelephonyCallingWindow, TwilioVoiceCredentials, TwilioVoiceEngine,
+    InitiateCallRequest, TelephonyCallingWindow, TelephonyCredentials, TelephonyVoiceEngine,
 };
 use uuid::Uuid;
 
@@ -117,21 +117,20 @@ fn test_calling_window_validator_blocks_weekends_when_disallowed() {
 }
 
 #[test]
-fn test_twilio_twiml_generation_and_audio_stream() {
-    let twiml = TwilioVoiceEngine::build_twiml_media_stream(
+fn test_telephony_media_stream_session_generation() {
+    let session = TelephonyVoiceEngine::build_session_media_stream(
         "wss://api.nexus.enterprise/v1/voice/stream/sess_abc123",
         "This call is recorded for quality assurance.",
         "sess_abc123",
     );
 
-    assert!(twiml.contains("<Response>"));
-    assert!(twiml.contains("<Say voice=\"Polly.Danielle-Neural\">This call is recorded for quality assurance.</Say>"));
-    assert!(twiml.contains("<Stream url=\"wss://api.nexus.enterprise/v1/voice/stream/sess_abc123\">"));
-    assert!(twiml.contains("<Parameter name=\"sessionToken\" value=\"sess_abc123\" />"));
+    assert!(session.contains("stream_url"));
+    assert!(session.contains("sess_abc123"));
+    assert!(session.contains("This call is recorded for quality assurance."));
 }
 
 #[test]
-fn test_twilio_call_initiation_simulation_and_production() {
+fn test_telephony_call_initiation_simulation_and_production() {
     let req = InitiateCallRequest {
         organization_id: Uuid::new_v4(),
         customer_id: Some(Uuid::new_v4()),
@@ -142,28 +141,28 @@ fn test_twilio_call_initiation_simulation_and_production() {
     };
 
     // 1. Without credentials -> simulation mode
-    let sim_result = TwilioVoiceEngine::initiate_call(None, req.clone(), "wss://nexus.internal").unwrap();
+    let sim_result = TelephonyVoiceEngine::initiate_call(None, req.clone(), "wss://nexus.internal").unwrap();
     assert!(sim_result.is_simulation);
-    assert!(sim_result.provider_call_sid.starts_with("CA_SIM_"));
+    assert!(sim_result.provider_call_sid.starts_with("CALL_SIM_"));
     assert_eq!(sim_result.status, CallStatus::Ringing);
 
-    // 2. With real Twilio credentials
-    let creds = TwilioVoiceCredentials {
-        account_sid: "AC_TEST_SANDBOX_MOCK_SID".to_string(),
+    // 2. With carrier credentials
+    let creds = TelephonyCredentials {
+        account_id: "CARRIER_ACCOUNT_123".to_string(),
         auth_token: "secret_token".to_string(),
         phone_number: "+18005550199".to_string(),
     };
-    let prod_result = TwilioVoiceEngine::initiate_call(Some(&creds), req, "wss://nexus.internal").unwrap();
+    let prod_result = TelephonyVoiceEngine::initiate_call(Some(&creds), req, "wss://nexus.internal").unwrap();
     assert!(!prod_result.is_simulation);
-    assert!(prod_result.provider_call_sid.starts_with("CA"));
-    assert!(!prod_result.provider_call_sid.starts_with("CA_SIM_"));
+    assert!(prod_result.provider_call_sid.starts_with("CALL_"));
+    assert!(!prod_result.provider_call_sid.starts_with("CALL_SIM_"));
 }
 
 #[test]
 fn test_supervisor_escalation_warm_transfer() {
     let call_id = Uuid::new_v4();
     let org_id = Uuid::new_v4();
-    let escalation = TwilioVoiceEngine::escalate_to_supervisor(
+    let escalation = TelephonyVoiceEngine::escalate_to_supervisor(
         call_id,
         org_id,
         "Customer requested human representative after invoice dispute",

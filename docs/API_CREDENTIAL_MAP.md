@@ -124,34 +124,30 @@ Live WhatsApp Chat Console (/communications/inbox), Message History, Quick Repli
 
 ---
 
-### 2.4 Twilio (Voice Telephony, SIP Streaming & PSTN Calls)
+### 2.4 Twilio (Voice Telephony) — [REMOVED]
 
 ```text
-Credential:
-TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN (Resolved via GSM: twilio-auth-token), TWILIO_PHONE_NUMBER
+Status:
+REMOVED / NO LONGER USED
+
+Architecture Note:
+Twilio has been completely removed from NEXUS ERP + CRM + TELI.
+Telephony operations (softphone dialpad, call ledger, call transcripts, customer timeline)
+now function through a provider-neutral telephony gateway layer:
     ↓
-Configuration:
-infrastructure/terraform/compute.tf (Line 73) & VoiceAgentConfig
+Provider-Neutral Architecture:
+TelephonyVoiceEngine & CallingWindowValidator
     ↓
-SDK / HTTP Client:
-reqwest::Client with Twilio Basic Auth & TwiML WebSocket Audio Stream handler
+Session Descriptor:
+Standard session descriptors & WebRTC audio streaming
     ↓
-Integration Adapter:
-platform_integrations::providers::twilio::TwilioConnector
+PostgreSQL Tables:
+calls, call_transcripts, customer_timeline preserved
     ↓
-Backend Service:
-platform_domain::voice_telephony::CallingWindowValidator & VoiceTelephonyEngine
-    ↓
-Business Module:
-AI Outbound Calling, Inbound IVR, Call Compliance & Do-Not-Call (DNC) Gateway
-    ↓
-Database / Event:
-calls, call_transcripts, customer_timeline ("voice.call_completed.v1")
-    ↓
-Frontend Feature:
-Voice Call Dialpad (/telephony), Real-Time Call Monitor, Call Recording Player
+Frontend Features:
+Voice Call Dialpad, Softphone UI, Call Ledger remain fully operational.
 ```
-* **Chain Status:** **COMPLETE & VERIFIED IN CODE** (Awaiting live Account SID & Auth Token).
+* **Chain Status:** **REMOVED** (Replaced by provider-neutral telephony layer; zero Twilio dependency).
 
 ---
 
@@ -186,34 +182,19 @@ Live Telephony Audio Waveform & Real-Time Transcript Display
 
 ---
 
-### 2.6 ElevenLabs (Ultra-Low Latency Neural Voice Synthesis TTS)
+### 2.6 ElevenLabs (Neural Voice Synthesis TTS) — [REMOVED]
 
 ```text
-Credential:
-ELEVENLABS_API_KEY (Resolved via GSM: elevenlabs-api-key), ELEVENLABS_VOICE_ID, ELEVENLABS_MODEL_ID
+Status:
+REMOVED / NO LONGER USED (Intentionally removed from platform)
     ↓
-Configuration:
-infrastructure/terraform/compute.tf & VoiceAgentConfig
+Impact:
+ElevenLabs-specific TTS/voice generation removed. Voice pipeline gracefully operates in text/telephony fallback.
     ↓
-SDK / HTTP Client:
-reqwest::Client streaming chunked audio from https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream
-    ↓
-Integration Adapter:
-platform_integrations::providers::elevenlabs::ElevenLabsConnector
-    ↓
-Backend Service:
-platform_domain::voice_agent_integration::VoiceAgentCoordinator
-    ↓
-Business Module:
-Autonomous AI Voice Response Generation (Rachel, Adam, Nicole preset models)
-    ↓
-Database / Event:
-call_audio_chunks, calls table
-    ↓
-Frontend Feature:
-Voice Agent Configuration Console (/ai-agents/voice), Voice Preview Player
+Remaining Active Architecture:
+Provider-neutral SIP Telephony + Deepgram Streaming STT + OpenAI/Gemini/Groq Decision Engine
 ```
-* **Chain Status:** **COMPLETE & VERIFIED IN CODE** (Awaiting live API Key).
+* **Chain Status:** **REMOVED** (Zero active dependencies).
 
 ---
 

@@ -257,7 +257,7 @@ const INITIAL_CALL_CENTER_DATA: CallCenterRecord[] = [
         timestamp: "14:18:20",
         eventType: "call_completed",
         actorType: "system",
-        actorName: "Twilio SIP Trunk",
+        actorName: "Telephony Carrier Trunk",
         details: "Call completed successfully. Duration: 198s. Cost: $0.032 USD",
       },
     ],
@@ -331,7 +331,7 @@ const INITIAL_CALL_CENTER_DATA: CallCenterRecord[] = [
         eventType: "ai_handshake",
         actorType: "ai_agent",
         actorName: "Rachel (AI Solutions Advisor)",
-        details: "Connected full-duplex Deepgram STT and ElevenLabs turbo_v2_5 engine",
+        details: "Connected full-duplex Deepgram STT and AI Reasoning engine",
       },
       {
         id: "aud-7",
